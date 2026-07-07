@@ -93,7 +93,7 @@ export default function Navbar() {
 
   const navLinks = [
     { label: "Home", href: "/" },
-    { label: "Events", href: "/event" },
+    { label: "Events", href: "/events" },
     { label: "Gallery", href: "#gallery" },
     { label: "Partners", href: "#partners" },
     { label: "Team", href: "#team" },
@@ -111,8 +111,8 @@ export default function Navbar() {
             alt="Genesis Logo"
             width={182}
             height={57}
-            style={{ height: "57px" }}
-            className="w-auto object-contain"
+            style={{ height: "57px", width: "auto" }}
+            className="object-contain"
             priority
           />
         </Link>
@@ -153,7 +153,7 @@ export default function Navbar() {
           </div>
 
           <Link
-            href="#register"
+            href="/events"
             onMouseEnter={onMouseEnter}
             onMouseLeave={onMouseLeave}
             className="relative inline-flex items-center justify-center rounded-full bg-[#1a73e8] px-6 py-3.5 text-[16px] font-semibold text-white shadow-sm overflow-hidden active:scale-[0.98] transition-transform duration-200"
@@ -221,7 +221,7 @@ export default function Navbar() {
               </Link>
             ))}
             <Link
-              href="#register"
+              href="/events"
               onClick={() => setMobileMenuOpen(false)}
               className="mt-2 inline-flex items-center justify-center rounded-full bg-[#1a73e8] py-3 text-[16px] font-semibold text-white shadow-sm hover:bg-[#1557b0] transition-colors duration-200"
             >
