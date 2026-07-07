@@ -1,9 +1,5 @@
 "use client";
 
-import { useRef } from "react";
-import { useGSAP } from "@gsap/react";
-import gsap from "gsap";
-
 import TicketCard, { TicketData } from "./TicketCard";
 
 const TICKETS_DATA: TicketData[] = [
@@ -16,7 +12,7 @@ const TICKETS_DATA: TicketData[] = [
     price: "Free",
     color: "bg-[#ff68a8]", // Pink ticket
     glowColor: "shadow-pink-500/20 hover:shadow-pink-500/40",
-    ticketId: "8892-GNS",
+    barcode: "/barcode.png",
   },
   {
     id: "2",
@@ -27,7 +23,7 @@ const TICKETS_DATA: TicketData[] = [
     price: "₹150",
     color: "bg-[#3cbbf6]", // Blue ticket
     glowColor: "shadow-blue-500/20 hover:shadow-blue-500/40",
-    ticketId: "5541-GNS",
+    barcode: "/barcode.png",
   },
   {
     id: "3",
@@ -38,35 +34,48 @@ const TICKETS_DATA: TicketData[] = [
     price: "₹250",
     color: "bg-[#4ade80]", // Green ticket
     glowColor: "shadow-emerald-500/20 hover:shadow-emerald-500/40",
-    ticketId: "7729-GNS",
+    barcode: "/barcode.png",
   },
+  {
+    id: "4",
+    title: "Design Sprint",
+    category: "CREATIVE DESIGN",
+    date: "December 05, 2026",
+    venue: "Design Studio A",
+    price: "Free",
+    color: "bg-[#fb923c]", // Orange ticket
+    glowColor: "shadow-orange-500/20 hover:shadow-orange-500/40",
+    barcode: "/barcode.png",
+  },
+  {
+    id: "5",
+    title: "Cyber CTF",
+    category: "CYBERSECURITY",
+    date: "December 12, 2026",
+    venue: "Main Lab B & C",
+    price: "₹100",
+    color: "bg-[#a78bfa]", // Purple ticket
+    glowColor: "shadow-purple-500/20 hover:shadow-purple-500/40",
+    barcode: "/barcode.png",
+  },
+  {
+    id: "6",
+    title: "Game Showcase",
+    category: "GAME DEV EXPO",
+    date: "December 18, 2026",
+    venue: "Exhibition Hall",
+    price: "Free",
+    color: "bg-[#facc15]", // Yellow ticket
+    glowColor: "shadow-yellow-500/20 hover:shadow-yellow-500/40",
+    barcode: "/barcode.png",
+  },
+ 
 ];
 
 export default function Events() {
-  const containerRef = useRef<HTMLDivElement>(null);
-
-  useGSAP(
-    () => {
-      // Intro animations
-      const tl = gsap.timeline();
-      tl.fromTo(
-        ".event-title",
-        { y: 40, opacity: 0 },
-        { y: 0, opacity: 1, duration: 0.8, ease: "power4.out" }
-      ).fromTo(
-        ".ticket-wrapper",
-        { y: 60, opacity: 0, rotateX: 15 },
-        { y: 0, opacity: 1, rotateX: 0, duration: 0.8, ease: "power3.out", stagger: 0.15 },
-        "-=0.4"
-      );
-    },
-    { scope: containerRef }
-  );
-
   return (
     <div
-      ref={containerRef}
-      className="relative min-h-screen w-full flex flex-col items-center pt-36 md:pt-40 pb-24 font-sans text-white overflow-hidden"
+      className="relative min-h-screen w-full flex flex-col items-center pt-36 md:pt-40 pb-24 font-absans text-white overflow-hidden"
       style={{
         background: "linear-gradient(135deg, #07162c 0%, #0e2954 35%, #1f5194 70%, #60a5fa 100%)",
       }}
@@ -76,9 +85,9 @@ export default function Events() {
       <div className="absolute bottom-1/4 right-1/10 w-[500px] h-[500px] bg-indigo-500/10 rounded-full blur-[150px] pointer-events-none" />
 
       {/* Main Title Section */}
-      <div className="text-center relative z-10 mb-16">
+      <div className="text-center relative z-10 mb-28">
         <h1 className="event-title text-[70px] md:text-[106px] font-bold tracking-tight font-absans bg-gradient-to-r from-white via-blue-100 to-blue-300 bg-clip-text text-transparent">
-          EVENTS
+          OUR EVENTS
         </h1>
       </div>
 

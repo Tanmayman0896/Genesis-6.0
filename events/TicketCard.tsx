@@ -1,5 +1,9 @@
 "use client";
 
+import { useRef } from "react";
+import { useGSAP } from "@gsap/react";
+import gsap from "gsap";
+
 interface TicketData {
   id: string;
   title: string;
@@ -8,8 +12,8 @@ interface TicketData {
   venue: string;
   price: string;
   color: string; 
-  glowColor: string; 
-  ticketId: string;
+  glowColor: string;
+  barcode: string; // Image path for custom barcode
 }
 
 interface TicketCardProps {
@@ -17,6 +21,48 @@ interface TicketCardProps {
 }
 
 export default function TicketCard({ ticket }: TicketCardProps) {
+  const pillRef = useRef<HTMLSpanElement>(null);
+  const textRef = useRef<HTMLSpanElement>(null);
+
+  // Initialize the pill position using GSAP to avoid React inline style conflicts
+  const { contextSafe } = useGSAP(() => {
+    gsap.set(pillRef.current, { xPercent: -100 });
+  });
+
+  const onButtonMouseEnter = contextSafe(() => {
+    gsap.to(pillRef.current, {
+      xPercent: 0,
+      duration: 0.6,
+      ease: "power2.out",
+      overwrite: "auto",
+    });
+    gsap.to(textRef.current, {
+      color: "#1a73e8",
+      duration: 0.6,
+      ease: "power2.out",
+      overwrite: "auto",
+    });
+  });
+
+  const onButtonMouseLeave = contextSafe(() => {
+    gsap.to(pillRef.current, {
+      xPercent: 100,
+      duration: 0.6,
+      ease: "power2.out",
+      overwrite: "auto",
+      onComplete: () => {
+        gsap.set(pillRef.current, { xPercent: -100 });
+      },
+    });
+    gsap.to(textRef.current, {
+      color: "#ffffff",
+      duration: 0.6,
+      ease: "power2.out",
+      overwrite: "auto",
+    });
+  });
+
+  // Generates a responsive polygon clipPath with circular notches and scallops
   const generateClipPath = () => {
     const numNotches = 12;
     const w = 100 / numNotches;
@@ -24,7 +70,7 @@ export default function TicketCard({ ticket }: TicketCardProps) {
 
     for (let i = 0; i < numNotches; i++) {
       const xStart = 100 - i * w;
-      // Scalloped circular cutouts 
+      // Scalloped circular cutouts (peaks at 100%, valleys at 100% - 12px)
       bottomPoints.push(
         `${xStart}% 100%`,
         `${xStart - 0.25 * w}% calc(100% - 9px)`,
@@ -66,48 +112,74 @@ export default function TicketCard({ ticket }: TicketCardProps) {
 
   return (
     <div
-      className={`ticket-wrapper group relative flex flex-col h-[520px] w-full max-w-[340px] mx-auto rounded-3xl ${ticket.color} text-slate-950 shadow-2xl ${ticket.glowColor} hover:scale-105 hover:-translate-y-2 transition-all duration-500 cursor-pointer`}
+      className={`ticket-wrapper group relative flex flex-col h-[520px] w-full max-w-[340px] mx-auto rounded-[3px] ${ticket.color} text-slate-950 shadow-2xl ${ticket.glowColor} cursor-pointer font-absans`}
       style={{
         clipPath: generateClipPath(),
+        WebkitMaskImage: `
+          linear-gradient(to bottom, black calc(40% - 2px), transparent calc(40% - 2px)),
+          linear-gradient(to bottom, transparent calc(40% + 2px), black calc(40% + 2px)),
+          repeating-linear-gradient(to right, black 0px, black 28px, transparent 28px, transparent 48px)
+        `,
+        WebkitMaskSize: "100% 100%, 100% 100%, 100% 6px",
+        WebkitMaskPosition: "0 0, 0 0, 0 calc(40% - 3px)",
+        WebkitMaskRepeat: "no-repeat, no-repeat, repeat-x",
+        maskImage: `
+          linear-gradient(to bottom, black calc(40% - 2px), transparent calc(40% - 2px)),
+          linear-gradient(to bottom, transparent calc(40% + 2px), black calc(40% + 2px)),
+          repeating-linear-gradient(to right, black 0px, black 28px, transparent 28px, transparent 48px)
+        `,
+        maskSize: "100% 100%, 100% 100%, 100% 6px",
+        maskPosition: "0 0, 0 0, 0 calc(40% - 3px)",
+        maskRepeat: "no-repeat, no-repeat, repeat-x",
       }}
     >
       {/* Top Section (White Card Logo Area) */}
-      <div className="bg-white m-4 p-5 rounded-2xl flex flex-col justify-between min-h-[160px] shadow-sm">
+      <div className="bg-white m-4 p-5 rounded-[2px] flex flex-col justify-between min-h-[160px] shadow-sm">
         <div className="flex justify-between items-start">
           <div>
             <div className="font-absans text-xl font-black tracking-tight flex items-center gap-1 text-slate-900">
-              <span className="text-blue-600 font-sans">&#123;</span>
+              <span className="text-blue-600 font-absans">&#123;</span>
               Genesis
-              <span className="text-blue-600 font-sans">&#125;</span>
+              <span className="text-blue-600 font-absans">&#125;</span>
             </div>
             <div className="text-[10px] uppercase font-bold tracking-wider text-slate-500 mt-1">
               {ticket.category}
             </div>
           </div>
-          {/* Visual cubes representation */}
-          <div className="flex gap-[2px] mt-1">
-            <span className="w-2.5 h-2.5 rounded-sm bg-blue-500 animate-pulse" />
-            <span className="w-2.5 h-2.5 rounded-sm bg-rose-500" />
-            <span className="w-2.5 h-2.5 rounded-sm bg-emerald-500" />
-          </div>
         </div>
 
-        {/* Middle Row with Year */}
+        {/* Middle Row with Register Button */}
         <div className="flex justify-end items-center border-t border-slate-100 pt-4 mt-2">
-          <div className="border border-rose-300 bg-rose-50 text-rose-600 px-3.5 py-0.5 rounded-full text-xs font-bold shadow-sm">
-            2026
-          </div>
+          <button
+            onMouseEnter={onButtonMouseEnter}
+            onMouseLeave={onButtonMouseLeave}
+            className="relative inline-flex items-center justify-center overflow-hidden rounded-full bg-[#1a73e8] px-4 py-1.5 text-xs font-bold text-white shadow-sm active:scale-[0.98] transition-transform duration-200 cursor-pointer"
+          >
+            <span
+              ref={pillRef}
+              className="absolute inset-0 bg-white rounded-full pointer-events-none"
+            />
+            <span ref={textRef} className="relative z-10">
+              Register
+            </span>
+          </button>
         </div>
       </div>
 
-      {/* Perforation Line */}
-      <div className="relative my-2">
-        <div className="border-t-2 border-dashed border-white/50 w-full" />
-      </div>
+      {/* Spacing for perforation line region */}
+      <div className="h-6 shrink-0" />
 
       {/* Ticket Details (Middle Section) */}
-      <div className="flex flex-col justify-between flex-grow px-7 py-4 font-sans">
+      <div className="flex flex-col justify-between flex-grow px-7 py-4 font-absans">
         <div className="space-y-4">
+          <div>
+            <div className="text-slate-900/60 text-[11px] uppercase tracking-wider font-bold">
+              Event
+            </div>
+            <div className="text-lg font-black text-slate-950 tracking-tight uppercase leading-tight mt-0.5">
+              {ticket.title}
+            </div>
+          </div>
           <div>
             <div className="text-slate-900/60 text-[11px] uppercase tracking-wider font-bold">
               Date
@@ -137,23 +209,14 @@ export default function TicketCard({ ticket }: TicketCardProps) {
       </div>
 
       {/* Bottom Section (Barcode Area) */}
-      <div className="bg-white mx-4 mb-6 p-3 rounded-2xl flex flex-col items-center justify-center shadow-sm relative overflow-hidden">
-        {/* Barcode representation */}
-        <div className="flex items-stretch justify-center gap-[2px] h-10 w-full px-1">
-          {[
-            2, 1, 3, 1, 4, 1, 2, 3, 2, 1, 4, 1, 2, 3, 1, 2, 4, 1, 3, 1, 2,
-            4, 1, 3, 2, 1, 2, 4, 1, 3, 1, 2, 3, 1, 2, 4, 1, 3, 2, 1,
-          ].map((w, i) => (
-            <div
-              key={i}
-              className="bg-slate-950"
-              style={{ width: `${w}px`, opacity: i % 3 === 0 ? 0.9 : 0.8 }}
-            />
-          ))}
-        </div>
-        {/* Ticket ID */}
-        <div className="text-[10px] text-slate-500 font-mono tracking-wider mt-1.5 font-semibold">
-          Ticket Id: {ticket.ticketId}
+      <div className="bg-white mx-4 mb-6 p-3 rounded-[2px] flex flex-col items-center justify-center shadow-sm relative overflow-hidden">
+        {/* Barcode image */}
+        <div className="relative h-10 w-full flex justify-center items-center px-1">
+          <img
+            src={ticket.barcode}
+            alt="Barcode"
+            className="h-full max-w-full object-contain"
+          />
         </div>
       </div>
     </div>
