@@ -101,6 +101,17 @@ export default function Gallery() {
     setActiveImage(GALLERY_IMAGES[nextIndex]);
   }, [activeImage]);
 
+  // Toggle body class when modal opens/closes to hide z-index UI
+  useEffect(() => {
+    if (activeImage) {
+      document.body.classList.add('modal-is-open');
+    } else {
+      document.body.classList.remove('modal-is-open');
+    }
+    // Cleanup on unmount
+    return () => document.body.classList.remove('modal-is-open');
+  }, [activeImage]);
+
   // Keyboard navigation for lightbox
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -345,7 +356,7 @@ export default function Gallery() {
       <div className="absolute bottom-1/4 right-1/10 w-[500px] h-[500px] bg-indigo-500/10 rounded-full blur-[150px] pointer-events-none" />
 
       {/* Main Title Section (Absolute centered above marquee) */}
-      <div className="gallery-title-wrapper absolute top-1/2 left-1/2 text-center pointer-events-none select-none !z-[999]">
+      <div className="gallery-title-wrapper absolute top-1/2 left-1/2 text-center pointer-events-none select-none !z-[999] transition-[opacity,visibility] duration-300 ease-in-out [.modal-is-open_&]:opacity-0 [.modal-is-open_&]:invisible">
         <div className="title-overlay flex flex-col items-center justify-center">
           <h2 className="title-line top-line m-0 relative z-20 text-[12vw] md:text-[10vw] font-black tracking-tight leading-[0.85] !text-white !mix-blend-difference uppercase whitespace-nowrap transition-transform duration-500 ease-[cubic-bezier(0.25,1,0.5,1)] will-change-transform translate-y-0 [.is-overlapping_&]:-translate-y-[6vw]">
             OUR
