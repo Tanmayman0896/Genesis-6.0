@@ -137,7 +137,17 @@ export default function Gallery() {
     mm.add("(hover: hover)", () => {
       const cards = gsap.utils.toArray<HTMLElement>(".gallery-card");
       const marqueeSection = containerRef.current?.querySelector(".gallery-marquee-section") as HTMLElement;
+      const titleWrapper = containerRef.current?.querySelector(".gallery-title-wrapper") as HTMLElement;
+      const topLine = containerRef.current?.querySelector(".top-line") as HTMLElement;
+      const bottomLine = containerRef.current?.querySelector(".bottom-line") as HTMLElement;
+      
       if (!marqueeSection) return;
+
+      if (titleWrapper) {
+        gsap.set(titleWrapper, { xPercent: -50, yPercent: -50 });
+      }
+
+      let lastDangerState = false;
 
       // Create high-performance cached property getters
       const getMarqueeY = gsap.getProperty(marqueeSection);
@@ -207,6 +217,24 @@ export default function Gallery() {
 
         // Determine center of screen
         const screenCenterX = window.innerWidth / 2;
+        
+        // 1. Dynamic Baseline Calculation (Reading live DOM rect)
+        const trackRect = marqueeSection.getBoundingClientRect();
+        const trackCenterY = trackRect.top + (trackRect.height / 2);
+        
+        // 2. Inverse Trigger Condition
+        const viewportCenterY = window.innerHeight / 2;
+        const isOverlapping = Math.abs(viewportCenterY - trackCenterY) < 100;
+
+        if (titleWrapper) {
+          // STRICT LAYERING: Keep the heading dead-center at all times. 
+          gsap.set(titleWrapper, {
+            yPercent: -50,
+            y: 0,
+            force3D: true,
+            overwrite: "auto"
+          });
+        }
 
         // Influence parameters
         const sigma = 380; // Width of the U-shape influence
@@ -237,6 +265,18 @@ export default function Gallery() {
             overwrite: "auto",
           });
         });
+
+        // 3. Clean Variable Toggling
+        if (isOverlapping !== lastDangerState) {
+          if (titleWrapper) {
+            if (isOverlapping) {
+              titleWrapper.classList.add("is-overlapping");
+            } else {
+              titleWrapper.classList.remove("is-overlapping");
+            }
+          }
+          lastDangerState = isOverlapping;
+        }
       };
 
       gsap.ticker.add(updatePhysics);
@@ -305,14 +345,19 @@ export default function Gallery() {
       <div className="absolute bottom-1/4 right-1/10 w-[500px] h-[500px] bg-indigo-500/10 rounded-full blur-[150px] pointer-events-none" />
 
       {/* Main Title Section (Absolute centered above marquee) */}
-      <div className="gallery-title-wrapper absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-center pointer-events-none select-none z-20">
-        <h1 className="text-[70px] md:text-[106px] font-bold tracking-tight font-mirava-sans bg-gradient-to-r from-white via-blue-100 to-blue-300 bg-clip-text text-transparent">
-          OUR GALLERY
-        </h1>
+      <div className="gallery-title-wrapper absolute top-1/2 left-1/2 text-center pointer-events-none select-none !z-[999]">
+        <div className="title-overlay flex flex-col items-center justify-center">
+          <h2 className="title-line top-line m-0 relative z-20 text-[12vw] md:text-[10vw] font-black tracking-tight leading-[0.85] !text-white !mix-blend-difference uppercase whitespace-nowrap transition-transform duration-500 ease-[cubic-bezier(0.25,1,0.5,1)] will-change-transform translate-y-0 [.is-overlapping_&]:-translate-y-[6vw]">
+            OUR
+          </h2>
+          <h2 className="title-line bottom-line m-0 relative z-20 text-[12vw] md:text-[10vw] font-black tracking-tight leading-[0.85] !text-white !mix-blend-difference uppercase whitespace-nowrap transition-transform duration-500 ease-[cubic-bezier(0.25,1,0.5,1)] will-change-transform translate-y-0 [.is-overlapping_&]:translate-y-[6vw]">
+            GALLERY
+          </h2>
+        </div>
       </div>
 
       {/* Gallery Marquee Row Container */}
-      <div className="gallery-marquee-section w-full relative z-10 flex items-center overflow-visible py-3">
+      <div className="gallery-marquee-section w-full relative !z-1 flex items-center overflow-visible py-3">
         {/* Marquee Track */}
         <div
           ref={marqueeRef}
