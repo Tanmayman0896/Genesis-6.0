@@ -188,9 +188,7 @@
   stroke: currentColor;
 }
 
-.footerLink:hover {
-  opacity: 0.8;
-}
+
 
 @media (min-width: 1024px) {
   .content {
@@ -285,9 +283,7 @@
     align-items: flex-start;
   }
 
-  .footerLink:hover {
-    transform: translateX(3px);
-  }
+
 }
 
 @media (max-width: 480px) {

@@ -116,9 +116,9 @@ export default function Footer() {
                   <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
                   <circle cx="12" cy="7" r="4" />
                 </svg>
-                Samaksh Gupta
+                Tanmoy Mandal
               </h4>
-              <p className={styles.contactPhone}>+91 98713 40076</p>
+              <p className={styles.contactPhone}>+91 83401 57213</p>
               <p className={styles.contactRole}>(Chairperson-IEEE CS MUJ)</p>
             </div>
             <div className={styles.contactCard}>
@@ -127,9 +127,9 @@ export default function Footer() {
                   <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
                   <circle cx="12" cy="7" r="4" />
                 </svg>
-                Aditya Rajawat
+                Arunanshu Basu
               </h4>
-              <p className={styles.contactPhone}>+91 70273 45159</p>
+              <p className={styles.contactPhone}>+91 78694 86315</p>
               <p className={styles.contactRole}>(Chairperson-IEEE SB MUJ)</p>
             </div>
             <div className={styles.contactCard}>
@@ -138,9 +138,9 @@ export default function Footer() {
                   <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
                   <circle cx="12" cy="7" r="4" />
                 </svg>
-                Kashish Kumar
+                Palakshi Sirsa
               </h4>
-              <p className={styles.contactPhone}>+91 98731 63828</p>
+              <p className={styles.contactPhone}>+91 62665 63992</p>
               <p className={styles.contactRole}>(Chairperson-IEEE WIE MUJ)</p>
             </div>
             <div className={styles.contactCard}>
@@ -149,9 +149,9 @@ export default function Footer() {
                   <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
                   <circle cx="12" cy="7" r="4" />
                 </svg>
-                Anshika Katare
+                Shubhanshu Dixit
               </h4>
-              <p className={styles.contactPhone}>+91 79825 53998</p>
+              <p className={styles.contactPhone}>+91 85215 42280</p>
               <p className={styles.contactRole}>(Chairperson-IEEE CIS MUJ)</p>
             </div>
           </div>
