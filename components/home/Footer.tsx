@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import { usePathname } from "next/navigation";
 import styles from "./Footer.module.css";
 
 interface Bubble {
@@ -15,9 +16,11 @@ interface Bubble {
 }
 
 export default function Footer() {
+  const pathname = usePathname();
   const [bubbles, setBubbles] = useState<Bubble[]>([]);
 
   useEffect(() => {
+    if (pathname === "/gallery") return;
     const isMobile = window.innerWidth < 768;
     const bubbleCount = isMobile ? 40 : 128;
     const list: Bubble[] = [];
@@ -32,7 +35,9 @@ export default function Footer() {
       });
     }
     setBubbles(list);
-  }, []);
+  }, [pathname]);
+
+  if (pathname === "/gallery") return null;
 
   return (
     <footer className={styles.footer}>

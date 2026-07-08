@@ -13,6 +13,17 @@
   --font-google-sans: "Google Sans", var(--font-outfit), sans-serif;
   --font-absans: var(--font-absans), sans-serif;
   --font-mirava-sans: var(--font-mirava-sans), "Mirava Sans", sans-serif;
+
+  --animate-fadeIn: fadeIn 0.5s ease-out forwards;
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
 }
 
 @media (prefers-color-scheme: dark) {
