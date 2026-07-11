@@ -49,12 +49,30 @@ const STRING_3_SEGMENTS = [
 ];
 
 const CARD_IMAGES = {
-  card1: ["/gallery/amadej-tauses-xWOTojs1eg4-unsplash.jpg", "/gallery/microsoft-copilot-oTDuuLUhH20-unsplash.jpg"],
-  card2: ["/gallery/anastase-maragos-_PyN0ignfko-unsplash.jpg", "/gallery/rafael-peier-jbgnfanT8Bw-unsplash.jpg"],
-  card3: ["/gallery/annie-spratt-Ng2UydNj4W8-unsplash.jpg", "/gallery/the-metropolitan-museum-of-art-Bvw8rNl4fD4-unsplash.jpg"],
-  card4: ["/gallery/leo_visions-pH3a_0GRXYk-unsplash.jpg", "/gallery/peter-olexa-mxIGWk111u0-unsplash.jpg"],
-  card5: ["/gallery/mana5280-6k5aeGvhuEA-unsplash.jpg", "/gallery/amadej-tauses-xWOTojs1eg4-unsplash.jpg"],
-  card6: ["/gallery/peter-olexa-ZO4rHqkCat4-unsplash.jpg", "/gallery/anastase-maragos-_PyN0ignfko-unsplash.jpg"],
+  card1: [
+    "https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=600&auto=format&fit=crop&q=80",
+    "https://images.unsplash.com/photo-1504384308090-c894fdcc538d?w=600&auto=format&fit=crop&q=80"
+  ],
+  card2: [
+    "https://images.unsplash.com/photo-1515187029135-18ee286d815b?w=600&auto=format&fit=crop&q=80",
+    "https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=600&auto=format&fit=crop&q=80"
+  ],
+  card3: [
+    "https://images.unsplash.com/photo-1531482615713-2afd69097998?w=600&auto=format&fit=crop&q=80",
+    "https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?w=600&auto=format&fit=crop&q=80"
+  ],
+  card4: [
+    "https://images.unsplash.com/photo-1531297484001-80022131f5a1?w=600&auto=format&fit=crop&q=80",
+    "https://images.unsplash.com/photo-1504639725590-34d0984388bd?w=600&auto=format&fit=crop&q=80"
+  ],
+  card5: [
+    "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=600&auto=format&fit=crop&q=80",
+    "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=600&auto=format&fit=crop&q=80"
+  ],
+  card6: [
+    "https://images.unsplash.com/photo-1485827404703-89b55fcc595e?w=600&auto=format&fit=crop&q=80",
+    "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=600&auto=format&fit=crop&q=80"
+  ]
 };
 
 function MomentCardImage({ images, alt, priority = false }: { images: string[]; alt: string; priority?: boolean }) {
@@ -127,10 +145,8 @@ export default function TopMoments() {
   return (
     <section ref={containerRef} className="moments-section w-full max-w-6xl mx-auto px-6 py-20 md:py-28 relative z-10 flex flex-col items-center">
       {/* Section Header */}
-      <div className="text-center max-w-3xl mb-12 sm:mb-16">
-        <p className="text-sm md:text-base font-bold uppercase tracking-widest text-blue-400 mb-3">
-          Highlights
-        </p>
+      <div className="text-center max-w-3xl mb-1 sm:mb-1">
+        
         <h2 className="text-[39px] md:text-[63px] font-extrabold tracking-tight font-mirava-sans bg-gradient-to-r from-white via-blue-100 to-blue-300 bg-clip-text text-transparent uppercase">
           OUR MOMENTS
         </h2>
