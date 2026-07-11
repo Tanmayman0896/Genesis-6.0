@@ -46,3 +46,6 @@ public/logos/ieee_backup.glb
 public/Heroimg_backup/
 /.agents
 
+# Mascot models
+public/models/genesis mascot.glb
+public/models/genesis mascot 2.glb
