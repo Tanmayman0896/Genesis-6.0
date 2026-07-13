@@ -1,11 +1,34 @@
 "use client";
 
-import MascotCanvas from "./MascotCanvas";
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
+import dynamic from "next/dynamic";
 import StatsSection from "./StatsSection";
 import TopMoments from "./TopMoments";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
+import Preloader from "./Preloader";
+
+// Sleek fallback component that matches MascotCanvas aspect ratios and UI to prevent layout shifts (CLS)
+function MascotFallback() {
+  return (
+    <div className="relative w-full h-full min-h-[350px] sm:min-h-[400px] md:min-h-[550px] lg:min-h-[650px] flex flex-col items-center justify-center select-none">
+      <div className="relative flex items-center justify-center">
+        <div className="w-16 h-16 rounded-full border-2 border-t-white border-r-neutral-600 border-b-neutral-800 border-l-transparent animate-spin duration-700" />
+        <div className="absolute w-12 h-12 rounded-full border border-white/5 animate-ping duration-1000" />
+        <div className="absolute w-2.5 h-2.5 bg-white rounded-full shadow-[0_0_10px_rgba(255,255,255,0.8)]" />
+      </div>
+      <span className="mt-6 font-sans font-medium text-neutral-400 tracking-widest text-[10px] uppercase animate-pulse">
+        Initializing 3D Space...
+      </span>
+    </div>
+  );
+}
+
+// Lazy load the heavy 3D canvas so it does not block the initial page load/LCP
+const MascotCanvas = dynamic(() => import("./MascotCanvas"), {
+  ssr: false,
+  loading: () => <MascotFallback />,
+});
 
 const OPPORTUNITIES = [
   {
@@ -101,21 +124,32 @@ export default function Home() {
   const canvasParentRef = useRef<HTMLDivElement>(null);
   const bgTextRef = useRef<HTMLDivElement>(null);
 
+  const [progress, setProgress] = useState(0);
+  const [isLoading, setIsLoading] = useState(true);
+  const [isPreloaderActive, setIsPreloaderActive] = useState(true);
+
+  const handleLoaded = React.useCallback(() => {
+    setIsLoading(false);
+  }, []);
+
   useGSAP(() => {
-    // Entrance animation for the mascot canvas
+    if (isLoading) return;
+
+    // Entrance animation for the mascot canvas synchronized with curtain slide
+    const delay = 0.35;
     gsap.fromTo(
       canvasParentRef.current,
       { opacity: 0, scale: 0.85 },
-      { opacity: 1, scale: 1, duration: 1.2, ease: "power3.out" }
+      { opacity: 1, scale: 1, duration: 1.2, ease: "power3.out", delay }
     );
 
     // Entrance animation for the background giant text
     gsap.fromTo(
       bgTextRef.current,
       { opacity: 0, y: 50, scale: 0.95 },
-      { opacity: 1, y: 0, scale: 1, duration: 1.5, ease: "power3.out", delay: 0.2 }
+      { opacity: 1, y: 0, scale: 1, duration: 1.5, ease: "power3.out", delay: delay + 0.15 }
     );
-  }, { scope: containerRef });
+  }, { dependencies: [isLoading], scope: containerRef });
 
   return (
     <div 
@@ -128,6 +162,7 @@ export default function Home() {
         <div 
           ref={bgTextRef}
           className="absolute inset-0 flex flex-col items-center justify-start pt-24 md:justify-center md:pt-0 select-none pointer-events-none z-0"
+          style={{ opacity: 0 }}
         >
           <h1 className="text-[13vw] sm:text-[15vw] md:text-[19vw] font-black tracking-widest font-absans bg-gradient-to-b from-white/90 to-white/10 bg-clip-text text-transparent uppercase text-center leading-none">
             GENESIS 6.0
@@ -138,10 +173,19 @@ export default function Home() {
         <div 
           ref={canvasParentRef}
           className="w-[115vw] sm:w-full max-w-[500px] sm:max-w-[800px] aspect-square shrink-0 flex items-center justify-center relative z-10"
+          style={{ opacity: 0 }}
         >
-          <MascotCanvas />
+          <MascotCanvas onProgress={setProgress} onLoaded={handleLoaded} />
         </div>
       </div>
+
+      {/* Screen preloader curtain */}
+      {isPreloaderActive && (
+        <Preloader
+          isLoading={isLoading}
+          onRevealComplete={() => setIsPreloaderActive(false)}
+        />
+      )}
 
       {/* Clean Typographic Stats Section */}
       <StatsSection />

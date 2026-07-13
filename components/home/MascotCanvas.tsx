@@ -3,13 +3,25 @@
 import { useEffect, useRef, useState } from "react";
 import * as THREE from "three";
 import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
-import { OrbitControls } from "three/addons/controls/OrbitControls.js";
+import { DRACOLoader } from "three/addons/loaders/DRACOLoader.js";
 
-export default function MascotCanvas() {
+interface MascotCanvasProps {
+  onProgress?: (progress: number) => void;
+  onLoaded?: () => void;
+}
+
+export default function MascotCanvas({ onProgress, onLoaded }: MascotCanvasProps) {
   const containerRef = useRef<HTMLDivElement>(null);
-  const [loading, setLoading] = useState(true);
-  const [progress, setProgress] = useState(0);
   const [error, setError] = useState(false);
+
+  // Use refs to keep callbacks up to date without triggering useEffect re-runs
+  const onProgressRef = useRef(onProgress);
+  const onLoadedRef = useRef(onLoaded);
+
+  useEffect(() => {
+    onProgressRef.current = onProgress;
+    onLoadedRef.current = onLoaded;
+  }, [onProgress, onLoaded]);
 
   useEffect(() => {
     if (typeof window === "undefined" || !containerRef.current) return;
@@ -18,57 +30,67 @@ export default function MascotCanvas() {
     const width = container.clientWidth;
     const height = container.clientHeight || 500;
 
-    // 1. Create Scene
+    // 1. Scene Variables
+    let mascotModel: THREE.Group | null = null;
+    let modelGroup: THREE.Group | null = null;
+    let animationFrameId: number;
+    let isVisible = false;
+
+    // Create Scene
     const scene = new THREE.Scene();
 
     // 2. Camera Setup
     const camera = new THREE.PerspectiveCamera(40, width / height, 0.1, 100);
-    const initialZ = typeof window !== "undefined" && window.innerWidth < 640 ? 6.0 : 7.5;
-    camera.position.set(0, 0.5, initialZ);
+    const isMobile = window.innerWidth < 640;
+    const initialZ = isMobile ? 6.2 : 7.5;
+    camera.position.set(0, 0.15, initialZ);
 
-    // 3. Renderer Setup
-    const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+    // 3. Renderer Setup with Performance Optimizations
+    const renderer = new THREE.WebGLRenderer({
+      antialias: window.innerWidth >= 768,
+      alpha: true,
+      stencil: false,
+      depth: true,
+      powerPreference: "high-performance",
+      precision: "mediump",
+    });
     renderer.setSize(width, height);
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+
+    // Determine max DPR based on device capability to prevent GPU overhead on weak screens
+    let maxDPR = 1.5;
+    if (typeof navigator !== "undefined") {
+      const isWeakDevice =
+        (navigator.hardwareConcurrency && (navigator.hardwareConcurrency as number) < 4) ||
+        ((navigator as any).deviceMemory && (navigator as any).deviceMemory < 4);
+      if (isWeakDevice || window.innerWidth < 768) {
+        maxDPR = 1.0;
+      }
+    }
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, maxDPR));
     renderer.toneMapping = THREE.ACESFilmicToneMapping;
     renderer.toneMappingExposure = 1.25;
     container.appendChild(renderer.domElement);
 
-    // 4. Orbit Controls
-    const controls = new OrbitControls(camera, renderer.domElement);
-    controls.enableDamping = true;
-    controls.dampingFactor = 0.05;
-    controls.enableZoom = true;
-    controls.minDistance = 4;
-    controls.maxDistance = 12;
-    // Limit vertical rotation to keep it looking cool
-    controls.minPolarAngle = Math.PI / 3; // Look slightly down
-    controls.maxPolarAngle = Math.PI / 1.7; // Look slightly up
-    controls.autoRotate = true;
-    controls.autoRotateSpeed = 0.6; // Very slow and majestic rotation
-
-    // 5. Lighting System (Clean neutral white lighting)
-    // Ambient Light to fill in shadows neutrally
+    // 4. Lighting System (Clean neutral white lighting - simple & high performance)
     const ambientLight = new THREE.AmbientLight(0xffffff, 1.2);
     scene.add(ambientLight);
 
-    // Key Light (Directional white light)
     const keyLight = new THREE.DirectionalLight(0xffffff, 2.0);
     keyLight.position.set(5, 5, 5);
     scene.add(keyLight);
 
-    // Fill Light (Directional white light to soften opposite side)
     const fillLight = new THREE.DirectionalLight(0xffffff, 1.0);
     fillLight.position.set(-5, 3, -5);
     scene.add(fillLight);
 
-    // 6. Load Model
-    let mascotModel: THREE.Group | null = null;
+    // 5. Setup GLTF Loader with DRACO Compression
     const loader = new GLTFLoader();
+    const dracoLoader = new DRACOLoader();
+    dracoLoader.setDecoderPath("https://www.gstatic.com/draco/versioned/decoders/1.5.7/");
+    loader.setDRACOLoader(dracoLoader);
 
-    // We can try to load "genesis mascot.glb". If not found, log error.
     loader.load(
-      "/models/genesis mascot.glb",
+      "/models/genesis_mascot_optimized.glb",
       (gltf) => {
         mascotModel = gltf.scene;
 
@@ -77,8 +99,7 @@ export default function MascotCanvas() {
         const size = box.getSize(new THREE.Vector3());
         const center = box.getCenter(new THREE.Vector3());
 
-        // Target size of mascot in Three.js space
-        const targetSize = 4.2;
+        const targetSize = window.innerWidth < 640 ? 3.3 : 3.8;
         const maxDim = Math.max(size.x, size.y, size.z);
         const scale = targetSize / maxDim;
         mascotModel.scale.set(scale, scale, scale);
@@ -91,81 +112,107 @@ export default function MascotCanvas() {
         // Traverse and optimize materials
         mascotModel.traverse((node) => {
           if ((node as THREE.Mesh).isMesh) {
-            
-            // Boost material roughness & metalness if missing to look glossy and futuristic
             const mesh = node as THREE.Mesh;
             if (mesh.material && (mesh.material as THREE.MeshStandardMaterial).isMeshStandardMaterial) {
               const mat = mesh.material as THREE.MeshStandardMaterial;
-              // Make it metallic and glowing
               if (mat.roughness !== undefined) mat.roughness = Math.min(mat.roughness, 0.4);
               if (mat.metalness !== undefined) mat.metalness = Math.max(mat.metalness, 0.8);
             }
           }
         });
 
-        // Add parent offset group to easily animate floating without messing with controls
-        const modelGroup = new THREE.Group();
+        // Add parent offset group to easily animate floating
+        modelGroup = new THREE.Group();
         modelGroup.add(mascotModel);
-        // Slightly lower it so it sits near the grid
-        modelGroup.position.y = 0.2;
-        scene.add(modelGroup);
+        modelGroup.position.y = 0.05;
+        
+        // Orient the mascot to face forward directly at the camera
+        modelGroup.rotation.y = -1.5;
 
-        setLoading(false);
+        scene.add(modelGroup);
+        if (onLoadedRef.current) onLoadedRef.current();
       },
       (xhr) => {
         if (xhr.total > 0) {
-          setProgress(Math.round((xhr.loaded / xhr.total) * 100));
+          const pct = Math.round((xhr.loaded / xhr.total) * 100);
+          if (onProgressRef.current) onProgressRef.current(pct);
         }
       },
       (err) => {
-        console.error("Error loading genesis mascot.glb", err);
+        console.error("Error loading optimized genesis mascot model", err);
         setError(true);
-        setLoading(false);
+        if (onLoadedRef.current) onLoadedRef.current(); // Call onLoaded to close preloader in case of error
       }
     );
 
-    // 7. Animation Loop
+    // 6. Animation and Render Loop with Visibility Control
     const clock = new THREE.Clock();
-    let animationFrameId: number;
+
+    // Accessibility check: respects prefers-reduced-motion
+    const mediaQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
+    let prefersReducedMotion = mediaQuery.matches;
+
+    const handleMotionChange = (e: MediaQueryListEvent) => {
+      prefersReducedMotion = e.matches;
+      if (prefersReducedMotion && modelGroup) {
+        modelGroup.position.y = 0.05;
+        modelGroup.rotation.z = 0;
+        modelGroup.rotation.x = 0;
+      }
+    };
+    mediaQuery.addEventListener("change", handleMotionChange);
 
     const animate = () => {
+      if (!isVisible) return;
       animationFrameId = requestAnimationFrame(animate);
 
       const elapsedTime = clock.getElapsedTime();
 
-      // Gentle floating animation
-      if (scene.children.length > 0) {
-        // Find the group containing the mascot
-        scene.traverse((node) => {
-          if (node instanceof THREE.Group && node.parent === scene) {
-            // Floating up and down
-            node.position.y = Math.sin(elapsedTime * 1.5) * 0.12;
-            
-            // Slow wobble/tilting animation in addition to auto-rotation
-            node.rotation.z = Math.sin(elapsedTime * 0.8) * 0.04;
-            node.rotation.x = Math.cos(elapsedTime * 0.5) * 0.03;
-          }
-        });
+      // Gentle floating/wobble animations (disabled if user prefers reduced motion)
+      if (modelGroup && !prefersReducedMotion) {
+        modelGroup.position.y = Math.sin(elapsedTime * 1.5) * 0.12;
+        modelGroup.rotation.z = Math.sin(elapsedTime * 0.8) * 0.04;
+        modelGroup.rotation.x = Math.cos(elapsedTime * 0.5) * 0.03;
       }
 
-      controls.update();
       renderer.render(scene, camera);
     };
 
-    animate();
+    // IntersectionObserver to pause loop when MascotCanvas is off-screen
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            if (!isVisible) {
+              isVisible = true;
+              clock.start();
+              animate();
+            }
+          } else {
+            if (isVisible) {
+              isVisible = false;
+              cancelAnimationFrame(animationFrameId);
+            }
+          }
+        });
+      },
+      { threshold: 0.05 }
+    );
+    observer.observe(container);
 
-    // 8. Resize Handler
+    // 7. Resize Handler
     const handleResize = () => {
       if (!containerRef.current) return;
       const w = container.clientWidth;
       const h = container.clientHeight || 500;
       camera.aspect = w / h;
       
-      // Dynamically adjust camera Z position based on window width for responsiveness
       if (window.innerWidth < 640) {
-        camera.position.z = 6.0;
+        camera.position.z = 6.2;
+        camera.position.y = 0.15;
       } else {
         camera.position.z = 7.5;
+        camera.position.y = 0.15;
       }
       
       camera.updateProjectionMatrix();
@@ -174,12 +221,16 @@ export default function MascotCanvas() {
 
     window.addEventListener("resize", handleResize);
 
-    // 9. Cleanup
+    // 8. Cleanup
     return () => {
       window.removeEventListener("resize", handleResize);
+      mediaQuery.removeEventListener("change", handleMotionChange);
+      observer.disconnect();
       cancelAnimationFrame(animationFrameId);
-      controls.dispose();
+      
+      dracoLoader.dispose();
       renderer.dispose();
+      
       if (container.contains(renderer.domElement)) {
         container.removeChild(renderer.domElement);
       }
@@ -188,7 +239,6 @@ export default function MascotCanvas() {
       scene.traverse((object) => {
         if (!(object instanceof THREE.Mesh)) return;
         object.geometry.dispose();
-
         if (Array.isArray(object.material)) {
           object.material.forEach((material) => material.dispose());
         } else {
@@ -202,22 +252,6 @@ export default function MascotCanvas() {
     <div className="relative w-full h-full min-h-[350px] sm:min-h-[400px] md:min-h-[550px] lg:min-h-[650px] flex items-center justify-center select-none">
       {/* Three.js Canvas Container */}
       <div ref={containerRef} className="absolute inset-0 w-full h-full z-10" />
-
-      {/* Loading Overlay */}
-      {loading && (
-        <div className="absolute inset-0 flex flex-col items-center justify-center bg-[#0a0a0a]/80 backdrop-blur-sm z-20 transition-opacity duration-500">
-          <div className="relative flex items-center justify-center">
-            {/* Neutral outer spinning ring */}
-            <div className="w-16 h-16 rounded-full border-2 border-t-white border-r-neutral-600 border-b-neutral-800 border-l-transparent animate-spin duration-700" />
-            <div className="absolute w-12 h-12 rounded-full border border-white/5 animate-ping duration-1000" />
-            {/* Center neutral dot */}
-            <div className="absolute w-2.5 h-2.5 bg-white rounded-full shadow-[0_0_10px_rgba(255,255,255,0.8)]" />
-          </div>
-          <span className="mt-6 font-sans font-medium text-neutral-400 tracking-widest text-[10px] uppercase animate-pulse">
-            Loading Mascot {progress}%
-          </span>
-        </div>
-      )}
 
       {/* Error Fallback */}
       {error && (

@@ -4,6 +4,9 @@ import React, { useRef, useState, useEffect } from "react";
 import Image from "next/image";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+gsap.registerPlugin(ScrollTrigger);
 
 interface Segment {
   p0: { x: number; y: number };
@@ -11,11 +14,23 @@ interface Segment {
   p2: { x: number; y: number };
 }
 
-const getPointsForSegments = (segments: Segment[], pointsPerSegment: number) => {
+const distance = (a: { x: number; y: number }, b: { x: number; y: number }) => {
+  return Math.sqrt(Math.pow(a.x - b.x, 2) + Math.pow(a.y - b.y, 2));
+};
+
+const getApproxSegmentLength = (seg: Segment) => {
+  const chord = distance(seg.p0, seg.p2);
+  const net = distance(seg.p0, seg.p1) + distance(seg.p1, seg.p2);
+  return (chord + net) / 2;
+};
+
+const getPointsForSegments = (segments: Segment[], targetSpacing: number) => {
   const points: { x: number; y: number }[] = [];
   segments.forEach((seg) => {
-    for (let i = 0; i < pointsPerSegment; i++) {
-      const t = i / pointsPerSegment;
+    const length = getApproxSegmentLength(seg);
+    const numPoints = Math.max(1, Math.round(length / targetSpacing));
+    for (let i = 0; i < numPoints; i++) {
+      const t = i / numPoints;
       const x = Math.pow(1 - t, 2) * seg.p0.x + 2 * (1 - t) * t * seg.p1.x + Math.pow(t, 2) * seg.p2.x;
       const y = Math.pow(1 - t, 2) * seg.p0.y + 2 * (1 - t) * t * seg.p1.y + Math.pow(t, 2) * seg.p2.y;
       points.push({ x, y });
@@ -29,8 +44,8 @@ const getPointsForSegments = (segments: Segment[], pointsPerSegment: number) => 
 
 // String 1 curves coordinates
 const STRING_1_SEGMENTS = [
-  { p0: { x: 0, y: 130 }, p1: { x: 95, y: 110 }, p2: { x: 190, y: 90 } },
-  { p0: { x: 190, y: 90 }, p1: { x: 500, y: 240 }, p2: { x: 810, y: 45 } },
+  { p0: { x: 0, y: 100 }, p1: { x: 95, y: 80 }, p2: { x: 190, y: 60 } },
+  { p0: { x: 190, y: 60 }, p1: { x: 500, y: 240 }, p2: { x: 810, y: 45 } },
   { p0: { x: 810, y: 45 }, p1: { x: 905, y: 87 }, p2: { x: 1000, y: 130 } }
 ];
 
@@ -43,9 +58,9 @@ const STRING_2_SEGMENTS = [
 
 // String 3 curves coordinates
 const STRING_3_SEGMENTS = [
-  { p0: { x: 0, y: 650 }, p1: { x: 235, y: 631 }, p2: { x: 470, y: 612 } },
-  { p0: { x: 470, y: 612 }, p1: { x: 630, y: 680 }, p2: { x: 790, y: 558 } },
-  { p0: { x: 790, y: 558 }, p1: { x: 895, y: 589 }, p2: { x: 1000, y: 620 } }
+  { p0: { x: 0, y: 690 }, p1: { x: 235, y: 671 }, p2: { x: 470, y: 652 } },
+  { p0: { x: 470, y: 652 }, p1: { x: 630, y: 720 }, p2: { x: 790, y: 598 } },
+  { p0: { x: 790, y: 598 }, p1: { x: 895, y: 629 }, p2: { x: 1000, y: 660 } }
 ];
 
 const CARD_IMAGES = {
@@ -117,12 +132,87 @@ export default function TopMoments() {
 
   useGSAP(() => {
     try {
-      const { ScrollTrigger } = require("gsap/ScrollTrigger");
-      gsap.registerPlugin(ScrollTrigger);
+      const defaultRotations = [-6, 3, 6, -3, 4, -4];
 
+      const startSway = (card: HTMLElement, idx: number) => {
+        const baseRot = defaultRotations[idx] || 0;
+        gsap.to(card, {
+          rotation: baseRot + (idx % 2 === 0 ? 1.5 : -1.5),
+          y: "+=6",
+          duration: 2.2 + idx * 0.3,
+          repeat: -1,
+          yoyo: true,
+          ease: "sine.inOut",
+          overwrite: "auto"
+        });
+      };
+
+      // Entrance animation for desktop cards
+      const cards = gsap.utils.toArray(".moment-card") as HTMLElement[];
+      cards.forEach((card, idx) => {
+        const baseRot = defaultRotations[idx] || 0;
+        gsap.fromTo(
+          card,
+          { opacity: 0, y: 60, scale: 0.9, rotation: idx % 2 === 0 ? -12 : 12 },
+          {
+            opacity: 1,
+            y: 0,
+            scale: 1,
+            rotation: baseRot,
+            duration: 1.2,
+            delay: idx * 0.15,
+            ease: "power2.out",
+            scrollTrigger: {
+              trigger: containerRef.current,
+              start: "top 70%",
+              toggleActions: "play none none none"
+            },
+            onComplete: () => {
+              startSway(card, idx);
+            }
+          }
+        );
+
+        // Hover animations via GSAP
+        const enterHandler = () => {
+          gsap.to(card, {
+            scale: 1.06,
+            rotation: baseRot * 0.4, // straighten slightly
+            y: -10, // lift up slightly
+            duration: 0.4,
+            ease: "power2.out",
+            overwrite: "auto"
+          });
+          gsap.set(card, { zIndex: 30 });
+        };
+
+        const leaveHandler = () => {
+          gsap.to(card, {
+            scale: 1.0,
+            rotation: baseRot,
+            y: 0,
+            duration: 0.4,
+            ease: "power2.out",
+            overwrite: "auto",
+            onComplete: () => {
+              gsap.set(card, { zIndex: "" });
+              startSway(card, idx);
+            }
+          });
+        };
+
+        // Keep references for clean unmounting
+        (card as any)._enterHandler = enterHandler;
+        (card as any)._leaveHandler = leaveHandler;
+
+        card.addEventListener("mouseenter", enterHandler);
+        card.addEventListener("mouseleave", leaveHandler);
+      });
+
+      // Mobile cards entrance animation
       gsap.fromTo(
-        ".moment-card",
-        { opacity: 0, y: 60, scale: 0.95 },
+        ".mobile-moment-card",
+        { opacity: 0, y: 50, scale: 0.95 },
         {
           opacity: 1,
           y: 0,
@@ -132,13 +222,21 @@ export default function TopMoments() {
           ease: "power2.out",
           scrollTrigger: {
             trigger: containerRef.current,
-            start: "top 70%",
+            start: "top 85%",
             toggleActions: "play none none none"
           }
         }
       );
+
+      // Return cleanup function to remove event listeners and prevent memory leaks
+      return () => {
+        cards.forEach((card) => {
+          if ((card as any)._enterHandler) card.removeEventListener("mouseenter", (card as any)._enterHandler);
+          if ((card as any)._leaveHandler) card.removeEventListener("mouseleave", (card as any)._leaveHandler);
+        });
+      };
     } catch (e) {
-      console.warn("GSAP ScrollTrigger could not be loaded", e);
+      console.warn("GSAP Animations could not be loaded", e);
     }
   }, { scope: containerRef });
 
@@ -182,17 +280,17 @@ export default function TopMoments() {
         
         {/* Fairy Lights (3 Drooping Strings passing EXACTLY through top center clothespins) */}
         <svg className="absolute inset-0 w-full h-full text-blue-400/20 pointer-events-none -z-10" fill="none" viewBox="0 0 1000 900" preserveAspectRatio="none">
-          {/* Hanging String 1 (Top) - Passes exactly through (190, 90) and (810, 45) */}
-          <path d="M 0,130 Q 95,110 190,90 Q 500,240 810,45 Q 905,87 1000,130" stroke="#475569" strokeWidth="1.5" />
+          {/* Hanging String 1 (Top) - Passes exactly through (190, 60) and (810, 45) */}
+          <path d="M 0,100 Q 95,80 190,60 Q 500,240 810,45 Q 905,87 1000,130" stroke="#475569" strokeWidth="1.5" />
           
           {/* Hanging String 2 (Middle) - Passes exactly through (160, 405) and (500, 315) */}
           <path d="M 0,420 Q 80,412 160,405 Q 330,480 500,315 Q 750,377 1000,440" stroke="#475569" strokeWidth="1.5" />
           
-          {/* Hanging String 3 (Bottom) - Passes exactly through (470, 612) and (790, 558) */}
-          <path d="M 0,650 Q 235,631 470,612 Q 630,680 790,558 Q 895,589 1000,620" stroke="#475569" strokeWidth="1.5" />
+          {/* Hanging String 3 (Bottom) - Passes exactly through (470, 652) and (790, 598) */}
+          <path d="M 0,690 Q 235,671 470,652 Q 630,720 790,598 Q 895,629 1000,660" stroke="#475569" strokeWidth="1.5" />
 
           {/* Glowing Bulbs on String 1 (using exact wire segment coordinates) */}
-          {getPointsForSegments(STRING_1_SEGMENTS, 5).map((pt, i) => (
+          {getPointsForSegments(STRING_1_SEGMENTS, 85).map((pt, i) => (
             <g key={`s1-${i}`}>
               <circle cx={pt.x} cy={pt.y} r="8" className="fill-amber-400/30 blur-[3px] animate-pulse" style={{ animationDelay: `${i * 180}ms` }} />
               <circle cx={pt.x} cy={pt.y} r="3" className="fill-amber-100" />
@@ -200,7 +298,7 @@ export default function TopMoments() {
           ))}
 
           {/* Glowing Bulbs on String 2 (using exact wire segment coordinates) */}
-          {getPointsForSegments(STRING_2_SEGMENTS, 5).map((pt, i) => (
+          {getPointsForSegments(STRING_2_SEGMENTS, 85).map((pt, i) => (
             <g key={`s2-${i}`}>
               <circle cx={pt.x} cy={pt.y} r="8" className="fill-amber-400/30 blur-[3px] animate-pulse" style={{ animationDelay: `${i * 220}ms` }} />
               <circle cx={pt.x} cy={pt.y} r="3" className="fill-amber-100" />
@@ -208,7 +306,7 @@ export default function TopMoments() {
           ))}
 
           {/* Glowing Bulbs on String 3 (using exact wire segment coordinates) */}
-          {getPointsForSegments(STRING_3_SEGMENTS, 5).map((pt, i) => (
+          {getPointsForSegments(STRING_3_SEGMENTS, 85).map((pt, i) => (
             <g key={`s3-${i}`}>
               <circle cx={pt.x} cy={pt.y} r="8" className="fill-amber-400/30 blur-[3px] animate-pulse" style={{ animationDelay: `${i * 150}ms` }} />
               <circle cx={pt.x} cy={pt.y} r="3" className="fill-amber-100" />
@@ -224,7 +322,7 @@ export default function TopMoments() {
         </div>
 
         {/* Card 1 */}
-        <div className="moment-card absolute w-[22%] max-w-[220px] aspect-[3/4] rounded-3xl overflow-visible shadow-2xl transition-all duration-500 hover:scale-105 hover:z-30 -rotate-6 left-[8%] top-[10%]">
+        <div className="moment-card absolute w-[22%] max-w-[220px] aspect-[3/4] rounded-3xl overflow-visible shadow-2xl origin-top -rotate-6 left-[8%] top-[6.6%]">
           {/* Clothespin Clip */}
           <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 w-3.5 h-8 bg-[#d2b48c] rounded-sm border border-[#b59975] shadow-md z-30 flex flex-col items-center justify-between py-1 select-none">
             <div className="w-4.5 h-0.5 border-y border-slate-500 bg-slate-600/90 my-auto" />
@@ -239,7 +337,7 @@ export default function TopMoments() {
         </div>
 
         {/* Card 2 */}
-        <div className="moment-card absolute w-[22%] max-w-[220px] aspect-[3/4] rounded-3xl overflow-visible shadow-2xl transition-all duration-500 hover:scale-105 hover:z-30 rotate-3 right-[8%] top-[5%]">
+        <div className="moment-card absolute w-[22%] max-w-[220px] aspect-[3/4] rounded-3xl overflow-visible shadow-2xl origin-top rotate-3 right-[8%] top-[5%]">
           {/* Clothespin Clip */}
           <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 w-3.5 h-8 bg-[#d2b48c] rounded-sm border border-[#b59975] shadow-md z-30 flex flex-col items-center justify-between py-1 select-none">
             <div className="w-4.5 h-0.5 border-y border-slate-500 bg-slate-600/90 my-auto" />
@@ -256,7 +354,7 @@ export default function TopMoments() {
         </div>
 
         {/* Card 3 */}
-        <div className="moment-card absolute w-[22%] max-w-[220px] aspect-[3/4] rounded-3xl overflow-visible shadow-2xl transition-all duration-500 hover:scale-105 hover:z-30 rotate-6 left-[5%] top-[45%]">
+        <div className="moment-card absolute w-[22%] max-w-[220px] aspect-[3/4] rounded-3xl overflow-visible shadow-2xl origin-top rotate-6 left-[5%] top-[45%]">
           {/* Clothespin Clip */}
           <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 w-3.5 h-8 bg-[#d2b48c] rounded-sm border border-[#b59975] shadow-md z-30 flex flex-col items-center justify-between py-1 select-none">
             <div className="w-4.5 h-0.5 border-y border-slate-500 bg-slate-600/90 my-auto" />
@@ -267,13 +365,13 @@ export default function TopMoments() {
         </div>
 
         {/* Card 4 */}
-        <div className="moment-card absolute w-[22%] max-w-[220px] aspect-[3/4] rounded-3xl overflow-visible shadow-2xl transition-all duration-500 hover:scale-105 hover:z-30 -rotate-3 left-[39%] top-[35%]">
+        <div className="moment-card absolute w-[22%] max-w-[220px] aspect-[3/4] rounded-3xl overflow-visible shadow-2xl origin-top -rotate-3 left-[39%] top-[35%]">
           {/* Clothespin Clip */}
           <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 w-3.5 h-8 bg-[#d2b48c] rounded-sm border border-[#b59975] shadow-md z-30 flex flex-col items-center justify-between py-1 select-none">
             <div className="w-4.5 h-0.5 border-y border-slate-500 bg-slate-600/90 my-auto" />
           </div>
           {/* Sticker Element */}
-          <div className="absolute -bottom-5 -left-5 bg-[#3b82f6] text-white font-black text-base px-4 py-1.5 rounded-2xl rotate-[12deg] shadow-lg border border-white/20 font-sans select-none z-20">
+          <div className="absolute -bottom-5 -right-5 bg-[#3b82f6] text-white font-black text-base px-4 py-1.5 rounded-2xl rotate-[12deg] shadow-lg border border-white/20 font-sans select-none z-20">
             hi!
           </div>
           <div className="w-full h-full rounded-3xl overflow-hidden border border-white/10 relative">
@@ -282,7 +380,7 @@ export default function TopMoments() {
         </div>
 
         {/* Card 5 */}
-        <div className="moment-card absolute w-[22%] max-w-[220px] aspect-[3/4] rounded-3xl overflow-visible shadow-2xl transition-all duration-500 hover:scale-105 hover:z-30 rotate-4 left-[36%] top-[68%]">
+        <div className="moment-card absolute w-[22%] max-w-[220px] aspect-[3/4] rounded-3xl overflow-visible shadow-2xl origin-top rotate-4 left-[36%] top-[72.4%]">
           {/* Clothespin Clip */}
           <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 w-3.5 h-8 bg-[#d2b48c] rounded-sm border border-[#b59975] shadow-md z-30 flex flex-col items-center justify-between py-1 select-none">
             <div className="w-4.5 h-0.5 border-y border-slate-500 bg-slate-600/90 my-auto" />
@@ -297,7 +395,7 @@ export default function TopMoments() {
         </div>
 
         {/* Card 6 */}
-        <div className="moment-card absolute w-[22%] max-w-[220px] aspect-[3/4] rounded-3xl overflow-visible shadow-2xl transition-all duration-500 hover:scale-105 hover:z-30 -rotate-4 right-[10%] top-[62%]">
+        <div className="moment-card absolute w-[22%] max-w-[220px] aspect-[3/4] rounded-3xl overflow-visible shadow-2xl origin-top -rotate-4 right-[10%] top-[66.4%]">
           {/* Clothespin Clip */}
           <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 w-3.5 h-8 bg-[#d2b48c] rounded-sm border border-[#b59975] shadow-md z-30 flex flex-col items-center justify-between py-1 select-none">
             <div className="w-4.5 h-0.5 border-y border-slate-500 bg-slate-600/90 my-auto" />
@@ -318,7 +416,7 @@ export default function TopMoments() {
       {/* Mobile View Grid Layout (Clean stacked columns, hidden on desktop) */}
       <div className="w-full grid grid-cols-1 sm:grid-cols-2 gap-12 mt-8 md:hidden px-4">
         {/* Card 1 */}
-        <div className="relative w-full max-w-[280px] h-[360px] mx-auto rounded-3xl overflow-visible shadow-2xl -rotate-2">
+        <div className="mobile-moment-card relative w-full max-w-[280px] h-[360px] mx-auto rounded-3xl overflow-visible shadow-2xl -rotate-2">
           <div className="absolute -bottom-4 -right-4 bg-[#ff6b35] text-white font-black text-[10px] px-3 py-1 rounded-full uppercase tracking-widest font-sans select-none z-20">
             good vibes
           </div>
@@ -327,20 +425,20 @@ export default function TopMoments() {
           </div>
         </div>
         {/* Card 2 */}
-        <div className="relative w-full max-w-[280px] h-[360px] mx-auto rounded-3xl overflow-visible shadow-2xl rotate-2">
+        <div className="mobile-moment-card relative w-full max-w-[280px] h-[360px] mx-auto rounded-3xl overflow-visible shadow-2xl rotate-2">
           <div className="w-full h-full rounded-3xl overflow-hidden border border-white/10 relative">
             <MomentCardImage images={CARD_IMAGES.card2} alt="Moment 2" />
           </div>
         </div>
         {/* Card 3 */}
-        <div className="relative w-full max-w-[280px] h-[360px] mx-auto rounded-3xl overflow-visible shadow-2xl -rotate-1">
+        <div className="mobile-moment-card relative w-full max-w-[280px] h-[360px] mx-auto rounded-3xl overflow-visible shadow-2xl -rotate-1">
           <div className="w-full h-full rounded-3xl overflow-hidden border border-white/10 relative">
             <MomentCardImage images={CARD_IMAGES.card3} alt="Moment 3" />
           </div>
         </div>
         {/* Card 4 */}
-        <div className="relative w-full max-w-[280px] h-[360px] mx-auto rounded-3xl overflow-visible shadow-2xl rotate-3">
-          <div className="absolute -bottom-4 -left-4 bg-[#3b82f6] text-white font-black text-xs px-3 py-1 rounded-2xl font-sans select-none z-20">
+        <div className="mobile-moment-card relative w-full max-w-[280px] h-[360px] mx-auto rounded-3xl overflow-visible shadow-2xl rotate-3">
+          <div className="absolute -bottom-4 -right-4 bg-[#3b82f6] text-white font-black text-xs px-3 py-1 rounded-2xl font-sans select-none z-20">
             hi!
           </div>
           <div className="w-full h-full rounded-3xl overflow-hidden border border-white/10 relative">
@@ -348,7 +446,7 @@ export default function TopMoments() {
           </div>
         </div>
         {/* Card 5 */}
-        <div className="relative w-full max-w-[280px] h-[360px] mx-auto rounded-3xl overflow-visible shadow-2xl -rotate-3">
+        <div className="mobile-moment-card relative w-full max-w-[280px] h-[360px] mx-auto rounded-3xl overflow-visible shadow-2xl -rotate-3">
           <div className="absolute -top-4 -left-4 bg-[#10b981] text-white font-extrabold text-[9px] px-3 py-1.5 rounded-full uppercase tracking-wider font-sans select-none z-20">
             join the club
           </div>
@@ -357,7 +455,7 @@ export default function TopMoments() {
           </div>
         </div>
         {/* Card 6 */}
-        <div className="relative w-full max-w-[280px] h-[360px] mx-auto rounded-3xl overflow-visible shadow-2xl rotate-1">
+        <div className="mobile-moment-card relative w-full max-w-[280px] h-[360px] mx-auto rounded-3xl overflow-visible shadow-2xl rotate-1">
           <div className="w-full h-full rounded-3xl overflow-hidden border border-white/10 relative">
             <MomentCardImage images={CARD_IMAGES.card6} alt="Moment 6" />
           </div>
