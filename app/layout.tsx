@@ -40,7 +40,9 @@ export const metadata: Metadata = {
   title: "Genesis-6.0",
   description: "IEEE ",
   icons: {
-    icon: "/favicon.ico",
+    icon: "/icon.png",
+    shortcut: "/icon.png",
+    apple: "/apple-icon.png",
   },
 };
 
@@ -54,6 +56,11 @@ export default function RootLayout({
       lang="en"
       className={`${geistSans.variable} ${geistMono.variable} ${outfit.variable} ${absans.variable} ${plusJakartaSans.variable} h-full antialiased`}
     >
+      <head>
+        <link rel="icon" href="/icon.png" type="image/png" />
+        <link rel="shortcut icon" href="/icon.png" type="image/png" />
+        <link rel="apple-touch-icon" href="/apple-icon.png" />
+      </head>
       <body className="min-h-full flex flex-col">
         <SmoothScrollProvider>
           <Navbar />
