@@ -177,12 +177,9 @@ export default function PartnersPage() {
               {partner.logo}
             </div>
 
-            {/* Bottom Row: Name + Arrow */}
-            <div className="w-full mt-8 pt-4 border-t border-white/5 flex items-center justify-between text-[15px] font-bold text-blue-100 group-hover:text-white transition-colors duration-300">
+            {/* Bottom Row: Name */}
+            <div className="w-full mt-6 text-center text-[18px] font-bold text-blue-100 group-hover:text-white transition-colors duration-300">
               <span style={FONT}>{partner.name}</span>
-              <svg className="w-4 h-4 transform group-hover:translate-x-1 transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5">
-                <path strokeLinecap="round" strokeLinejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
-              </svg>
             </div>
           </a>
         ))}
