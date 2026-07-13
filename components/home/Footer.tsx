@@ -22,7 +22,7 @@ export default function Footer() {
   useEffect(() => {
     if (pathname === "/gallery") return;
     const isMobile = window.innerWidth < 768;
-    const bubbleCount = isMobile ? 40 : 128;
+    const bubbleCount = isMobile ? 12 : 32;
     const list: Bubble[] = [];
     for (let i = 0; i < bubbleCount; i++) {
       list.push({
