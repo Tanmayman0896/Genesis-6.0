@@ -162,26 +162,30 @@ export default function PartnersPage() {
       {/* Partner Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 w-full max-w-6xl mx-auto mt-8">
         {PARTNERS_DATA.map((partner, idx) => (
-          <a
-            key={idx}
-            href={partner.website}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="group relative flex flex-col justify-between p-8 rounded-2xl bg-[#0d1b35] border border-white/10 hover:border-blue-400/50 transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl hover:shadow-blue-500/10 min-h-[200px]"
-          >
-            {/* Corner Decorative Accent */}
-            <div className="absolute top-0 right-0 w-8 h-8 border-t-2 border-r-2 border-transparent group-hover:border-blue-400/30 rounded-tr-2xl transition-all duration-300 pointer-events-none" />
+          <div key={idx} className="relative group flex flex-col">
+            {/* Ambient colorful card-specific glow behind the glass card */}
+            <div className="absolute -inset-1.5 rounded-3xl bg-gradient-to-r from-pink-500/10 via-purple-500/15 to-blue-500/15 opacity-0 group-hover:opacity-100 blur-2xl transition-all duration-700 pointer-events-none -z-10" />
+            
+            <a
+              href={partner.website}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="relative flex flex-col justify-between p-8 rounded-2xl bg-white/[0.05] backdrop-blur-[32px] border border-white/[0.08] shadow-[inset_0_1px_1.5px_rgba(255,255,255,0.22),_inset_0_-1px_1.5px_rgba(0,0,0,0.18),_0_12px_32px_rgba(0,0,0,0.25)] hover:border-white/20 hover:bg-white/[0.09] transition-all duration-500 hover:-translate-y-1 hover:shadow-[inset_0_1px_2px_rgba(255,255,255,0.38),_inset_0_-1px_1.5px_rgba(0,0,0,0.1),_0_24px_50px_rgba(30,144,255,0.22)] min-h-[200px] flex-1"
+            >
+              {/* Corner Decorative Accent */}
+              <div className="absolute top-0 right-0 w-8 h-8 border-t-2 border-r-2 border-transparent group-hover:border-white/20 rounded-tr-2xl transition-all duration-300 pointer-events-none" />
 
-            {/* Logo Container */}
-            <div className="flex-1 flex items-center justify-center w-full">
-              {partner.logo}
-            </div>
+              {/* Logo Container */}
+              <div className="flex-1 flex items-center justify-center w-full">
+                {partner.logo}
+              </div>
 
-            {/* Bottom Row: Name */}
-            <div className="w-full mt-6 text-center text-[18px] font-bold text-blue-100 group-hover:text-white transition-colors duration-300">
-              <span style={FONT}>{partner.name}</span>
-            </div>
-          </a>
+              {/* Bottom Row: Name */}
+              <div className="w-full mt-6 text-center text-[18px] font-bold text-blue-100 group-hover:text-white transition-colors duration-300">
+                <span style={FONT}>{partner.name}</span>
+              </div>
+            </a>
+          </div>
         ))}
       </div>
 
