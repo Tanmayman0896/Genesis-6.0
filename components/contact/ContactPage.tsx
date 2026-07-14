@@ -61,19 +61,6 @@ export default function ContactPage() {
               {/* Quick info list */}
               <div className="flex flex-col gap-5 mt-4">
                 
-                <div className="flex items-start gap-4 group">
-                  <div className="w-12 h-12 rounded-xl bg-blue-500/10 border border-blue-500/20 flex items-center justify-center text-blue-400 group-hover:bg-blue-500 group-hover:text-white transition-all duration-300 shadow-md">
-                    <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-                    </svg>
-                  </div>
-                  <div>
-                    <h4 className="text-xs uppercase tracking-wider font-bold text-blue-400 font-absans">Email Us</h4>
-                    <a href="mailto:support@ieeemuj.com" className="text-white hover:text-blue-300 transition-colors text-base font-semibold font-sans mt-0.5 block">
-                      support@ieeemuj.com
-                    </a>
-                  </div>
-                </div>
 
                 <div className="flex items-start gap-4 group">
                   <div className="w-12 h-12 rounded-xl bg-blue-500/10 border border-blue-500/20 flex items-center justify-center text-blue-400 group-hover:bg-blue-500 group-hover:text-white transition-all duration-300 shadow-md">
@@ -93,6 +80,36 @@ export default function ContactPage() {
                 </div>
 
               </div>
+
+              {/* Chairperson Contacts Card */}
+              <div className="mt-6 p-6 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-md shadow-xl flex flex-col gap-4">
+                <h3 className="text-lg font-bold font-mirava-sans text-white tracking-tight">
+                  FOR MORE DETAILS CALL US
+                </h3>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-6">
+                  <div>
+                    <p className="text-sm text-blue-400 font-bold font-sans">Tanmoy Mandal</p>
+                    <p className="text-[15px] text-white font-bold font-sans mt-0.5">+91 83401 57213</p>
+                    <p className="text-xs text-blue-100/50 font-light font-sans mt-0.5">(Chairperson-IEEE CS MUJ)</p>
+                  </div>
+                  <div>
+                    <p className="text-sm text-blue-400 font-bold font-sans">Arunanshu Basu</p>
+                    <p className="text-[15px] text-white font-bold font-sans mt-0.5">+91 78694 86315</p>
+                    <p className="text-xs text-blue-100/50 font-light font-sans mt-0.5">(Chairperson-IEEE SB MUJ)</p>
+                  </div>
+                  <div>
+                    <p className="text-sm text-blue-400 font-bold font-sans">Palakshi Sirsa</p>
+                    <p className="text-[15px] text-white font-bold font-sans mt-0.5">+91 62665 63992</p>
+                    <p className="text-xs text-blue-100/50 font-light font-sans mt-0.5">(Chairperson-IEEE WIE MUJ)</p>
+                  </div>
+                  <div>
+                    <p className="text-sm text-blue-400 font-bold font-sans">Shubhanshu Dixit</p>
+                    <p className="text-[15px] text-white font-bold font-sans mt-0.5">+91 85215 42280</p>
+                    <p className="text-xs text-blue-100/50 font-light font-sans mt-0.5">(Chairperson-IEEE CIS MUJ)</p>
+                  </div>
+                </div>
+              </div>
+
             </div>
           </div>
 
@@ -150,7 +167,7 @@ export default function ContactPage() {
                 By Train
               </h3>
               <p className="text-[15px] leading-relaxed font-sans text-blue-100/70">
-                Book tickets from <span className="text-amber-400 font-semibold">IRCTC</span>: The campus is <span className="text-white font-semibold">25kms from Jaipur Railway Terminal</span> and auto fare is usually around <span className="text-white font-semibold">₹500-₹600</span>.
+                Book tickets from <span className="text-amber-400 font-semibold">IRCTC</span>: The campus is <span className="text-white font-semibold">25kms from Jaipur Railway Terminal</span> and auto fare is usually around <span className="text-white font-semibold">₹600-₹700</span>.
               </p>
             </div>
             {/* Subtle glow border effect */}
@@ -184,7 +201,7 @@ export default function ContactPage() {
                 By Bus
               </h3>
               <p className="text-[15px] leading-relaxed font-sans text-blue-100/70">
-                Only suggested if you live around <span className="text-orange-400 font-semibold">8-10hrs</span> from Jaipur. <span className="text-white font-semibold">Sindhi Camp Bus Stand</span> is around 30km from the venue, auto fare is usually around <span className="text-white font-semibold">₹400-₹450</span>.
+                Only suggested if you live around <span className="text-orange-400 font-semibold">8-10hrs</span> from Jaipur. <span className="text-white font-semibold">Sindhi Camp Bus Stand</span> is around 30km from the venue, auto fare is usually around <span className="text-white font-semibold">₹600-₹750</span>.
               </p>
             </div>
             {/* Subtle glow border effect */}
