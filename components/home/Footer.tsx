@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
@@ -18,11 +18,13 @@ interface Bubble {
 export default function Footer() {
   const pathname = usePathname();
   const [bubbles, setBubbles] = useState<Bubble[]>([]);
+  const [isVisible, setIsVisible] = useState(false);
+  const footerRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
     if (pathname === "/gallery") return;
     const isMobile = window.innerWidth < 768;
-    const bubbleCount = isMobile ? 12 : 32;
+    const bubbleCount = isMobile ? 8 : 16;
     const list: Bubble[] = [];
     for (let i = 0; i < bubbleCount; i++) {
       list.push({
@@ -37,25 +39,43 @@ export default function Footer() {
     setBubbles(list);
   }, [pathname]);
 
+  useEffect(() => {
+    if (pathname === "/gallery") return;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setIsVisible(entry.isIntersecting);
+      },
+      { rootMargin: "150px" } // trigger bubble rendering slightly before scroll
+    );
+    if (footerRef.current) {
+      observer.observe(footerRef.current);
+    }
+    return () => {
+      observer.disconnect();
+    };
+  }, [pathname]);
+
   if (pathname === "/gallery") return null;
 
   return (
-    <footer className={styles.footer}>
-      <div className={styles.bubbles}>
-        {bubbles.map((b) => (
-          <div
-            key={b.id}
-            className={styles.bubble}
-            style={{
-              "--size": `${b.size}rem`,
-              "--distance": `${b.distance}rem`,
-              "--position": `${b.position}%`,
-              "--time": `${b.time}s`,
-              "--delay": `${b.delay}s`,
-            } as React.CSSProperties}
-          />
-        ))}
-      </div>
+    <footer ref={footerRef} className={styles.footer}>
+      {isVisible && (
+        <div className={styles.bubbles}>
+          {bubbles.map((b) => (
+            <div
+              key={b.id}
+              className={styles.bubble}
+              style={{
+                "--size": `${b.size}rem`,
+                "--distance": `${b.distance}rem`,
+                "--position": `${b.position}%`,
+                "--time": `${b.time}s`,
+                "--delay": `${b.delay}s`,
+              } as React.CSSProperties}
+            />
+          ))}
+        </div>
+      )}
       <div className={styles.content}>
 
 

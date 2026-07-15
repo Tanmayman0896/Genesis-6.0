@@ -34,11 +34,44 @@
 }
 
 body {
-  background: linear-gradient(135deg, #07162c 0%, #0e2954 35%, #1f5194 70%, #60a5fa 100%) fixed;
+  background: transparent;
   color: #ededed;
   font-family: var(--font-outfit), var(--font-geist-sans), system-ui, -apple-system, sans-serif;
   overscroll-behavior-x: none; /* Disable trackpad swipe back/forward navigation */
   overflow-x: hidden;
+}
+
+.fixed-bg {
+  position: fixed;
+  inset: 0;
+  background: linear-gradient(135deg, #07162c 0%, #0e2954 35%, #1f5194 70%, #60a5fa 100%);
+  z-index: -10;
+  pointer-events: none;
+  transform: translate3d(0, 0, 0);
+  will-change: transform;
+}
+
+/* GPU Acceleration utility classes for heavy background blurs and animated gradients */
+.gpu-accelerated {
+  transform: translate3d(0, 0, 0);
+  will-change: transform;
+  backface-visibility: hidden;
+}
+
+.glow-blur-optimized {
+  will-change: transform, filter;
+  transform: translate3d(-50%, -50%, 0);
+  backface-visibility: hidden;
+}
+
+.glow-blur-optimized-positive {
+  will-change: transform, filter;
+  transform: translate3d(50%, 50%, 0);
+  backface-visibility: hidden;
+}
+
+.pause-animations, .pause-animations * {
+  animation-play-state: paused !important;
 }
 
 /* Hide scrollbars globally across all browsers */

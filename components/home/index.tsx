@@ -196,7 +196,7 @@ export default function Home() {
       {/* Opportunities Section */}
       <section className="opportunities-section w-full max-w-7xl mx-auto px-6 py-24 md:py-32 relative z-10 flex flex-col items-center text-white">
         {/* Glow Effects */}
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-blue-500/10 rounded-full blur-[160px] pointer-events-none -z-10" />
+        <div className="glow-blur-optimized absolute top-1/2 left-1/2 w-[600px] h-[600px] bg-blue-500/10 rounded-full blur-[160px] pointer-events-none -z-10" />
 
         {/* Section Header */}
         <div className="text-center max-w-5xl mb-16 md:mb-24">

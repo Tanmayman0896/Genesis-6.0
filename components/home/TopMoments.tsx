@@ -63,6 +63,11 @@ const STRING_3_SEGMENTS = [
   { p0: { x: 790, y: 598 }, p1: { x: 895, y: 629 }, p2: { x: 1000, y: 660 } }
 ];
 
+// Pre-calculate bulb coordinates once to avoid heavy Bezier calculations during every render/update
+const STRING_1_POINTS = getPointsForSegments(STRING_1_SEGMENTS, 85);
+const STRING_2_POINTS = getPointsForSegments(STRING_2_SEGMENTS, 85);
+const STRING_3_POINTS = getPointsForSegments(STRING_3_SEGMENTS, 85);
+
 const CARD_IMAGES = {
   card1: [
     "https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=600&auto=format&fit=crop&q=80",
@@ -129,6 +134,18 @@ function MomentCardImage({ images, alt, priority = false }: { images: string[]; 
 
 export default function TopMoments() {
   const containerRef = useRef<HTMLDivElement>(null);
+  const [isVisible, setIsVisible] = useState(false);
+  const swaysRef = useRef<gsap.core.Tween[]>([]);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(([entry]) => {
+      setIsVisible(entry.isIntersecting);
+    }, { rootMargin: "100px" });
+    if (containerRef.current) {
+      observer.observe(containerRef.current);
+    }
+    return () => observer.disconnect();
+  }, []);
 
   useGSAP(() => {
     try {
@@ -136,7 +153,7 @@ export default function TopMoments() {
 
       const startSway = (card: HTMLElement, idx: number) => {
         const baseRot = defaultRotations[idx] || 0;
-        gsap.to(card, {
+        const tween = gsap.to(card, {
           rotation: baseRot + (idx % 2 === 0 ? 1.5 : -1.5),
           y: "+=6",
           duration: 2.2 + idx * 0.3,
@@ -145,6 +162,7 @@ export default function TopMoments() {
           ease: "sine.inOut",
           overwrite: "auto"
         });
+        swaysRef.current[idx] = tween;
       };
 
       // Entrance animation for desktop cards
@@ -228,12 +246,26 @@ export default function TopMoments() {
         }
       );
 
+      const observer = new IntersectionObserver(([entry]) => {
+        if (entry.isIntersecting) {
+          swaysRef.current.forEach(t => t && t.play());
+        } else {
+          swaysRef.current.forEach(t => t && t.pause());
+        }
+      }, { threshold: 0.01 });
+
+      if (containerRef.current) {
+        observer.observe(containerRef.current);
+      }
+
       // Return cleanup function to remove event listeners and prevent memory leaks
       return () => {
+        observer.disconnect();
         cards.forEach((card) => {
           if ((card as any)._enterHandler) card.removeEventListener("mouseenter", (card as any)._enterHandler);
           if ((card as any)._leaveHandler) card.removeEventListener("mouseleave", (card as any)._leaveHandler);
         });
+        swaysRef.current.forEach(t => t && t.kill());
       };
     } catch (e) {
       console.warn("GSAP Animations could not be loaded", e);
@@ -241,17 +273,22 @@ export default function TopMoments() {
   }, { scope: containerRef });
 
   return (
-    <section ref={containerRef} className="moments-section w-full max-w-6xl mx-auto px-6 py-20 md:py-28 relative z-10 flex flex-col items-center">
+    <section ref={containerRef} className={`moments-section w-full max-w-6xl mx-auto px-6 py-20 md:py-28 relative z-10 flex flex-col items-center ${!isVisible ? "pause-animations" : ""}`}>
       {/* Background Ambient Glow */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[320px] sm:w-[600px] h-[320px] sm:h-[600px] bg-blue-500/10 rounded-full blur-[100px] sm:blur-[160px] pointer-events-none -z-20" />
-
+      <div className="glow-blur-optimized absolute top-1/2 left-1/2 w-[320px] sm:w-[600px] h-[320px] sm:h-[600px] bg-blue-500/10 rounded-full blur-[100px] sm:blur-[160px] pointer-events-none -z-20" />
       {/* Mobile Fairy Lights (Vertical hanging strings on the sides) */}
       <div className="absolute inset-0 w-full h-full pointer-events-none -z-10 md:hidden overflow-hidden">
         {/* Left String */}
         <div className="absolute left-[6%] sm:left-[12%] top-0 bottom-0 w-[1px] border-l border-dashed border-slate-600/50 flex flex-col justify-around py-16">
           {Array.from({ length: 10 }).map((_, i) => (
             <div key={`left-bulb-${i}`} className="relative w-0 h-0 flex items-center justify-center">
-              <div className="absolute w-4.5 h-4.5 bg-amber-400/25 rounded-full blur-[3.5px] animate-pulse" style={{ animationDelay: `${i * 200}ms` }} />
+              <div 
+                className="absolute w-6 h-6 rounded-full animate-pulse" 
+                style={{ 
+                  animationDelay: `${i * 200}ms`,
+                  background: "radial-gradient(circle, rgba(251, 191, 36, 0.5) 0%, rgba(251, 191, 36, 0) 70%)"
+                }} 
+              />
               <div className="absolute w-1.5 h-1.5 bg-amber-100 rounded-full border border-amber-200/50" />
             </div>
           ))}
@@ -260,7 +297,13 @@ export default function TopMoments() {
         <div className="absolute right-[6%] sm:right-[12%] top-0 bottom-0 w-[1px] border-l border-dashed border-slate-600/50 flex flex-col justify-around py-16">
           {Array.from({ length: 10 }).map((_, i) => (
             <div key={`right-bulb-${i}`} className="relative w-0 h-0 flex items-center justify-center">
-              <div className="absolute w-4.5 h-4.5 bg-amber-400/25 rounded-full blur-[3.5px] animate-pulse" style={{ animationDelay: `${i * 250}ms` }} />
+              <div 
+                className="absolute w-6 h-6 rounded-full animate-pulse" 
+                style={{ 
+                  animationDelay: `${i * 250}ms`,
+                  background: "radial-gradient(circle, rgba(251, 191, 36, 0.5) 0%, rgba(251, 191, 36, 0) 70%)"
+                }} 
+              />
               <div className="absolute w-1.5 h-1.5 bg-amber-100 rounded-full border border-amber-200/50" />
             </div>
           ))}
@@ -280,6 +323,14 @@ export default function TopMoments() {
         
         {/* Fairy Lights (3 Drooping Strings passing EXACTLY through top center clothespins) */}
         <svg className="absolute inset-0 w-full h-full text-blue-400/20 pointer-events-none -z-10" fill="none" viewBox="0 0 1000 900" preserveAspectRatio="none">
+          <defs>
+            <radialGradient id="bulb-glow" cx="50%" cy="50%" r="50%">
+              <stop offset="0%" stopColor="#fbbf24" stopOpacity="0.85" />
+              <stop offset="50%" stopColor="#fbbf24" stopOpacity="0.25" />
+              <stop offset="100%" stopColor="#fbbf24" stopOpacity="0" />
+            </radialGradient>
+          </defs>
+
           {/* Hanging String 1 (Top) - Passes exactly through (190, 60) and (810, 45) */}
           <path d="M 0,100 Q 95,80 190,60 Q 500,240 810,45 Q 905,87 1000,130" stroke="#475569" strokeWidth="1.5" />
           
@@ -289,31 +340,30 @@ export default function TopMoments() {
           {/* Hanging String 3 (Bottom) - Passes exactly through (470, 652) and (790, 598) */}
           <path d="M 0,690 Q 235,671 470,652 Q 630,720 790,598 Q 895,629 1000,660" stroke="#475569" strokeWidth="1.5" />
 
-          {/* Glowing Bulbs on String 1 (using exact wire segment coordinates) */}
-          {getPointsForSegments(STRING_1_SEGMENTS, 85).map((pt, i) => (
+          {/* Glowing Bulbs on String 1 (using pre-calculated points) */}
+          {STRING_1_POINTS.map((pt, i) => (
             <g key={`s1-${i}`}>
-              <circle cx={pt.x} cy={pt.y} r="8" className="fill-amber-400/30 blur-[3px] animate-pulse" style={{ animationDelay: `${i * 180}ms` }} />
+              <circle cx={pt.x} cy={pt.y} r="12" fill="url(#bulb-glow)" className="animate-pulse" style={{ animationDelay: `${i * 180}ms` }} />
               <circle cx={pt.x} cy={pt.y} r="3" className="fill-amber-100" />
             </g>
           ))}
 
-          {/* Glowing Bulbs on String 2 (using exact wire segment coordinates) */}
-          {getPointsForSegments(STRING_2_SEGMENTS, 85).map((pt, i) => (
+          {/* Glowing Bulbs on String 2 (using pre-calculated points) */}
+          {STRING_2_POINTS.map((pt, i) => (
             <g key={`s2-${i}`}>
-              <circle cx={pt.x} cy={pt.y} r="8" className="fill-amber-400/30 blur-[3px] animate-pulse" style={{ animationDelay: `${i * 220}ms` }} />
+              <circle cx={pt.x} cy={pt.y} r="12" fill="url(#bulb-glow)" className="animate-pulse" style={{ animationDelay: `${i * 220}ms` }} />
               <circle cx={pt.x} cy={pt.y} r="3" className="fill-amber-100" />
             </g>
           ))}
 
-          {/* Glowing Bulbs on String 3 (using exact wire segment coordinates) */}
-          {getPointsForSegments(STRING_3_SEGMENTS, 85).map((pt, i) => (
+          {/* Glowing Bulbs on String 3 (using pre-calculated points) */}
+          {STRING_3_POINTS.map((pt, i) => (
             <g key={`s3-${i}`}>
-              <circle cx={pt.x} cy={pt.y} r="8" className="fill-amber-400/30 blur-[3px] animate-pulse" style={{ animationDelay: `${i * 150}ms` }} />
+              <circle cx={pt.x} cy={pt.y} r="12" fill="url(#bulb-glow)" className="animate-pulse" style={{ animationDelay: `${i * 150}ms` }} />
               <circle cx={pt.x} cy={pt.y} r="3" className="fill-amber-100" />
             </g>
           ))}
         </svg>
-
         {/* Floating organic background blob */}
         <div className="absolute bottom-[30%] -left-12 w-48 h-48 text-blue-500/10 pointer-events-none -z-10 rotate-45">
           <svg viewBox="0 0 200 200" fill="currentColor" className="w-full h-full">

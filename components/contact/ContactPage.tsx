@@ -29,8 +29,8 @@ export default function ContactPage() {
   return (
     <div className="relative min-h-screen w-full bg-transparent overflow-x-hidden pt-28 pb-20 px-6 md:px-12 flex flex-col items-center">
       {/* Background ambient glow shapes */}
-      <div className="absolute top-1/4 left-1/4 -translate-x-1/2 -translate-y-1/2 w-[350px] sm:w-[500px] h-[350px] sm:h-[500px] bg-blue-600/10 rounded-full blur-[120px] pointer-events-none -z-10 animate-pulse" />
-      <div className="absolute bottom-1/4 right-1/4 translate-x-1/2 translate-y-1/2 w-[400px] sm:w-[600px] h-[400px] sm:h-[600px] bg-purple-600/10 rounded-full blur-[140px] pointer-events-none -z-10" />
+      <div className="glow-blur-optimized absolute top-1/4 left-1/4 w-[350px] sm:w-[500px] h-[350px] sm:h-[500px] bg-blue-600/10 rounded-full blur-[120px] pointer-events-none -z-10 animate-pulse" />
+      <div className="glow-blur-optimized-positive absolute bottom-1/4 right-1/4 w-[400px] sm:w-[600px] h-[400px] sm:h-[600px] bg-purple-600/10 rounded-full blur-[140px] pointer-events-none -z-10" />
 
       {/* Main Container */}
       <div className="w-full max-w-7xl flex flex-col gap-16 md:gap-24 relative z-10">
@@ -116,7 +116,7 @@ export default function ContactPage() {
           {/* Right Column: 3D Mascot Canvas */}
           <div className="lg:col-span-7 flex items-center justify-center relative w-full aspect-square max-w-[500px] sm:max-w-[650px] mx-auto z-10">
             {/* Soft decorative glow behind the mascot */}
-            <div className="absolute inset-0 bg-blue-500/5 rounded-full blur-[80px] pointer-events-none" />
+            <div className="gpu-accelerated absolute inset-0 bg-blue-500/5 rounded-full blur-[80px] pointer-events-none" />
             <MascotCanvas />
           </div>
 

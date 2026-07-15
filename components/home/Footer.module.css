@@ -15,16 +15,23 @@
   height: 1rem;
   background: var(--footer-background);
   filter: url("#blob");
+  transform: translate3d(0, 0, 0);
+  backface-visibility: hidden;
+  will-change: transform;
 }
 
 .bubble {
   position: absolute;
   left: var(--position, 50%);
+  bottom: -4rem;
   background: var(--footer-background);
   border-radius: 100%;
-  animation: bubble-size var(--time, 4s) ease-in infinite var(--delay, 0s),
-    bubble-move var(--time, 4s) ease-in infinite var(--delay, 0s);
-  transform: translate(-50%, 100%);
+  width: var(--size, 4rem);
+  height: var(--size, 4rem);
+  transform: translate3d(-50%, 100%, 0) scale(1);
+  will-change: transform;
+  backface-visibility: hidden;
+  animation: bubble-float var(--time, 4s) ease-in infinite var(--delay, 0s);
 }
 
 .content {
@@ -293,22 +300,14 @@
   }
 }
 
-@keyframes bubble-size {
-  0%, 75% {
-    width: var(--size, 4rem);
-    height: var(--size, 4rem);
-  }
-  100% {
-    width: 0rem;
-    height: 0rem;
-  }
-}
-
-@keyframes bubble-move {
+@keyframes bubble-float {
   0% {
-    bottom: -4rem;
+    transform: translate3d(-50%, 100%, 0) scale(1);
+  }
+  75% {
+    transform: translate3d(-50%, calc(100% - var(--distance, 10rem) - 4rem), 0) scale(1);
   }
   100% {
-    bottom: var(--distance, 10rem);
+    transform: translate3d(-50%, calc(100% - var(--distance, 10rem) - 4rem), 0) scale(0);
   }
 }

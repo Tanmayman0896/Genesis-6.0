@@ -57,11 +57,29 @@ const LogoRow = () => (
 
 export default function LogoMarquee() {
   const pathname = usePathname();
+  const containerRef = React.useRef<HTMLDivElement>(null);
+  const [isVisible, setIsVisible] = React.useState(false);
+
+  React.useEffect(() => {
+    if (pathname === "/gallery") return;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setIsVisible(entry.isIntersecting);
+      },
+      { rootMargin: "100px" }
+    );
+    if (containerRef.current) {
+      observer.observe(containerRef.current);
+    }
+    return () => {
+      observer.disconnect();
+    };
+  }, [pathname]);
 
   if (pathname === "/gallery") return null;
 
   return (
-    <div className="w-full bg-transparent py-6 mb-16 relative overflow-hidden select-none z-10">
+    <div ref={containerRef} className="w-full bg-transparent py-6 mb-16 relative overflow-hidden select-none z-10">
       <style>{`
         @keyframes marquee-comp {
           0% { transform: translateX(0); }
@@ -74,6 +92,9 @@ export default function LogoMarquee() {
         .animate-marquee-container-comp:hover {
           animation-play-state: paused;
         }
+        .animate-marquee-paused {
+          animation-play-state: paused !important;
+        }
       `}</style>
       
       <div 
@@ -83,7 +104,7 @@ export default function LogoMarquee() {
           WebkitMaskImage: "linear-gradient(to right, transparent, white 15%, white 85%, transparent)"
         }}
       >
-        <div className="flex w-max gap-20 sm:gap-28 animate-marquee-container-comp">
+        <div className={`flex w-max gap-20 sm:gap-28 animate-marquee-container-comp ${!isVisible ? "animate-marquee-paused" : ""}`}>
           <LogoRow />
           <LogoRow />
           <LogoRow />
