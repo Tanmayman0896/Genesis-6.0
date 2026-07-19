@@ -6,6 +6,7 @@ import "@fontsource/google-sans/index.css";
 import "@fontsource/google-sans/500.css";
 import "@fontsource/google-sans/700.css";
 import Navbar from "../components/home/Navbar";
+import NavbarFadeOverlay from "../components/home/NavbarFadeOverlay";
 import Footer from "../components/home/Footer";
 import LogoMarquee from "../components/home/LogoMarquee";
 import SmoothScrollProvider from "../components/providers/SmoothScrollProvider";
@@ -75,6 +76,7 @@ export default function RootLayout({
         <div className="fixed-bg" />
         <SmoothScrollProvider>
           <Navbar />
+          <NavbarFadeOverlay />
           {children}
           <LogoMarquee />
           <Footer />
