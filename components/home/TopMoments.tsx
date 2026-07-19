@@ -313,7 +313,7 @@ export default function TopMoments() {
       {/* Section Header */}
       <div className="text-center max-w-3xl mb-1 sm:mb-1">
         
-        <h2 className="text-[39px] md:text-[63px] font-extrabold tracking-tight font-mirava-sans bg-gradient-to-r from-white via-blue-100 to-blue-300 bg-clip-text text-transparent uppercase">
+        <h2 id="our-moments-title" className="text-[39px] md:text-[63px] font-extrabold tracking-tight font-mirava-sans bg-gradient-to-r from-white via-blue-100 to-blue-300 bg-clip-text text-transparent uppercase">
           OUR MOMENTS
         </h2>
       </div>

@@ -6,7 +6,10 @@ import StatsSection from "./StatsSection";
 import TopMoments from "./TopMoments";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Preloader from "./Preloader";
+
+gsap.registerPlugin(ScrollTrigger);
 
 // Sleek fallback component that matches MascotCanvas aspect ratios and UI to prevent layout shifts (CLS)
 function MascotFallback() {
@@ -123,6 +126,8 @@ export default function Home() {
   const containerRef = useRef<HTMLDivElement>(null);
   const canvasParentRef = useRef<HTMLDivElement>(null);
   const bgTextRef = useRef<HTMLDivElement>(null);
+  const mascotFixedRef = useRef<HTMLDivElement>(null);
+  const mascotScrollWrapperRef = useRef<HTMLDivElement>(null);
 
   const [progress, setProgress] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
@@ -135,7 +140,7 @@ export default function Home() {
   useGSAP(() => {
     if (isLoading) return;
 
-    // Entrance animation for the mascot canvas synchronized with curtain slide
+    // Entrance animation for the mascot canvas (innermost)
     const delay = 0.35;
     gsap.fromTo(
       canvasParentRef.current,
@@ -149,17 +154,91 @@ export default function Home() {
       { opacity: 0, y: 50, scale: 0.95 },
       { opacity: 1, y: 0, scale: 1, duration: 1.5, ease: "power3.out", delay: delay + 0.15 }
     );
+
+    // Scroll-driven timeline
+    const tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: containerRef.current,
+        start: "top top",
+        endTrigger: "#our-moments-title",
+        end: "center center",
+        scrub: 1.2,
+        pin: mascotFixedRef.current,
+        pinSpacing: false,
+        invalidateOnRefresh: true,
+      }
+    });
+
+    // 1. Scale & Y Scroll position on mascotScrollWrapperRef
+    tl.fromTo(
+      mascotScrollWrapperRef.current,
+      {
+        "--scroll-scale": 1,
+        "--scroll-y": "0px",
+        "--scroll-x": "0px",
+      },
+      {
+        "--scroll-scale": () => window.innerWidth < 640 ? 0.35 : 0.45,
+        "--scroll-y": () => window.innerWidth < 640 ? "-80px" : "-120px",
+        "--scroll-x": () => {
+          if (window.innerWidth < 640) {
+            return "-130px"; // Shift more left of centered column on mobile
+          } else if (window.innerWidth < 1024) {
+            return "-37vw"; // Shift more left of Sponsors column on tablet
+          } else {
+            return "-42vw"; // Shift more left of Sponsors column on desktop
+          }
+        },
+        duration: 6,
+        ease: "power1.inOut",
+      }
+    )
+      .to(mascotScrollWrapperRef.current, {
+        duration: 2.5, // Hold in stats section
+      })
+      .to(mascotScrollWrapperRef.current, {
+        "--scroll-scale": () => window.innerWidth < 640 ? 0.55 : 0.65,
+        "--scroll-y": "0px",
+        "--scroll-x": "0px",
+        duration: 1.5,
+        ease: "power1.inOut",
+      });
   }, { dependencies: [isLoading], scope: containerRef });
 
   return (
-    <div 
+    <div
       ref={containerRef}
       className="relative w-full flex flex-col items-center overflow-x-hidden bg-transparent"
     >
-      {/* Hero Section with Mascot */}
+      {/* Pin-able Wrapper for 3D Mascot */}
+      <div
+        ref={mascotFixedRef}
+        className="absolute inset-x-0 top-0 pointer-events-none z-[5] flex items-center justify-center w-full"
+        style={{ height: "100vh", left: 0, width: "100%" }}
+      >
+        {/* Scroll Animation Wrapper (Scale & Y) */}
+        <div
+          ref={mascotScrollWrapperRef}
+          className="w-full h-full flex items-center justify-center"
+          style={{
+            transform: "translate3d(var(--scroll-x, 0px), var(--scroll-y, 0px), 0) scale(var(--scroll-scale, 1))",
+          }}
+        >
+          {/* Center 3D Mascot Canvas Wrapper */}
+          <div
+            ref={canvasParentRef}
+            className="w-[115vw] sm:w-full max-w-[500px] sm:max-w-[800px] aspect-square shrink-0 flex items-center justify-center relative z-10"
+            style={{ opacity: 0 }}
+          >
+            <MascotCanvas onProgress={setProgress} onLoaded={handleLoaded} />
+          </div>
+        </div>
+      </div>
+
+      {/* Hero Section */}
       <div className="relative min-h-screen w-full flex items-center justify-center overflow-hidden">
         {/* Background Giant Text */}
-        <div 
+        <div
           ref={bgTextRef}
           className="absolute inset-0 flex flex-col items-center justify-start pt-24 md:justify-center md:pt-0 select-none pointer-events-none z-0"
           style={{ opacity: 0 }}
@@ -167,15 +246,6 @@ export default function Home() {
           <h1 className="text-[13vw] sm:text-[15vw] md:text-[19vw] font-black tracking-widest font-absans bg-gradient-to-b from-white/90 to-white/10 bg-clip-text text-transparent uppercase text-center leading-none">
             GENESIS 6.0
           </h1>
-        </div>
-
-        {/* Center 3D Mascot Canvas Wrapper */}
-        <div 
-          ref={canvasParentRef}
-          className="w-[115vw] sm:w-full max-w-[500px] sm:max-w-[800px] aspect-square shrink-0 flex items-center justify-center relative z-10"
-          style={{ opacity: 0 }}
-        >
-          <MascotCanvas onProgress={setProgress} onLoaded={handleLoaded} />
         </div>
       </div>
 
@@ -225,16 +295,16 @@ export default function Home() {
                   {opp.icon}
                 </div>
               </div>
-              
+
               <div>
                 {/* Card Title */}
                 <h3 className="text-lg sm:text-xl font-black font-sans tracking-tight mb-1.5 lowercase leading-tight">
                   {opp.title}
                 </h3>
-                
+
                 {/* Divider Line */}
                 <div className={`w-full border-t border-current/25 my-3`} />
-                
+
                 {/* Description Paragraph with Star Bullet */}
                 <p className="font-sans font-semibold text-[11px] sm:text-[13px] leading-relaxed flex items-start gap-1.5 opacity-90">
                   <span className="text-xs leading-none select-none">✦</span>
@@ -263,15 +333,15 @@ export default function Home() {
                     {opp.icon}
                   </div>
                 </div>
-                
+
                 {/* Card Title (lowercase) */}
                 <h3 className="text-2xl md:text-[27px] font-black font-sans tracking-tight mb-1 lowercase leading-tight">
                   {opp.title}
                 </h3>
-                
+
                 {/* Divider Line */}
                 <div className={`w-full border-t-2 ${opp.lineColor} my-4`} />
-                
+
                 {/* Description Paragraph with Star Bullet */}
                 <p className="font-sans font-semibold text-sm md:text-[15px] leading-relaxed mt-1 flex items-start gap-2">
                   <span className="text-base leading-none select-none">✦</span>

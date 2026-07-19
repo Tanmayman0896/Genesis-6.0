@@ -117,7 +117,7 @@ export default function ContactPage() {
           <div className="lg:col-span-7 flex items-center justify-center relative w-full aspect-square max-w-[500px] sm:max-w-[650px] mx-auto z-10">
             {/* Soft decorative glow behind the mascot */}
             <div className="gpu-accelerated absolute inset-0 bg-blue-500/5 rounded-full blur-[80px] pointer-events-none" />
-            <MascotCanvas />
+            <MascotCanvas page="contact" />
           </div>
 
         </div>
