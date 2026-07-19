@@ -11,6 +11,7 @@ export interface TeamMember {
   photo: string | null; // path relative to /public e.g. "/teams/events/john.jpg"
   linkedin?: string;
   github?: string;
+  instagram?: string;
   type: MemberType;
 }
 
@@ -23,10 +24,10 @@ export interface Team {
 // ─── Teams ────────────────────────────────────────────────────────────────────
 
 export const teamsData: Team[] = [
-  // ── Convenors & Directors (shown first on page open) ──────────────────────
+  // ── Convenors (Executive) ──────────────────────────────────────────────────
   {
     id: "convenors",
-    label: "Convenors & Directors",
+    label: "Convenors",
     members: [
       {
         id: "c1",
@@ -37,6 +38,14 @@ export const teamsData: Team[] = [
         github: "",
         type: "executive",
       },
+    ],
+  },
+
+  // ── Directors (Executive) ──────────────────────────────────────────────────
+  {
+    id: "directors",
+    label: "Directors",
+    members: [
       {
         id: "c2",
         name: "Director Name",
@@ -49,105 +58,10 @@ export const teamsData: Team[] = [
     ],
   },
 
-  // ── Events ────────────────────────────────────────────────────────────────
-  {
-    id: "events",
-    label: "Events",
-    members: [
-      {
-        id: "ev1",
-        name: "Member Name",
-        role: "Events Lead",
-        photo: null,
-        linkedin: "",
-        github: "",
-        type: "executive",
-      },
-      {
-        id: "ev2",
-        name: "Member Name",
-        role: "Events Core",
-        photo: null,
-        linkedin: "",
-        type: "core",
-      },
-    ],
-  },
-
-  // ── Marketing ─────────────────────────────────────────────────────────────
-  {
-    id: "marketing",
-    label: "Marketing",
-    members: [
-      {
-        id: "mk1",
-        name: "Member Name",
-        role: "Marketing Lead",
-        photo: null,
-        linkedin: "",
-        type: "executive",
-      },
-      {
-        id: "mk2",
-        name: "Member Name",
-        role: "Marketing Core",
-        photo: null,
-        linkedin: "",
-        type: "core",
-      },
-    ],
-  },
-
-  // ── Corporate ─────────────────────────────────────────────────────────────
-  {
-    id: "corporate",
-    label: "Corporate",
-    members: [
-      {
-        id: "cp1",
-        name: "Member Name",
-        role: "Corporate Lead",
-        photo: null,
-        linkedin: "",
-        type: "executive",
-      },
-      {
-        id: "cp2",
-        name: "Member Name",
-        role: "Corporate Core",
-        photo: null,
-        type: "core",
-      },
-    ],
-  },
-
-  // ── Graphic Design ────────────────────────────────────────────────────────
-  {
-    id: "graphic-design",
-    label: "Graphic Design",
-    members: [
-      {
-        id: "gd1",
-        name: "Member Name",
-        role: "Design Lead",
-        photo: null,
-        linkedin: "",
-        type: "executive",
-      },
-      {
-        id: "gd2",
-        name: "Member Name",
-        role: "Design Core",
-        photo: null,
-        type: "core",
-      },
-    ],
-  },
-
-  // ── Technical ─────────────────────────────────────────────────────────────
+  // ── Web Development Team (formerly Technical) ──────────────────────────────
   {
     id: "technical",
-    label: "Technical",
+    label: "Web Development Team",
     members: [
       {
         id: "tc1",
@@ -156,7 +70,7 @@ export const teamsData: Team[] = [
         photo: null,
         linkedin: "",
         github: "",
-        type: "executive",
+        type: "core",
       },
       {
         id: "tc2",
@@ -169,56 +83,33 @@ export const teamsData: Team[] = [
     ],
   },
 
-  // ── Content ───────────────────────────────────────────────────────────────
+  // ── Graphic Design Team ───────────────────────────────────────────────────
   {
-    id: "content",
-    label: "Content",
+    id: "graphic-design",
+    label: "Graphic Design Team",
     members: [
       {
-        id: "co1",
+        id: "gd1",
         name: "Member Name",
-        role: "Content Lead",
+        role: "Design Lead",
         photo: null,
         linkedin: "",
-        type: "executive",
+        type: "core",
       },
       {
-        id: "co2",
+        id: "gd2",
         name: "Member Name",
-        role: "Content Core",
+        role: "Design Core",
         photo: null,
         type: "core",
       },
     ],
   },
 
-  // ── Media & Coverage ──────────────────────────────────────────────────────
-  {
-    id: "media",
-    label: "Media & Coverage",
-    members: [
-      {
-        id: "mc1",
-        name: "Member Name",
-        role: "Media Lead",
-        photo: null,
-        linkedin: "",
-        type: "executive",
-      },
-      {
-        id: "mc2",
-        name: "Member Name",
-        role: "Media Core",
-        photo: null,
-        type: "core",
-      },
-    ],
-  },
-
-  // ── Curations ─────────────────────────────────────────────────────────────
+  // ── Curations Team ─────────────────────────────────────────────────────────
   {
     id: "curations",
-    label: "Curations",
+    label: "Curations Team",
     members: [
       {
         id: "cu1",
@@ -226,7 +117,7 @@ export const teamsData: Team[] = [
         role: "Curations Lead",
         photo: null,
         linkedin: "",
-        type: "executive",
+        type: "core",
       },
       {
         id: "cu2",
@@ -238,79 +129,10 @@ export const teamsData: Team[] = [
     ],
   },
 
-  // ── Logistics ─────────────────────────────────────────────────────────────
-  {
-    id: "logistics",
-    label: "Logistics",
-    members: [
-      {
-        id: "lo1",
-        name: "Member Name",
-        role: "Logistics Lead",
-        photo: null,
-        linkedin: "",
-        type: "executive",
-      },
-      {
-        id: "lo2",
-        name: "Member Name",
-        role: "Logistics Core",
-        photo: null,
-        type: "core",
-      },
-    ],
-  },
-
-  // ── Hospitality ───────────────────────────────────────────────────────────
-  {
-    id: "hospitality",
-    label: "Hospitality",
-    members: [
-      {
-        id: "ho1",
-        name: "Member Name",
-        role: "Hospitality Lead",
-        photo: null,
-        linkedin: "",
-        type: "executive",
-      },
-      {
-        id: "ho2",
-        name: "Member Name",
-        role: "Hospitality Core",
-        photo: null,
-        type: "core",
-      },
-    ],
-  },
-
-  // ── Finance ───────────────────────────────────────────────────────────────
-  {
-    id: "finance",
-    label: "Finance",
-    members: [
-      {
-        id: "fi1",
-        name: "Member Name",
-        role: "Finance Lead",
-        photo: null,
-        linkedin: "",
-        type: "executive",
-      },
-      {
-        id: "fi2",
-        name: "Member Name",
-        role: "Finance Core",
-        photo: null,
-        type: "core",
-      },
-    ],
-  },
-
-  // ── Social Media ──────────────────────────────────────────────────────────
+  // ── Social Media Team ──────────────────────────────────────────────────────
   {
     id: "social-media",
-    label: "Social Media",
+    label: "Social Media Team",
     members: [
       {
         id: "sm1",
@@ -318,7 +140,7 @@ export const teamsData: Team[] = [
         role: "Social Media Lead",
         photo: null,
         linkedin: "",
-        type: "executive",
+        type: "core",
       },
       {
         id: "sm2",
@@ -330,10 +152,151 @@ export const teamsData: Team[] = [
     ],
   },
 
-  // ── Crafts ────────────────────────────────────────────────────────────────
+  // ── Media & Coverage Team ──────────────────────────────────────────────────
+  {
+    id: "media",
+    label: "Media & Coverage Team",
+    members: [
+      {
+        id: "mc1",
+        name: "Member Name",
+        role: "Media Lead",
+        photo: null,
+        linkedin: "",
+        type: "core",
+      },
+      {
+        id: "mc2",
+        name: "Member Name",
+        role: "Media Core",
+        photo: null,
+        type: "core",
+      },
+    ],
+  },
+
+  // ── Logistics Team ─────────────────────────────────────────────────────────
+  {
+    id: "logistics",
+    label: "Logistics Team",
+    members: [
+      {
+        id: "lo1",
+        name: "Member Name",
+        role: "Logistics Lead",
+        photo: null,
+        linkedin: "",
+        type: "core",
+      },
+      {
+        id: "lo2",
+        name: "Member Name",
+        role: "Logistics Core",
+        photo: null,
+        type: "core",
+      },
+    ],
+  },
+
+  // ── Events Team ───────────────────────────────────────────────────────────
+  {
+    id: "events",
+    label: "Events Team",
+    members: [
+      {
+        id: "ev1",
+        name: "Member Name",
+        role: "Events Lead",
+        photo: null,
+        linkedin: "",
+        github: "",
+        type: "core",
+      },
+      {
+        id: "ev2",
+        name: "Member Name",
+        role: "Events Core",
+        photo: null,
+        linkedin: "",
+        type: "core",
+      },
+    ],
+  },
+
+  // ── Marketing Team ────────────────────────────────────────────────────────
+  {
+    id: "marketing",
+    label: "Marketing Team",
+    members: [
+      {
+        id: "mk1",
+        name: "Member Name",
+        role: "Marketing Lead",
+        photo: null,
+        linkedin: "",
+        type: "core",
+      },
+      {
+        id: "mk2",
+        name: "Member Name",
+        role: "Marketing Core",
+        photo: null,
+        linkedin: "",
+        type: "core",
+      },
+    ],
+  },
+
+  // ── Corporate Team ────────────────────────────────────────────────────────
+  {
+    id: "corporate",
+    label: "Corporate Team",
+    members: [
+      {
+        id: "cp1",
+        name: "Member Name",
+        role: "Corporate Lead",
+        photo: null,
+        linkedin: "",
+        type: "core",
+      },
+      {
+        id: "cp2",
+        name: "Member Name",
+        role: "Corporate Core",
+        photo: null,
+        type: "core",
+      },
+    ],
+  },
+
+  // ── Hospitality Team ───────────────────────────────────────────────────────
+  {
+    id: "hospitality",
+    label: "Hospitality Team",
+    members: [
+      {
+        id: "ho1",
+        name: "Member Name",
+        role: "Hospitality Lead",
+        photo: null,
+        linkedin: "",
+        type: "core",
+      },
+      {
+        id: "ho2",
+        name: "Member Name",
+        role: "Hospitality Core",
+        photo: null,
+        type: "core",
+      },
+    ],
+  },
+
+  // ── Crafts Team ───────────────────────────────────────────────────────────
   {
     id: "crafts",
-    label: "Crafts",
+    label: "Crafts Team",
     members: [
       {
         id: "cr1",
@@ -341,7 +304,7 @@ export const teamsData: Team[] = [
         role: "Crafts Lead",
         photo: null,
         linkedin: "",
-        type: "executive",
+        type: "core",
       },
       {
         id: "cr2",
@@ -364,12 +327,58 @@ export const teamsData: Team[] = [
         role: "Flying Squad Lead",
         photo: null,
         linkedin: "",
-        type: "executive",
+        type: "core",
       },
       {
         id: "fs2",
         name: "Member Name",
         role: "Flying Squad Core",
+        photo: null,
+        type: "core",
+      },
+    ],
+  },
+
+  // ── Content Team ──────────────────────────────────────────────────────────
+  {
+    id: "content",
+    label: "Content Team",
+    members: [
+      {
+        id: "co1",
+        name: "Member Name",
+        role: "Content Lead",
+        photo: null,
+        linkedin: "",
+        type: "core",
+      },
+      {
+        id: "co2",
+        name: "Member Name",
+        role: "Content Core",
+        photo: null,
+        type: "core",
+      },
+    ],
+  },
+
+  // ── Finance Team ──────────────────────────────────────────────────────────
+  {
+    id: "finance",
+    label: "Finance Team",
+    members: [
+      {
+        id: "fi1",
+        name: "Member Name",
+        role: "Finance Lead",
+        photo: null,
+        linkedin: "",
+        type: "core",
+      },
+      {
+        id: "fi2",
+        name: "Member Name",
+        role: "Finance Core",
         photo: null,
         type: "core",
       },

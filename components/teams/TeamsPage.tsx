@@ -3,7 +3,7 @@
 import { useState, useMemo, useRef, useEffect } from "react";
 import Image from "next/image";
 import { teamsData, MemberType } from "./teamsData";
-import { LinkedInIcon, GitHubIcon, ChevronIcon, FilterIcon } from "./TeamIcons";
+import { LinkedInIcon, GitHubIcon, InstagramIcon, ChevronIcon, FilterIcon } from "./TeamIcons";
 
 // ─── Font helper ──────────────────────────────────────────────────────────────
 const FONT: React.CSSProperties = {
@@ -13,21 +13,22 @@ const FONT: React.CSSProperties = {
 
 const TEAM_FILTERS = [
   { id: "all", label: "All Teams" },
-  { id: "convenors", label: "Convenors & Directors" },
-  { id: "events", label: "Events" },
-  { id: "marketing", label: "Marketing" },
-  { id: "corporate", label: "Corporate" },
-  { id: "graphic-design", label: "Graphic Design" },
-  { id: "technical", label: "Technical" },
-  { id: "content", label: "Content" },
-  { id: "media", label: "Media & Coverage" },
-  { id: "curations", label: "Curations" },
-  { id: "logistics", label: "Logistics" },
-  { id: "hospitality", label: "Hospitality" },
-  { id: "finance", label: "Finance" },
-  { id: "social-media", label: "Social Media" },
-  { id: "crafts", label: "Crafts" },
+  { id: "convenors", label: "Convenors" },
+  { id: "directors", label: "Directors" },
+  { id: "technical", label: "Web Development Team" },
+  { id: "graphic-design", label: "Graphic Design Team" },
+  { id: "curations", label: "Curations Team" },
+  { id: "social-media", label: "Social Media Team" },
+  { id: "media", label: "Media & Coverage Team" },
+  { id: "logistics", label: "Logistics Team" },
+  { id: "events", label: "Events Team" },
+  { id: "marketing", label: "Marketing Team" },
+  { id: "corporate", label: "Corporate Team" },
+  { id: "hospitality", label: "Hospitality Team" },
+  { id: "crafts", label: "Crafts Team" },
   { id: "flying-squad", label: "Flying Squad" },
+  { id: "content", label: "Content Team" },
+  { id: "finance", label: "Finance Team" },
 ];
 
 const MEMBER_TYPES: { id: MemberType; label: string }[] = [
@@ -117,95 +118,101 @@ function MemberCard({ member }: { member: (typeof teamsData)[0]["members"][0] })
     .toUpperCase();
 
   return (
-    <div className="group flex flex-col rounded-2xl overflow-hidden bg-[#0d1b35] border border-white/10 hover:border-[#1a73e8]/60 transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl hover:shadow-[#1a73e8]/15">
-
-      {/* ── Photo area — takes most of the card ── */}
-      <div className="relative w-full aspect-[3/4] flex-shrink-0 bg-gradient-to-br from-[#1a3a5c] to-[#071525]">
+    <div
+      className="group flex flex-col items-center justify-between rounded-[28px] p-5 transition-all duration-300 hover:scale-[1.03] hover:shadow-[0_20px_50px_rgba(26,115,232,0.3)] border border-white/25 bg-gradient-to-b from-[#72b6e5]/50 to-[#5ea1d4]/50 backdrop-blur-lg"
+      style={{
+        boxShadow: "inset 0 1px 1px rgba(255,255,255,0.4), 0 8px 32px 0 rgba(0, 0, 0, 0.15)",
+      }}
+    >
+      {/* ── Photo area — padded, rounded container ── */}
+      <div className="relative w-full aspect-[4/5] flex-shrink-0 rounded-[20px] overflow-hidden bg-gradient-to-br from-[#539cd4] to-[#4083bb] border border-white/10 shadow-inner">
         {member.photo ? (
           <Image
             src={member.photo}
             alt={member.name}
             fill
-            className="object-cover object-top"
+            className="object-cover object-top transition-transform duration-500 group-hover:scale-105"
             sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 20vw"
           />
         ) : (
           <div className="w-full h-full flex items-center justify-center">
             <span
-              className="text-4xl font-bold"
-              style={{ ...FONT, color: "#1a73e8" }}
+              className="text-3xl md:text-4xl font-extrabold text-white drop-shadow-[0_2px_4px_rgba(0,0,0,0.2)]"
+              style={FONT}
             >
               {initials}
             </span>
           </div>
         )}
-        {/* Bottom gradient so text below reads cleanly */}
-        <div className="absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-[#0d1b35] to-transparent" />
       </div>
 
       {/* ── Name + Role ── */}
-      <div className="px-3 pt-3 pb-1 text-center">
+      <div className="w-full text-center mt-5 mb-4">
         <h3
-          className="text-white font-bold text-[16px] leading-snug truncate"
+          className="text-white font-extrabold text-[16px] md:text-[18px] leading-snug drop-shadow-[0_2px_4px_rgba(0,0,0,0.25)] tracking-wide"
           style={FONT}
         >
           {member.name}
         </h3>
         <p
-          className="text-[13px] font-semibold truncate mt-1"
-          style={{ color: "#1a73e8" }}
+          className="text-white/90 font-bold text-[12px] md:text-[13px] leading-snug mt-1.5 drop-shadow-[0_1px_2px_rgba(0,0,0,0.15)]"
+          style={FONT}
         >
           {member.role}
         </p>
       </div>
 
-      {/* ── Social buttons — ALWAYS visible at the bottom ── */}
-      <div className="flex items-center justify-center gap-2 px-3 pt-2 pb-4 mt-auto">
-        {/* LinkedIn — always rendered; only navigates when URL is set */}
-        {member.linkedin !== undefined && (
-          member.linkedin ? (
-            <a
-              href={member.linkedin}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center gap-2 px-4 py-2 rounded-full transition-all duration-200 hover:scale-105 hover:brightness-110"
-              style={{ background: "#1a73e8", boxShadow: "0 2px 12px rgba(26,115,232,0.45)" }}
-              aria-label={`${member.name} LinkedIn`}
-            >
-              <LinkedInIcon className="w-4 h-4 text-white" />
-              <span className="text-[12px] font-bold text-white" style={FONT}>LinkedIn</span>
-            </a>
-          ) : (
-            <span
-              className="flex items-center gap-2 px-4 py-2 rounded-full opacity-50 cursor-default"
-              style={{ background: "#1a73e8" }}
-              aria-label="LinkedIn (not yet linked)"
-            >
-              <LinkedInIcon className="w-4 h-4 text-white" />
-              <span className="text-[12px] font-bold text-white" style={FONT}>LinkedIn</span>
-            </span>
-          )
+      {/* ── Social buttons pill — ALWAYS visible at the bottom ── */}
+      <div className="flex items-center justify-center gap-5 px-5 py-2 rounded-full border border-white/25 bg-white/20 backdrop-blur-sm w-fit mt-auto transition-colors duration-300 hover:bg-white/30 shadow-[0_2px_10px_rgba(0,0,0,0.05)]">
+        {/* Instagram */}
+        {member.instagram !== undefined && member.instagram ? (
+          <a
+            href={member.instagram}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-white hover:text-white/80 transition-all duration-200 hover:scale-110"
+            aria-label={`${member.name} Instagram`}
+          >
+            <InstagramIcon className="w-[18px] h-[18px]" />
+          </a>
+        ) : (
+          <span className="text-white/40 cursor-not-allowed" aria-label="Instagram (not linked)">
+            <InstagramIcon className="w-[18px] h-[18px]" />
+          </span>
         )}
-        {/* GitHub — always rendered when property exists */}
-        {member.github !== undefined && (
-          member.github ? (
-            <a
-              href={member.github}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center justify-center w-8 h-8 rounded-full bg-white/10 border border-white/20 hover:bg-white/25 hover:border-white/50 transition-all duration-200 hover:scale-105"
-              aria-label={`${member.name} GitHub`}
-            >
-              <GitHubIcon className="w-4 h-4 text-white" />
-            </a>
-          ) : (
-            <span
-              className="flex items-center justify-center w-8 h-8 rounded-full bg-white/10 border border-white/20 opacity-50 cursor-default"
-              aria-label="GitHub (not yet linked)"
-            >
-              <GitHubIcon className="w-4 h-4 text-white" />
-            </span>
-          )
+
+        {/* LinkedIn */}
+        {member.linkedin ? (
+          <a
+            href={member.linkedin}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-white hover:text-white/80 transition-all duration-200 hover:scale-110"
+            aria-label={`${member.name} LinkedIn`}
+          >
+            <LinkedInIcon className="w-[18px] h-[18px]" />
+          </a>
+        ) : (
+          <span className="text-white/40 cursor-not-allowed" aria-label="LinkedIn (not linked)">
+            <LinkedInIcon className="w-[18px] h-[18px]" />
+          </span>
+        )}
+
+        {/* GitHub */}
+        {member.github ? (
+          <a
+            href={member.github}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-white hover:text-white/80 transition-all duration-200 hover:scale-110"
+            aria-label={`${member.name} GitHub`}
+          >
+            <GitHubIcon className="w-[18px] h-[18px]" />
+          </a>
+        ) : (
+          <span className="text-white/40 cursor-not-allowed" aria-label="GitHub (not linked)">
+            <GitHubIcon className="w-[18px] h-[18px]" />
+          </span>
         )}
       </div>
 
