@@ -21,6 +21,20 @@ export const coreData: Team[] = [
         photo: null,
         github: "",
       },
+            {
+        id: "tc3",
+        name: "Member Name",
+        role: "Team Member",
+        photo: null,
+        github: "",
+      },
+            {
+        id: "tc4",
+        name: "Member Name",
+        role: "Team Member",
+        photo: null,
+        github: "",
+      },
     ],
   },
 

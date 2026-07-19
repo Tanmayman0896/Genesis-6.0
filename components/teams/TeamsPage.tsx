@@ -112,7 +112,33 @@ function SlidingPillToggle({
 // Layout: large photo fills the top 3/4 of the card, name + role appear small
 // below. LinkedIn / GitHub icon buttons always visible at the very bottom.
 
-function MemberCard({ member }: { member: TeamMember }) {
+function MemberCard({ member, index }: { member: TeamMember; index: number }) {
+  const [isVisible, setIsVisible] = useState(false);
+  const cardRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+          observer.unobserve(entry.target);
+        }
+      },
+      {
+        threshold: 0.05,
+        rootMargin: "0px 0px -50px 0px",
+      }
+    );
+
+    if (cardRef.current) {
+      observer.observe(cardRef.current);
+    }
+
+    return () => {
+      observer.disconnect();
+    };
+  }, []);
+
   const initials = member.name
     .split(" ")
     .map((n) => n[0])
@@ -120,75 +146,94 @@ function MemberCard({ member }: { member: TeamMember }) {
     .slice(0, 2)
     .toUpperCase();
 
+  const getSlideClass = () => {
+    if (isVisible) return "translate-x-0 opacity-100";
+
+    const col4 = index % 4;
+    if (col4 === 0) {
+      return "-translate-x-12 opacity-0";
+    } else if (col4 === 1) {
+      return "translate-x-12 md:-translate-x-12 opacity-0";
+    } else if (col4 === 2) {
+      return "-translate-x-12 md:translate-x-12 opacity-0";
+    } else {
+      return "translate-x-12 opacity-0";
+    }
+  };
+
   return (
     <div
-      className="group flex flex-col items-center justify-between rounded-2xl p-4 transition-all duration-300 hover:scale-[1.03] hover:shadow-[0_20px_50px_rgba(26,115,232,0.3)] border border-white/25 bg-gradient-to-b from-[#72b6e5]/30 to-[#5ea1d4]/30 backdrop-blur-lg"
-      style={{
-        boxShadow: "inset 0 1px 1px rgba(255,255,255,0.4), 0 8px 32px 0 rgba(0, 0, 0, 0.15)",
-      }}
+      ref={cardRef}
+      className={`w-full transition-all duration-[850ms] ease-out transform ${getSlideClass()}`}
     >
-      {/* ── Photo area — padded, rounded container ── */}
-      <div className="relative w-full aspect-square flex-shrink-0 rounded-xl overflow-hidden bg-gradient-to-br from-[#539cd4] to-[#4083bb] border border-white/10 shadow-inner">
-        {member.photo ? (
-          <Image
-            src={member.photo}
-            alt={member.name}
-            fill
-            className="object-cover object-top transition-transform duration-500 group-hover:scale-105"
-            sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 20vw"
-          />
-        ) : (
-          <div className="w-full h-full flex items-center justify-center">
-            <span
-              className="text-3xl md:text-4xl font-extrabold text-white drop-shadow-[0_2px_4px_rgba(0,0,0,0.2)]"
-              style={FONT}
+      <div
+        className="group flex flex-col items-center justify-between rounded-2xl p-4 transition-all duration-300 hover:scale-[1.03] hover:shadow-[0_20px_50px_rgba(26,115,232,0.3)] border border-white/25 bg-gradient-to-b from-[#72b6e5]/30 to-[#5ea1d4]/30 backdrop-blur-lg h-full"
+        style={{
+          boxShadow: "inset 0 1px 1px rgba(255,255,255,0.4), 0 8px 32px 0 rgba(0, 0, 0, 0.15)",
+        }}
+      >
+        {/* ── Photo area — padded, rounded container ── */}
+        <div className="relative w-full aspect-square flex-shrink-0 rounded-xl overflow-hidden bg-gradient-to-br from-[#539cd4] to-[#4083bb] border border-white/10 shadow-inner">
+          {member.photo ? (
+            <Image
+              src={member.photo}
+              alt={member.name}
+              fill
+              className="object-cover object-top transition-transform duration-500 group-hover:scale-105"
+              sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 20vw"
+            />
+          ) : (
+            <div className="w-full h-full flex items-center justify-center">
+              <span
+                className="text-3xl md:text-4xl font-extrabold text-white drop-shadow-[0_2px_4px_rgba(0,0,0,0.2)]"
+                style={FONT}
+              >
+                {initials}
+              </span>
+            </div>
+          )}
+        </div>
+
+        {/* ── Name + Role ── */}
+        <div className="w-full text-center mt-4 mb-3">
+          <h3
+            className="text-white font-extrabold text-[16px] md:text-[18px] leading-snug drop-shadow-[0_2px_4px_rgba(0,0,0,0.25)] tracking-wide"
+            style={FONT}
+          >
+            {member.name}
+          </h3>
+          <p
+            className="text-white/90 font-bold text-[12px] md:text-[13px] leading-snug mt-1.5 drop-shadow-[0_1px_2px_rgba(0,0,0,0.15)]"
+            style={FONT}
+          >
+            {member.role}
+          </p>
+        </div>
+
+        {/* ── LinkedIn Button — ALWAYS visible at the bottom ── */}
+        <div className="flex items-center justify-center mt-auto w-full">
+          {member.linkedin ? (
+            <a
+              href={member.linkedin}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center justify-center gap-2 px-5 py-1.5 rounded-full border border-white/30 bg-white/20 backdrop-blur-sm text-white hover:text-white hover:bg-white/35 hover:scale-105 transition-all duration-300 shadow-[0_2px_10px_rgba(0,0,0,0.05)] w-fit"
+              aria-label={`${member.name} LinkedIn`}
             >
-              {initials}
+              <LinkedInIcon className="w-[14px] h-[14px] text-white" />
+              <span className="text-[13px] font-bold text-white tracking-wide" style={FONT}>LinkedIn</span>
+            </a>
+          ) : (
+            <span
+              className="flex items-center justify-center gap-2 px-5 py-1.5 rounded-full border border-white/20 bg-white/10 text-white/60 cursor-not-allowed w-fit"
+              aria-label="LinkedIn (not linked)"
+            >
+              <LinkedInIcon className="w-[14px] h-[14px] text-white/60" />
+              <span className="text-[13px] font-bold text-white/60 tracking-wide" style={FONT}>LinkedIn</span>
             </span>
-          </div>
-        )}
+          )}
+        </div>
       </div>
-
-      {/* ── Name + Role ── */}
-      <div className="w-full text-center mt-4 mb-3">
-        <h3
-          className="text-white font-extrabold text-[16px] md:text-[18px] leading-snug drop-shadow-[0_2px_4px_rgba(0,0,0,0.25)] tracking-wide"
-          style={FONT}
-        >
-          {member.name}
-        </h3>
-        <p
-          className="text-white/90 font-bold text-[12px] md:text-[13px] leading-snug mt-1.5 drop-shadow-[0_1px_2px_rgba(0,0,0,0.15)]"
-          style={FONT}
-        >
-          {member.role}
-        </p>
-      </div>
-
-      {/* ── LinkedIn Button — ALWAYS visible at the bottom ── */}
-      <div className="flex items-center justify-center mt-auto w-full">
-        {member.linkedin ? (
-          <a
-            href={member.linkedin}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex items-center justify-center gap-2 px-5 py-1.5 rounded-full border border-white/30 bg-white/20 backdrop-blur-sm text-white hover:text-white hover:bg-white/35 hover:scale-105 transition-all duration-300 shadow-[0_2px_10px_rgba(0,0,0,0.05)] w-fit"
-            aria-label={`${member.name} LinkedIn`}
-          >
-            <LinkedInIcon className="w-[14px] h-[14px] text-white" />
-            <span className="text-[13px] font-bold text-white tracking-wide" style={FONT}>LinkedIn</span>
-          </a>
-        ) : (
-          <span
-            className="flex items-center justify-center gap-2 px-5 py-1.5 rounded-full border border-white/20 bg-white/10 text-white/60 cursor-not-allowed w-fit"
-            aria-label="LinkedIn (not linked)"
-          >
-            <LinkedInIcon className="w-[14px] h-[14px] text-white/60" />
-            <span className="text-[13px] font-bold text-white/60 tracking-wide" style={FONT}>LinkedIn</span>
-          </span>
-        )}
-      </div>
-
     </div>
   );
 }
@@ -340,8 +385,8 @@ export default function TeamsPage() {
 
               {/* Member Cards */}
               <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
-                {team.members.map((member) => (
-                  <MemberCard key={member.id} member={member} />
+                {team.members.map((member, index) => (
+                  <MemberCard key={member.id} member={member} index={index} />
                 ))}
               </div>
             </section>
