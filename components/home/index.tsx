@@ -128,6 +128,9 @@ export default function Home() {
   const bgTextRef = useRef<HTMLDivElement>(null);
   const mascotFixedRef = useRef<HTMLDivElement>(null);
   const mascotScrollWrapperRef = useRef<HTMLDivElement>(null);
+  const whyMascotRef = useRef<HTMLDivElement>(null);
+  const whyMascotRightRef = useRef<HTMLDivElement>(null);
+  const whyTitleWrapperRef = useRef<HTMLDivElement>(null);
 
   const [progress, setProgress] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
@@ -155,7 +158,7 @@ export default function Home() {
       { opacity: 1, y: 0, scale: 1, duration: 1.5, ease: "power3.out", delay: delay + 0.15 }
     );
 
-    // Scroll-driven timeline
+    // Scroll-driven timeline for main hero mascot
     const tl = gsap.timeline({
       scrollTrigger: {
         trigger: containerRef.current,
@@ -203,6 +206,97 @@ export default function Home() {
         duration: 1.5,
         ease: "power1.inOut",
       });
+
+    // Refactored GSAP ScrollTrigger animations with matchMedia for responsive performance
+    const mm = gsap.matchMedia();
+
+    mm.add("(min-width: 640px)", () => {
+      if (whyMascotRef.current && whyTitleWrapperRef.current) {
+        gsap.fromTo(
+          whyMascotRef.current,
+          { x: "-80vw", opacity: 0, scale: 0.3, rotate: -20 },
+          {
+            x: "20px",
+            opacity: 1,
+            scale: 1,
+            rotate: 0,
+            ease: "power2.out",
+            scrollTrigger: {
+              trigger: whyTitleWrapperRef.current,
+              start: "top 85%",
+              end: "top 45%",
+              scrub: 1.2,
+              invalidateOnRefresh: true,
+            },
+          }
+        );
+      }
+
+      if (whyMascotRightRef.current && whyTitleWrapperRef.current) {
+        gsap.fromTo(
+          whyMascotRightRef.current,
+          { x: "80vw", opacity: 0, scale: 0.3, rotate: 20 },
+          {
+            x: "-20px",
+            opacity: 1,
+            scale: 1,
+            rotate: 0,
+            ease: "power2.out",
+            scrollTrigger: {
+              trigger: whyTitleWrapperRef.current,
+              start: "top 85%",
+              end: "top 45%",
+              scrub: 1.2,
+              invalidateOnRefresh: true,
+            },
+          }
+        );
+      }
+    });
+
+    mm.add("(max-width: 639px)", () => {
+      if (whyMascotRef.current && whyTitleWrapperRef.current) {
+        gsap.fromTo(
+          whyMascotRef.current,
+          { x: "-80vw", opacity: 0, scale: 0.3, rotate: -20 },
+          {
+            x: "8px",
+            opacity: 1,
+            scale: 1,
+            rotate: 0,
+            ease: "power2.out",
+            scrollTrigger: {
+              trigger: whyTitleWrapperRef.current,
+              start: "top 85%",
+              end: "top 45%",
+              scrub: 1.2,
+              invalidateOnRefresh: true,
+            },
+          }
+        );
+      }
+
+      if (whyMascotRightRef.current && whyTitleWrapperRef.current) {
+        gsap.fromTo(
+          whyMascotRightRef.current,
+          { x: "80vw", opacity: 0, scale: 0.3, rotate: 20 },
+          {
+            x: "-8px",
+            opacity: 1,
+            scale: 1,
+            rotate: 0,
+            ease: "power2.out",
+            scrollTrigger: {
+              trigger: whyTitleWrapperRef.current,
+              start: "top 85%",
+              end: "top 45%",
+              scrub: 1.2,
+              invalidateOnRefresh: true,
+            },
+          }
+        );
+      }
+    });
   }, { dependencies: [isLoading], scope: containerRef });
 
   return (
@@ -273,9 +367,52 @@ export default function Home() {
           <p className="text-base md:text-lg font-bold uppercase tracking-widest text-blue-400 mb-3">
             Opportunities for Participants
           </p>
-          <h2 className="text-[38px] md:text-[62px] font-extrabold tracking-tight font-mirava-sans bg-gradient-to-r from-white via-blue-100 to-blue-300 bg-clip-text text-transparent mb-6 md:whitespace-nowrap">
-            Why participate in Genesis 6.0?
-          </h2>
+          <div ref={whyTitleWrapperRef} className="relative inline-block">
+            {/* 3D Mascot appearing from left edge right next to "Why" */}
+            <div
+              ref={whyMascotRef}
+              className="absolute right-full top-1/2 -translate-y-1/2 mr-1 sm:mr-2 md:mr-3 lg:mr-4 w-32 h-32 sm:w-48 sm:h-48 md:w-72 md:h-72 lg:w-96 lg:h-96 pointer-events-auto z-20 shrink-0"
+              style={{ opacity: 0 }}
+            >
+              {/* Minimal 3 Question Marks Overlay */}
+              <div className="absolute -top-2 sm:-top-4 left-1/2 -translate-x-1/2 z-30 pointer-events-none flex gap-1 sm:gap-1.5 items-center select-none">
+                <span className="inline-block transform-gpu will-change-transform font-black font-mirava-sans text-xl sm:text-3xl text-blue-400 drop-shadow-[0_0_12px_rgba(96,165,250,0.9)] animate-bounce duration-1000">
+                  ?
+                </span>
+                <span className="inline-block transform-gpu will-change-transform font-black font-mirava-sans text-lg sm:text-2xl text-cyan-300 drop-shadow-[0_0_12px_rgba(103,232,249,0.9)] animate-bounce duration-1000 -rotate-12" style={{ animationDelay: "200ms" }}>
+                  ?
+                </span>
+                <span className="inline-block transform-gpu will-change-transform font-black font-mirava-sans text-base sm:text-xl text-purple-400 drop-shadow-[0_0_10px_rgba(168,85,247,0.9)] animate-bounce duration-1000 rotate-12" style={{ animationDelay: "400ms" }}>
+                  ?
+                </span>
+              </div>
+              <MascotCanvas page="why" side="left" />
+            </div>
+            <h2 className="text-[38px] md:text-[62px] font-extrabold tracking-tight font-mirava-sans bg-gradient-to-r from-white via-blue-100 to-blue-300 bg-clip-text text-transparent mb-6 md:whitespace-nowrap">
+              Why participate in Genesis 6.0?
+            </h2>
+
+            {/* 3D Mascot appearing from right edge right next to "Genesis 6.0?" */}
+            <div
+              ref={whyMascotRightRef}
+              className="absolute left-full top-1/2 -translate-y-1/2 ml-1 sm:ml-2 md:ml-3 lg:ml-4 w-32 h-32 sm:w-48 sm:h-48 md:w-72 md:h-72 lg:w-96 lg:h-96 pointer-events-auto z-20 shrink-0"
+              style={{ opacity: 0 }}
+            >
+              {/* Minimal 3 Question Marks Overlay */}
+              <div className="absolute -top-2 sm:-top-4 left-1/2 -translate-x-1/2 z-30 pointer-events-none flex gap-1 sm:gap-1.5 items-center select-none">
+                <span className="inline-block transform-gpu will-change-transform font-black font-mirava-sans text-xl sm:text-3xl text-purple-400 drop-shadow-[0_0_12px_rgba(168,85,247,0.9)] animate-bounce duration-1000">
+                  ?
+                </span>
+                <span className="inline-block transform-gpu will-change-transform font-black font-mirava-sans text-lg sm:text-2xl text-cyan-300 drop-shadow-[0_0_12px_rgba(103,232,249,0.9)] animate-bounce duration-1000 rotate-12" style={{ animationDelay: "200ms" }}>
+                  ?
+                </span>
+                <span className="inline-block transform-gpu will-change-transform font-black font-mirava-sans text-base sm:text-xl text-blue-400 drop-shadow-[0_0_10px_rgba(96,165,250,0.9)] animate-bounce duration-1000 -rotate-12" style={{ animationDelay: "400ms" }}>
+                  ?
+                </span>
+              </div>
+              <MascotCanvas page="why" side="right" />
+            </div>
+          </div>
           <p className="text-xl md:text-[22px] text-blue-100/80 font-light leading-relaxed">
             Genesis 6.0 promises a wonderful experience to the participants.
           </p>

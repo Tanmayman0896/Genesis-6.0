@@ -12,10 +12,41 @@ gsap.registerPlugin(ScrollTrigger);
 interface MascotCanvasProps {
   onProgress?: (progress: number) => void;
   onLoaded?: () => void;
-  page?: "home" | "contact";
+  page?: "home" | "contact" | "why";
+  side?: "left" | "right";
 }
 
-export default function MascotCanvas({ onProgress, onLoaded, page = "home" }: MascotCanvasProps) {
+// Module-level GLTF cache to prevent redundant HTTP requests and Draco decompression overhead
+let cachedGLTFPromise: Promise<any> | null = null;
+
+function loadMascotGLTF(): Promise<any> {
+  if (cachedGLTFPromise) return cachedGLTFPromise;
+
+  cachedGLTFPromise = new Promise((resolve, reject) => {
+    const loader = new GLTFLoader();
+    const dracoLoader = new DRACOLoader();
+    dracoLoader.setDecoderPath("https://www.gstatic.com/draco/versioned/decoders/1.5.7/");
+    loader.setDRACOLoader(dracoLoader);
+
+    loader.load(
+      "/models/genesis_mascot_optimized.glb",
+      (gltf) => {
+        dracoLoader.dispose();
+        resolve(gltf);
+      },
+      undefined,
+      (err) => {
+        cachedGLTFPromise = null;
+        dracoLoader.dispose();
+        reject(err);
+      }
+    );
+  });
+
+  return cachedGLTFPromise;
+}
+
+export default function MascotCanvas({ onProgress, onLoaded, page = "home", side = "left" }: MascotCanvasProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const [error, setError] = useState(false);
 
@@ -41,6 +72,7 @@ export default function MascotCanvas({ onProgress, onLoaded, page = "home" }: Ma
     let animationFrameId: number;
     let isVisible = false;
     let rotationTrigger: any = null;
+    let confusedTl: gsap.core.Timeline | null = null;
     let cleanupClick: (() => void) | null = null;
     let mouse = { x: 0, y: 0 };
     let targetMouse = { x: 0, y: 0 };
@@ -54,24 +86,24 @@ export default function MascotCanvas({ onProgress, onLoaded, page = "home" }: Ma
     const initialZ = isMobile ? 6.2 : 7.5;
     camera.position.set(0, 0.15, initialZ);
 
-    // 3. Renderer Setup with Performance Optimizations
+    // 3. Renderer Setup with Razor-Sharp Ultra-HD Performance
     const renderer = new THREE.WebGLRenderer({
-      antialias: window.innerWidth >= 768,
+      antialias: true,
       alpha: true,
       stencil: false,
       depth: true,
       powerPreference: "high-performance",
-      precision: "mediump",
+      precision: "highp",
     });
     renderer.setSize(width, height);
 
-    // Determine max DPR based on device capability to prevent GPU overhead on weak screens
+    // Determine max DPR based on device capability to ensure crisp high-DPI rendering
     let maxDPR = 1.5;
     if (typeof navigator !== "undefined") {
       const isWeakDevice =
         (navigator.hardwareConcurrency && (navigator.hardwareConcurrency as number) < 4) ||
         ((navigator as any).deviceMemory && (navigator as any).deviceMemory < 4);
-      if (isWeakDevice || window.innerWidth < 768) {
+      if (isWeakDevice || window.innerWidth < 640) {
         maxDPR = 1.0;
       }
     }
@@ -134,6 +166,27 @@ export default function MascotCanvas({ onProgress, onLoaded, page = "home" }: Ma
     const sparkleGeometry = new THREE.ExtrudeGeometry(sparkleShape, sparkleExtrudeSettings);
     sparkleGeometry.center(); // Center geometry so scale/rotation is clean
 
+    // Create Question Mark Geometry (Symmetrical curve so stem & dot are centered at X=0)
+    const questionMarkShape = new THREE.Shape();
+    questionMarkShape.moveTo(-0.28, 0.28);
+    questionMarkShape.bezierCurveTo(-0.28, 0.72, 0.28, 0.72, 0.28, 0.28);
+    questionMarkShape.bezierCurveTo(0.28, 0.02, 0.07, -0.02, 0.07, -0.28);
+    questionMarkShape.lineTo(-0.07, -0.28);
+    questionMarkShape.bezierCurveTo(-0.07, 0.08, 0.14, 0.12, 0.14, 0.28);
+    questionMarkShape.bezierCurveTo(0.14, 0.54, -0.14, 0.54, -0.14, 0.28);
+
+    const questionExtrudeSettings = {
+      depth: 0.08,
+      bevelEnabled: true,
+      bevelSegments: 3,
+      steps: 1,
+      bevelSize: 0.02,
+      bevelThickness: 0.02,
+    };
+    const questionGeometry = new THREE.ExtrudeGeometry(questionMarkShape, questionExtrudeSettings);
+    questionGeometry.center();
+    const questionDotGeometry = new THREE.SphereGeometry(0.09, 16, 16);
+
     // Mouse Tracking Event Listeners
     const handleMouseMove = (event: MouseEvent) => {
       const rect = container.getBoundingClientRect();
@@ -149,56 +202,55 @@ export default function MascotCanvas({ onProgress, onLoaded, page = "home" }: Ma
     container.addEventListener("mousemove", handleMouseMove);
     container.addEventListener("mouseleave", handleMouseLeave);
 
-    // 5. Setup GLTF Loader with DRACO Compression
+    // 5. Setup Cached GLTF Model Load
+    loadMascotGLTF().then((gltf) => {
+      if (!gltf || !gltf.scene) return;
+      const model = gltf.scene.clone(true);
+      mascotModel = model;
 
-    const loader = new GLTFLoader();
-    const dracoLoader = new DRACOLoader();
-    dracoLoader.setDecoderPath("https://www.gstatic.com/draco/versioned/decoders/1.5.7/");
-    loader.setDRACOLoader(dracoLoader);
+      // Auto center and scale model
+      const box = new THREE.Box3().setFromObject(model);
+      const size = box.getSize(new THREE.Vector3());
+      const center = box.getCenter(new THREE.Vector3());
 
-    loader.load(
-      "/models/genesis_mascot_optimized.glb",
-      (gltf) => {
-        mascotModel = gltf.scene;
+      const targetSize = page === "why"
+        ? (window.innerWidth < 640 ? 4.0 : 4.5)
+        : (window.innerWidth < 640 ? 3.3 : 3.8);
+      const maxDim = Math.max(size.x, size.y, size.z);
+      const scale = targetSize / maxDim;
+      model.scale.set(scale, scale, scale);
 
-        // Auto center and scale model
-        const box = new THREE.Box3().setFromObject(mascotModel);
-        const size = box.getSize(new THREE.Vector3());
-        const center = box.getCenter(new THREE.Vector3());
+      // Position it center-aligned
+      model.position.x = -center.x * scale;
+      model.position.y = -center.y * scale;
+      model.position.z = -center.z * scale;
 
-        const targetSize = window.innerWidth < 640 ? 3.3 : 3.8;
-        const maxDim = Math.max(size.x, size.y, size.z);
-        const scale = targetSize / maxDim;
-        mascotModel.scale.set(scale, scale, scale);
-
-        // Position it center-aligned
-        mascotModel.position.x = -center.x * scale;
-        mascotModel.position.y = -center.y * scale;
-        mascotModel.position.z = -center.z * scale;
-
-        // Traverse and optimize materials
-        mascotModel.traverse((node) => {
-          if ((node as THREE.Mesh).isMesh) {
-            const mesh = node as THREE.Mesh;
-            if (mesh.material && (mesh.material as THREE.MeshStandardMaterial).isMeshStandardMaterial) {
-              const mat = mesh.material as THREE.MeshStandardMaterial;
-              if (mat.roughness !== undefined) mat.roughness = Math.min(mat.roughness, 0.4);
-              if (mat.metalness !== undefined) mat.metalness = Math.max(mat.metalness, 0.8);
-            }
+      // Traverse and optimize materials
+      model.traverse((node: THREE.Object3D) => {
+        if ((node as THREE.Mesh).isMesh) {
+          const mesh = node as THREE.Mesh;
+          if (mesh.material && (mesh.material as THREE.MeshStandardMaterial).isMeshStandardMaterial) {
+            const mat = mesh.material as THREE.MeshStandardMaterial;
+            if (mat.roughness !== undefined) mat.roughness = Math.min(mat.roughness, 0.4);
+            if (mat.metalness !== undefined) mat.metalness = Math.max(mat.metalness, 0.8);
           }
-        });
+        }
+      });
 
-        // Add parent offset group to easily animate floating
-        modelGroup = new THREE.Group();
-        modelGroup.add(mascotModel);
+      // Add parent offset group to easily animate floating
+      modelGroup = new THREE.Group();
+      modelGroup.add(model);
         modelGroup.position.y = 0.05;
 
-        // Orient the mascot to face forward directly at the camera
-        modelGroup.rotation.y = -1.5;
+        // Orient the mascot to face forward or slightly inward if side is left/right in why section
+        const baseRotationY = page === "why"
+          ? (side === "right" ? -1.5 - 0.25 : -1.5 + 0.25)
+          : -1.5;
+        modelGroup.rotation.y = baseRotationY;
 
         scene.add(modelGroup);
 
-        const spawnHeart = (delay: number = 0) => {
+        const spawnHeart = (angle?: number, delay: number = 0) => {
           if (!scene || !modelGroup) return;
 
           const mat = new THREE.MeshStandardMaterial({
@@ -214,10 +266,9 @@ export default function MascotCanvas({ onProgress, onLoaded, page = "home" }: Ma
           const mesh = new THREE.Mesh(heartGeometry, mat);
 
           // Position it near the chest/center of the mascot
-          // Start far enough forward (Z-axis) to be in front of the scaled mascot model
           mesh.position.set(
-            (Math.random() - 0.5) * 0.2, // slight random x offset
-            0.2 + (Math.random() - 0.5) * 0.1, // near mascot chest
+            0,
+            0.3, // near mascot chest
             1.5 // in front of the model
           );
 
@@ -233,12 +284,14 @@ export default function MascotCanvas({ onProgress, onLoaded, page = "home" }: Ma
 
           scene.add(mesh);
 
-          // Animate with GSAP
-          const targetScale = 0.08 + Math.random() * 0.06; // scale factor
-          const targetY = 1.8 + Math.random() * 1.0;     // float up
-          const targetX = mesh.position.x + (Math.random() - 0.5) * 1.2; // drift sideways
-          const targetZ = 1.9 + Math.random() * 0.6; // float forward (towards camera) to stay clear of the mascot body
-          const duration = 1.5 + Math.random() * 1.0;
+          // Animate with GSAP (radial explosion in 360 degrees spread like sparkles)
+          const heartAngle = angle !== undefined ? angle : Math.random() * Math.PI * 2;
+          const targetScale = 0.08 + Math.random() * 0.06;
+          const distance = 1.2 + Math.random() * 0.8; // explode outwards
+          const targetX = Math.cos(heartAngle) * distance;
+          const targetY = 0.3 + Math.sin(heartAngle) * distance;
+          const targetZ = 1.9 + Math.random() * 0.6;
+          const duration = 1.2 + Math.random() * 0.6;
 
           gsap.timeline({
             delay: delay,
@@ -252,14 +305,14 @@ export default function MascotCanvas({ onProgress, onLoaded, page = "home" }: Ma
               y: targetScale,
               z: targetScale,
               duration: duration * 0.3,
-              ease: "back.out(1.5)"
+              ease: "back.out(1.8)"
             })
             .to(mesh.position, {
               x: targetX,
               y: targetY,
               z: targetZ,
               duration: duration,
-              ease: "power1.out"
+              ease: "power2.out"
             }, 0)
             .to(mesh.rotation, {
               x: mesh.rotation.x + (Math.random() - 0.5) * 2,
@@ -269,7 +322,7 @@ export default function MascotCanvas({ onProgress, onLoaded, page = "home" }: Ma
               ease: "power1.out"
             }, 0)
             .to(mat, {
-              opacity: 0.9,
+              opacity: 0.95,
               duration: duration * 0.2,
               ease: "power1.out"
             }, 0)
@@ -361,6 +414,91 @@ export default function MascotCanvas({ onProgress, onLoaded, page = "home" }: Ma
             }, duration * 0.55);
         };
 
+        const spawnQuestionMark = (delay: number = 0, customX?: number) => {
+          if (!scene || !modelGroup) return;
+
+          const questionGroup = new THREE.Group();
+
+          const mat = new THREE.MeshStandardMaterial({
+            color: 0x60a5fa, // vibrant blue
+            roughness: 0.1,
+            metalness: 0.6,
+            emissive: 0x3b82f6,
+            emissiveIntensity: 0.8,
+            transparent: true,
+            opacity: 0,
+          });
+
+          const mainMesh = new THREE.Mesh(questionGeometry, mat);
+          const dotMesh = new THREE.Mesh(questionDotGeometry, mat);
+          dotMesh.position.set(0, -0.62, 0);
+
+          questionGroup.add(mainMesh);
+          questionGroup.add(dotMesh);
+
+          // Position in open space facing center text:
+          // Left model -> move to its RIGHT (+1.35)
+          // Right model -> move to its LEFT (-1.35)
+          const defaultX = side === "left" ? 1.35 : -1.35;
+          const startX = customX !== undefined ? customX : defaultX;
+
+          questionGroup.position.set(
+            startX + (Math.random() - 0.5) * 0.2,
+            1.2 + Math.random() * 0.3,   // in open air beside head
+            0.4 + Math.random() * 0.2
+          );
+
+          questionGroup.rotation.set(
+            (Math.random() - 0.5) * 0.1,
+            (Math.random() - 0.5) * 0.1,
+            (side === "left" ? 0.2 : -0.2) + (Math.random() - 0.5) * 0.2
+          );
+
+          questionGroup.scale.set(0, 0, 0);
+          scene.add(questionGroup);
+
+          const targetScale = 0.58 + Math.random() * 0.12;
+          const targetY = questionGroup.position.y + 0.9 + Math.random() * 0.4;
+          const targetX = questionGroup.position.x + (side === "left" ? 0.2 : -0.2); // drift gently towards center
+          const duration = 1.9 + Math.random() * 0.5;
+
+          gsap.timeline({
+            delay,
+            onComplete: () => {
+              scene.remove(questionGroup);
+              mat.dispose();
+            }
+          })
+            .to(questionGroup.scale, {
+              x: targetScale,
+              y: targetScale,
+              z: targetScale,
+              duration: duration * 0.25,
+              ease: "back.out(2)"
+            })
+            .to(questionGroup.position, {
+              x: targetX,
+              y: targetY,
+              duration: duration,
+              ease: "power1.out"
+            }, 0)
+            .to(questionGroup.rotation, {
+              z: questionGroup.rotation.z + (side === "left" ? 0.15 : -0.15),
+              duration: duration,
+              ease: "sine.inOut"
+            }, 0)
+            .to(mat, {
+              opacity: 0.95,
+              duration: duration * 0.2,
+              ease: "power1.out"
+            }, 0)
+            .to(mat, {
+              opacity: 0,
+              duration: duration * 0.45,
+              ease: "power2.in"
+            }, duration * 0.55);
+        };
+
         if (page === "contact") {
           let hasBlinkedContact = false;
 
@@ -423,6 +561,91 @@ export default function MascotCanvas({ onProgress, onLoaded, page = "home" }: Ma
           cleanupClick = () => {
             container.removeEventListener("click", handleClick);
           };
+        } else if (page === "why") {
+          // Smooth Confused Animation loop for the Why / Question Mark section
+          const startDelay = side === "right" ? 0.75 : 0;
+
+          if (mascotModel) {
+            confusedTl = gsap.timeline({
+              repeat: -1,
+              repeatDelay: 0.8,
+              delay: startDelay,
+            });
+
+            // 1. Smooth curious head tilt gazing towards the 3D question mark on inner side
+            confusedTl
+              .to(mascotModel.rotation, {
+                z: side === "left" ? -0.24 : 0.24,   // tilt head towards inner side question mark
+                x: -0.12,                            // chin up gazing at floating question mark
+                y: side === "left" ? 0.18 : -0.18,   // look towards 3D question mark
+                duration: 0.9,
+                ease: "power2.inOut",
+              })
+              // 2. Puzzled pause & spawn 3D question mark in open space
+              .add(() => {
+                spawnQuestionMark(0);
+              })
+              .to({}, { duration: 0.7 })
+              // 3. Gentle shrug / "beats me!" squash & stretch bounce
+              .to(mascotModel.scale, {
+                y: scale * 0.90,
+                x: scale * 1.06,
+                duration: 0.18,
+                ease: "power1.out",
+              })
+              .to(mascotModel.scale, {
+                y: scale * 1.06,
+                x: scale * 0.95,
+                duration: 0.18,
+                ease: "power1.inOut",
+              })
+              .to(mascotModel.scale, {
+                y: scale,
+                x: scale,
+                duration: 0.25,
+                ease: "back.out(1.6)",
+              })
+              // 4. Smooth head tilt transition to opposite side
+              .to(mascotModel.rotation, {
+                z: side === "left" ? 0.18 : -0.18,
+                x: -0.15,
+                y: side === "left" ? -0.12 : 0.12,
+                duration: 0.95,
+                ease: "power2.inOut",
+              }, "+=0.2")
+              // 5. Spawn second 3D question mark & hold pose
+              .add(() => {
+                spawnQuestionMark(0);
+              })
+              .to({}, { duration: 0.7 })
+              // 6. Return smoothly to centered inquisitive posture
+              .to(mascotModel.rotation, {
+                z: 0.03,
+                x: -0.05,
+                y: 0,
+                duration: 0.9,
+                ease: "power2.inOut",
+              }, "+=0.2");
+          }
+
+          // Interactive click behavior: Smooth inquisitive bounce + 3D question mark
+          const handleClick = () => {
+            if (modelGroup && mascotModel) {
+              gsap.timeline()
+                .to(mascotModel.rotation, { z: side === "left" ? -0.32 : 0.32, x: -0.2, duration: 0.2, ease: "power2.out" })
+                .to(mascotModel.scale, { y: scale * 0.8, x: scale * 1.1, duration: 0.15, ease: "power1.out" })
+                .to(mascotModel.scale, { y: scale * 1.08, x: scale * 0.92, duration: 0.15, ease: "power1.inOut" })
+                .to(mascotModel.scale, { y: scale, x: scale, duration: 0.25, ease: "back.out(2)" });
+
+              // Spawn 3D glowing question mark in open space
+              spawnQuestionMark(0);
+              spawnQuestionMark(0.18);
+            }
+          };
+          container.addEventListener("click", handleClick);
+          cleanupClick = () => {
+            container.removeEventListener("click", handleClick);
+          };
         } else {
           let hasBlinked = false;
           let hasSparkled = false;
@@ -459,9 +682,12 @@ export default function MascotCanvas({ onProgress, onLoaded, page = "home" }: Ma
                         .to(mascotModel.scale, { y: scale * 1.12, x: scale * 0.9, duration: 0.15, ease: "power1.inOut" })
                         .to(mascotModel.scale, { y: scale, x: scale, duration: 0.2, ease: "back.out(2)" });
 
-                      // Spawn pink hearts stream
-                      for (let i = 0; i < 6; i++) {
-                        spawnHeart(i * 0.15);
+                      // Spawn radial burst of 360-degree pink hearts (spread like sparkles)
+                      const numHearts = 10;
+                      for (let i = 0; i < numHearts; i++) {
+                        const baseAngle = (i / numHearts) * 2 * Math.PI;
+                        const angle = baseAngle + (Math.random() - 0.5) * 0.25;
+                        spawnHeart(angle, Math.random() * 0.15);
                       }
                     }
                   }
@@ -499,19 +725,12 @@ export default function MascotCanvas({ onProgress, onLoaded, page = "home" }: Ma
         }
 
         if (onLoadedRef.current) onLoadedRef.current();
-      },
-      (xhr) => {
-        if (xhr.total > 0) {
-          const pct = Math.round((xhr.loaded / xhr.total) * 100);
-          if (onProgressRef.current) onProgressRef.current(pct);
-        }
-      },
-      (err) => {
+      })
+      .catch((err) => {
         console.error("Error loading optimized genesis mascot model", err);
         setError(true);
-        if (onLoadedRef.current) onLoadedRef.current(); // Call onLoaded to close preloader in case of error
-      }
-    );
+        if (onLoadedRef.current) onLoadedRef.current();
+      });
 
     // 6. Animation and Render Loop with Visibility Control
     const clock = new THREE.Clock();
@@ -543,12 +762,20 @@ export default function MascotCanvas({ onProgress, onLoaded, page = "home" }: Ma
       // Gentle floating/wobble animations (disabled if user prefers reduced motion)
       if (modelGroup && !prefersReducedMotion) {
         modelGroup.position.y = Math.sin(elapsedTime * 1.5) * 0.12;
-        modelGroup.rotation.z = Math.sin(elapsedTime * 0.8) * 0.04;
-        modelGroup.rotation.x = Math.cos(elapsedTime * 0.5) * 0.03;
+
+        if (page === "why") {
+          // For question mark section: modelGroup parent handles cursor tracking angle while mascotModel child runs GSAP confused animation
+          const baseRotationY = side === "right" ? -1.5 - 0.25 : -1.5 + 0.25;
+          modelGroup.rotation.y = baseRotationY + mouse.x * 0.15;
+          modelGroup.rotation.x = mouse.y * 0.08;
+        } else {
+          modelGroup.rotation.z = Math.sin(elapsedTime * 0.8) * 0.04;
+          modelGroup.rotation.x = Math.cos(elapsedTime * 0.5) * 0.03;
+        }
       }
 
-      // Rotate the mascot model slightly to track cursor (disabled if user prefers reduced motion)
-      if (mascotModel && !prefersReducedMotion) {
+      // Rotate the mascot model slightly to track cursor for non-why pages (disabled if user prefers reduced motion)
+      if (mascotModel && !prefersReducedMotion && page !== "why") {
         mascotModel.rotation.y = mouse.x * 0.25; // look left/right
         mascotModel.rotation.x = mouse.y * 0.15; // look up/down
       }
@@ -604,6 +831,9 @@ export default function MascotCanvas({ onProgress, onLoaded, page = "home" }: Ma
       if (rotationTrigger) {
         rotationTrigger.kill();
       }
+      if (confusedTl) {
+        confusedTl.kill();
+      }
       if (cleanupClick) {
         cleanupClick();
       }
@@ -614,10 +844,11 @@ export default function MascotCanvas({ onProgress, onLoaded, page = "home" }: Ma
       observer.disconnect();
       cancelAnimationFrame(animationFrameId);
 
-      dracoLoader.dispose();
       renderer.dispose();
       heartGeometry.dispose();
       sparkleGeometry.dispose();
+      questionGeometry.dispose();
+      questionDotGeometry.dispose();
 
       if (container.contains(renderer.domElement)) {
         container.removeChild(renderer.domElement);
@@ -637,7 +868,9 @@ export default function MascotCanvas({ onProgress, onLoaded, page = "home" }: Ma
   }, [page]);
 
   return (
-    <div className="relative w-full h-full min-h-[350px] sm:min-h-[400px] md:min-h-[550px] lg:min-h-[650px] flex items-center justify-center select-none">
+    <div className={`relative w-full h-full flex items-center justify-center select-none ${
+      page === "why" ? "min-h-0" : "min-h-[350px] sm:min-h-[400px] md:min-h-[550px] lg:min-h-[650px]"
+    }`}>
       {/* Three.js Canvas Container */}
       <div ref={containerRef} className="absolute inset-0 w-full h-full z-10" />
 

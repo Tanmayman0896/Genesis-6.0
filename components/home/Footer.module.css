@@ -1,6 +1,6 @@
 .footer {
   z-index: 1;
-  --footer-background: #38bdf8;
+  --footer-background: #0ea5e9;
   display: grid;
   position: relative;
   min-height: 10rem;
@@ -18,6 +18,16 @@
   transform: translate3d(0, 0, 0);
   backface-visibility: hidden;
   will-change: transform;
+  isolation: isolate;
+  pointer-events: none;
+}
+
+.bubbles[data-paused="true"] {
+  visibility: hidden;
+}
+
+.bubbles[data-paused="true"] .bubble {
+  animation-play-state: paused;
 }
 
 .bubble {
@@ -160,6 +170,12 @@
   font-size: 0.9rem;
   margin: 0.25rem 0 0.15rem 0;
   font-weight: 500;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.contactPhone:hover {
+  color: #0ea5e9;
 }
 
 .contactRole {
@@ -188,14 +204,17 @@
   gap: 0.6rem;
 }
 
+.footerLink:hover {
+  opacity: 0.85;
+  transform: translateY(-1px);
+}
+
 .globeIcon {
   width: 1.15rem;
   height: 1.15rem;
   flex-shrink: 0;
   stroke: currentColor;
 }
-
-
 
 @media (min-width: 1024px) {
   .content {
@@ -289,8 +308,12 @@
   .linksContainer {
     align-items: flex-start;
   }
+}
 
-
+@media (max-width: 768px) {
+  .bubble:nth-child(n+19) {
+    display: none;
+  }
 }
 
 @media (max-width: 480px) {
@@ -305,9 +328,13 @@
     transform: translate3d(-50%, 100%, 0) scale(1);
   }
   75% {
-    transform: translate3d(-50%, calc(100% - var(--distance, 10rem) - 4rem), 0) scale(1);
+    transform: translate3d(-50%, calc(100% + var(--ty, -10rem)), 0) scale(1);
   }
   100% {
-    transform: translate3d(-50%, calc(100% - var(--distance, 10rem) - 4rem), 0) scale(0);
+    transform: translate3d(-50%, calc(100% + var(--ty, -10rem)), 0) scale(0);
   }
 }
+
+
+
+
