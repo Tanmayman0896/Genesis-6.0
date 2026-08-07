@@ -4,7 +4,7 @@ export const executiveData: Team[] = [
   // ── Convenors ──────────────────────────────────────────────────────────────
 {
   id: "conveners",
-  label: "Conveners",
+  label: "CONVENERS",
   members: [
     {
       id: "cv1",
@@ -36,7 +36,7 @@ export const executiveData: Team[] = [
 // ── Directors ────────────────────────────────────────────────────────────────
 {
   id: "directors",
-  label: "Directors",
+  label: "DIRECTORS",
   members: [
     {
       id: "dr1",
@@ -180,6 +180,511 @@ export const executiveData: Team[] = [
       id: "dr24",
       name: "Manya Moona",
       role: "Director",
+      photo: null,
+    },
+  ],
+},
+{
+  id: "technical_mentors",
+  label: "TECHNICAL MENTORS",
+  members: [
+    {
+      id: "tm1",
+      name: "Yogesh Jajoria",
+      role: "Mentor",
+      photo: null,
+    },
+    {
+      id: "tm2",
+      name: "Manan Chaudhary",
+      role: "Mentor",
+      photo: null,
+    },
+  ],
+},
+{
+  id: "team_heads",
+  label: "Team Heads",
+  members: [
+    {
+      id: "th1",
+      name: "Aarush Dayal",
+      role: "Events Head",
+      photo: null,
+    },
+    {
+      id: "th2",
+      name: "Shreya Daljeet",
+      role: "Events Head",
+      photo: null,
+    },
+    {
+      id: "th3",
+      name: "Anushka Srivastav",
+      role: "Events Head",
+      photo: null,
+    },
+    {
+      id: "th4",
+      name: "Aadrit Kaushik",
+      role: "Events Head",
+      photo: null,
+    },
+    {
+      id: "th5",
+      name: "Palakshi Sirsat",
+      role: "Events Head",
+      photo: null,
+    },
+    {
+      id: "th6",
+      name: "Kshiti Singh",
+      role: "Events Head",
+      photo: null,
+    },
+    {
+      id: "th7",
+      name: "Manya Moonat",
+      role: "Events Head",
+      photo: null,
+    },
+    {
+      id: "th8",
+      name: "Yash Raj",
+      role: "Events Head",
+      photo: null,
+    },
+
+    {
+      id: "th9",
+      name: "Tanmoy Mandal",
+      role: "Marketing Head",
+      photo: null,
+    },
+    {
+      id: "th10",
+      name: "Sara Pansuriya",
+      role: "Marketing Head",
+      photo: null,
+    },
+    {
+      id: "th11",
+      name: "Arunanshu Basu",
+      role: "Marketing Head",
+      photo: null,
+    },
+    {
+      id: "th12",
+      name: "Navya Bhardwaj",
+      role: "Marketing Head",
+      photo: null,
+    },
+    {
+      id: "th13",
+      name: "Palakshi Sirsat",
+      role: "Marketing Head",
+      photo: null,
+    },
+    {
+      id: "th14",
+      name: "Pranav Kheole",
+      role: "Marketing Head",
+      photo: null,
+    },
+    {
+      id: "th15",
+      name: "Manya Moonat",
+      role: "Marketing Head",
+      photo: null,
+    },
+
+    {
+      id: "th16",
+      name: "Tanmoy Mandal",
+      role: "Corporate Head",
+      photo: null,
+    },
+    {
+      id: "th17",
+      name: "Dolly Srivastava",
+      role: "Corporate Head",
+      photo: null,
+    },
+    {
+      id: "th18",
+      name: "Aadrit Kaushik",
+      role: "Corporate Head",
+      photo: null,
+    },
+    {
+      id: "th19",
+      name: "Navya Bhardwaj",
+      role: "Corporate Head",
+      photo: null,
+    },
+    {
+      id: "th20",
+      name: "Sarath Mohanraj",
+      role: "Corporate Head",
+      photo: null,
+    },
+    {
+      id: "th21",
+      name: "Shivangi Kotnala",
+      role: "Corporate Head",
+      photo: null,
+    },
+    {
+      id: "th22",
+      name: "Garv Sharma",
+      role: "Corporate Head",
+      photo: null,
+    },
+    {
+      id: "th23",
+      name: "Yash Raj",
+      role: "Corporate Head",
+      photo: null,
+    },
+
+    {
+      id: "th24",
+      name: "Aarush Dayal",
+      role: "Graphic Design Head",
+      photo: null,
+    },
+    {
+      id: "th25",
+      name: "Pratyush Sharma",
+      role: "Graphic Design Head",
+      photo: null,
+    },
+    {
+      id: "th26",
+      name: "Akshat Raheja",
+      role: "Graphic Design Head",
+      photo: null,
+    },
+    {
+      id: "th27",
+      name: "Garv Sharma",
+      role: "Graphic Design Head",
+      photo: null,
+    },
+
+    {
+      id: "th28",
+      name: "Tanmoy Mandal",
+      role: "Technical Head",
+      photo: null,
+    },
+    {
+      id: "th29",
+      name: "Manan Chaudhary",
+      role: "Technical Head",
+      photo: null,
+    },
+    {
+      id: "th30",
+      name: "Yogesh Jajoria",
+      role: "Technical Head",
+      photo: null,
+    },
+    {
+      id: "th31",
+      name: "Vaibhav Kumar",
+      role: "Technical Head",
+      photo: null,
+    },
+    {
+      id: "th32",
+      name: "Harsh Raj",
+      role: "Technical Head",
+      photo: null,
+    },
+    {
+      id: "th33",
+      name: "Yash Raj",
+      role: "Technical Head",
+      photo: null,
+    },
+
+    {
+      id: "th34",
+      name: "Sara Pansuriya",
+      role: "Content Head",
+      photo: null,
+    },
+    {
+      id: "th35",
+      name: "Anushka Srivastav",
+      role: "Content Head",
+      photo: null,
+    },
+    {
+      id: "th36",
+      name: "Ashita Saxena",
+      role: "Content Head",
+      photo: null,
+    },
+    {
+      id: "th37",
+      name: "Manya Moonat",
+      role: "Content Head",
+      photo: null,
+    },
+
+    {
+      id: "th38",
+      name: "Anshuman Singh",
+      role: "Media & Coverage Head",
+      photo: null,
+    },
+    {
+      id: "th39",
+      name: "Shrinivas Kharpade",
+      role: "Media & Coverage Head",
+      photo: null,
+    },
+    {
+      id: "th40",
+      name: "Vaibhav Kumar",
+      role: "Media & Coverage Head",
+      photo: null,
+    },
+    {
+      id: "th41",
+      name: "Pranav Kheole",
+      role: "Media & Coverage Head",
+      photo: null,
+    },
+
+    {
+      id: "th42",
+      name: "Dolly Srivastava",
+      role: "Curations Head",
+      photo: null,
+    },
+    {
+      id: "th43",
+      name: "Yatharth Rajpoot",
+      role: "Curations Head",
+      photo: null,
+    },
+    {
+      id: "th44",
+      name: "Ashita Saxena",
+      role: "Curations Head",
+      photo: null,
+    },
+    {
+      id: "th45",
+      name: "Sarath Mohanraj",
+      role: "Curations Head",
+      photo: null,
+    },
+    {
+      id: "th46",
+      name: "Shubhanshu Dixit",
+      role: "Curations Head",
+      photo: null,
+    },
+
+    {
+      id: "th47",
+      name: "Keshav Anand",
+      role: "Logistics Head",
+      photo: null,
+    },
+    {
+      id: "th48",
+      name: "Anshuman Singh",
+      role: "Logistics Head",
+      photo: null,
+    },
+    {
+      id: "th49",
+      name: "Arunanshu Basu",
+      role: "Logistics Head",
+      photo: null,
+    },
+    {
+      id: "th50",
+      name: "Pratyush Sharma",
+      role: "Logistics Head",
+      photo: null,
+    },
+    {
+      id: "th51",
+      name: "Akshat Raheja",
+      role: "Logistics Head",
+      photo: null,
+    },
+    {
+      id: "th52",
+      name: "Rishan Mazumdar",
+      role: "Logistics Head",
+      photo: null,
+    },
+
+    {
+      id: "th53",
+      name: "Keshav Anand",
+      role: "Hospitality Head",
+      photo: null,
+    },
+    {
+      id: "th54",
+      name: "Anshuman Singh",
+      role: "Hospitality Head",
+      photo: null,
+    },
+    {
+      id: "th55",
+      name: "Arunanshu Basu",
+      role: "Hospitality Head",
+      photo: null,
+    },
+    {
+      id: "th56",
+      name: "Pratyush Sharma",
+      role: "Hospitality Head",
+      photo: null,
+    },
+    {
+      id: "th57",
+      name: "Kshiti Singh",
+      role: "Hospitality Head",
+      photo: null,
+    },
+    {
+      id: "th58",
+      name: "Garv Sharma",
+      role: "Hospitality Head",
+      photo: null,
+    },
+    {
+      id: "th59",
+      name: "Rishan Mazumdar",
+      role: "Hospitality Head",
+      photo: null,
+    },
+
+    {
+      id: "th60",
+      name: "Dolly Srivastava",
+      role: "Finance Head",
+      photo: null,
+    },
+    {
+      id: "th61",
+      name: "Aadrit Kaushik",
+      role: "Finance Head",
+      photo: null,
+    },
+    {
+      id: "th62",
+      name: "Sarath Mohanraj",
+      role: "Finance Head",
+      photo: null,
+    },
+    {
+      id: "th63",
+      name: "Harsh Raj",
+      role: "Finance Head",
+      photo: null,
+    },
+
+    {
+      id: "th64",
+      name: "Shreya Daljeet",
+      role: "Social Media Head",
+      photo: null,
+    },
+    {
+      id: "th65",
+      name: "Aadrit Kaushik",
+      role: "Social Media Head",
+      photo: null,
+    },
+    {
+      id: "th66",
+      name: "Shrinivas Kharpade",
+      role: "Social Media Head",
+      photo: null,
+    },
+    {
+      id: "th67",
+      name: "Shivangi Kotnala",
+      role: "Social Media Head",
+      photo: null,
+    },
+    {
+      id: "th68",
+      name: "Shubhanshu Dixit",
+      role: "Social Media Head",
+      photo: null,
+    },
+    {
+      id: "th69",
+      name: "Pranav Kheole",
+      role: "Social Media Head",
+      photo: null,
+    },
+
+    {
+      id: "th70",
+      name: "Sara Pansuriya",
+      role: "Crafts Head",
+      photo: null,
+    },
+    {
+      id: "th71",
+      name: "Yatharth Rajpoot",
+      role: "Crafts Head",
+      photo: null,
+    },
+    {
+      id: "th72",
+      name: "Akshat Raheja",
+      role: "Crafts Head",
+      photo: null,
+    },
+    {
+      id: "th73",
+      name: "Shubhanshu Dixit",
+      role: "Crafts Head",
+      photo: null,
+    },
+
+    {
+      id: "th74",
+      name: "Keshav Anand",
+      role: "Flying Squad Head",
+      photo: null,
+    },
+    {
+      id: "th75",
+      name: "Arunanshu Basu",
+      role: "Flying Squad Head",
+      photo: null,
+    },
+    {
+      id: "th76",
+      name: "Pratyush Sharma",
+      role: "Flying Squad Head",
+      photo: null,
+    },
+    {
+      id: "th77",
+      name: "Akshat Raheja",
+      role: "Flying Squad Head",
+      photo: null,
+    },
+    {
+      id: "th78",
+      name: "Rishan Mazumdar",
+      role: "Flying Squad Head",
       photo: null,
     },
   ],
