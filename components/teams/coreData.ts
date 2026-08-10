@@ -312,7 +312,7 @@ export const coreData: Team[] = [
         id: "cu6",
         name: "Tejas Kaur",
         role: "Team Member",
-        photo: null,
+        photo: "https://pub-2b91df05320148438318902a8dc7795b.r2.dev/team-photos/tejas-kaur.avif",
       },
       {
         id: "cu7",
@@ -523,7 +523,7 @@ export const coreData: Team[] = [
         id: "mc2",
         name: "Dwijesh Chilukuri",
         role: "Team Member",
-        photo: "https://images.prismic.io/ieeemuj/65379e8b-198c-4d7e-ad60-17873c088cf0_Dinesh+Yadav.jpg?auto=format,compress",
+        photo: "https://pub-2b91df05320148438318902a8dc7795b.r2.dev/team-photos/dwijesh-chilukuri.avif",
       },
       {
         id: "mc3",
@@ -634,7 +634,7 @@ export const coreData: Team[] = [
         id: "lo4",
         name: "Taran Singh",
         role: "Team Member",
-        photo: null,
+        photo: "https://pub-2b91df05320148438318902a8dc7795b.r2.dev/team-photos/taran-singh.avif",
       },
       {
         id: "lo5",
@@ -1026,7 +1026,7 @@ export const coreData: Team[] = [
         id: "mk5",
         name: "Kashvi Mohta",
         role: "Team Member",
-        photo: null,
+        photo: "https://pub-2b91df05320148438318902a8dc7795b.r2.dev/team-photos/kashvi-mohta.avif",
         linkedin: "",
       },
       {
@@ -1180,13 +1180,13 @@ export const coreData: Team[] = [
         id: "cp4",
         name: "Krish Barnwal",
         role: "Team Member",
-        photo: null,
+        photo: "https://pub-2b91df05320148438318902a8dc7795b.r2.dev/team-photos/krish-barnwal.avif",
       },
       {
         id: "cp5",
         name: "Shana Srivastava",
         role: "Team Member",
-        photo: null,
+        photo: "https://pub-2b91df05320148438318902a8dc7795b.r2.dev/team-photos/shana-srivastava.avif",
       },
       {
         id: "cp6",
