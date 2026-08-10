@@ -162,7 +162,7 @@ export const executiveData: Team[] = [
       id: "dr21",
       name: "Garv Sharma",
       role: "Director",
-      photo: null,
+      photo: "https://images.prismic.io/ieeemuj/rfYmx8Csu3rfgoar_IMG_20260531_011152-GarvSharma.jpg?auto=format,compress",
     },
     {
       id: "dr22",
@@ -338,7 +338,7 @@ export const executiveData: Team[] = [
       id: "th22",
       name: "Garv Sharma",
       role: "Corporate Head",
-      photo: null,
+      photo: "https://images.prismic.io/ieeemuj/rfYmx8Csu3rfgoar_IMG_20260531_011152-GarvSharma.jpg?auto=format,compress",
     },
     {
       id: "th23",
@@ -369,7 +369,7 @@ export const executiveData: Team[] = [
       id: "th27",
       name: "Garv Sharma",
       role: "Graphic Design Head",
-      photo: null,
+      photo: "https://images.prismic.io/ieeemuj/rfYmx8Csu3rfgoar_IMG_20260531_011152-GarvSharma.jpg?auto=format,compress",
     },
 
     {
@@ -561,7 +561,7 @@ export const executiveData: Team[] = [
       id: "th58",
       name: "Garv Sharma",
       role: "Hospitality Head",
-      photo: null,
+      photo: "https://images.prismic.io/ieeemuj/rfYmx8Csu3rfgoar_IMG_20260531_011152-GarvSharma.jpg?auto=format,compress",
     },
     {
       id: "th59",
