@@ -271,11 +271,11 @@ export default function TeamsPage() {
           style={FONT}
         >
           Unveiling the{" "}
-          <span className="bg-gradient-to-r from-[#135DBE] via-[#2979ff] to-[#94BEF4] bg-clip-text text-transparent">
+          <span className="bg-gradient-to-r from-white via-[#94BEF4] to-[#2979ff] bg-clip-text text-transparent">
             Minds Behind
           </span>
           <br />
-          Genesis 6.0
+          GENESIS 6.0
         </h1>
       </div>
 
