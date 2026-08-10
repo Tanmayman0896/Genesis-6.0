@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" class="hidden-svg">
+  <filter id="noise-filter">
+    <feTurbulence result="noise" baseFrequency="0.013 " numOctaves="2" type="turbulence" seed="0" stitchTiles="stitch"></feTurbulence>
+    <feDiffuseLighting in="noise" lighting-color="#ffffff" surfaceScale="4.4" diffuseConstant="1">
+      <feDistantLight azimuth="90" elevation="55"></feDistantLight>
+    </feDiffuseLighting>
+  </filter>
+</svg>
+<!-- Generated from https://chrismbarr.github.io/noise-maker/?base-frequency-x=0.013&separate-frequencies=false&octaves=2&noise-type=turbulence&seed=0&tile-stitch=stitch&enable-lighting=true&lighting-lighting-color=%23ffffff&lighting-primitive-type=feDiffuseLighting&lighting-surface-scale=4.4&lighting-diffuse-constant=1&light-type=distant&lighting-distant-azimuth=90&lighting-distant-elevation=55&enable-effects=false&bg-type=solid-color&bg-color=%23e9e4ef&enable-custom-size=false -->

@@ -2,14 +2,16 @@
 
 :root {
   --background: #07162c;
-  --foreground: #171717;
+  --foreground: #ededed;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+
   --font-sans: var(--font-outfit), var(--font-geist-sans), sans-serif;
   --font-mono: var(--font-geist-mono);
+
   --font-google-sans: "Google Sans", var(--font-outfit), sans-serif;
   --font-absans: var(--font-absans), sans-serif;
   --font-mirava-sans: var(--font-mirava-sans), "Mirava Sans", sans-serif;
@@ -20,6 +22,7 @@
     from {
       opacity: 0;
     }
+
     to {
       opacity: 1;
     }
@@ -36,22 +39,56 @@
 body {
   background: transparent;
   color: #ededed;
-  font-family: var(--font-outfit), var(--font-geist-sans), system-ui, -apple-system, sans-serif;
-  overscroll-behavior-x: none; /* Disable trackpad swipe back/forward navigation */
+
+  font-family:
+    var(--font-outfit),
+    var(--font-geist-sans),
+    system-ui,
+    -apple-system,
+    sans-serif;
+
+  overscroll-behavior-x: none;
   overflow-x: hidden;
 }
 
 .fixed-bg {
   position: fixed;
   inset: 0;
-  background: linear-gradient(135deg, #07162c 0%, #0e2954 35%, #1f5194 70%, #60a5fa 100%);
+
+  background:
+    linear-gradient(
+      135deg,
+      #07162c 0%,
+      #0e2954 35%,
+      #1f5194 70%,
+      #60a5fa 100%
+    );
+
   z-index: -10;
   pointer-events: none;
+
   transform: translate3d(0, 0, 0);
   will-change: transform;
 }
 
-/* GPU Acceleration utility classes for heavy background blurs and animated gradients */
+.fixed-bg::after {
+  content: "";
+
+  position: absolute;
+  inset: 0;
+
+  background-image: url("/noise.svg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+
+  mix-blend-mode: soft-light;
+
+  opacity: 0.5;
+
+  pointer-events: none;
+}
+
 .gpu-accelerated {
   transform: translate3d(0, 0, 0);
   will-change: transform;
@@ -69,30 +106,28 @@ body {
   transform: translate3d(50%, 50%, 0);
   backface-visibility: hidden;
 }
-
-.pause-animations, .pause-animations * {
+.pause-animations,
+.pause-animations * {
   animation-play-state: paused !important;
 }
 
-/* Hide scrollbars globally across all browsers */
 ::-webkit-scrollbar {
   display: none;
 }
 
 html {
-  scrollbar-width: none; /* Firefox */
-  -ms-overflow-style: none; /* IE/Edge */
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+
   overscroll-behavior-x: none;
   scroll-behavior: auto !important;
   overflow-x: hidden;
 }
 
-/* Ensure no native smooth scrolling conflicts with Lenis */
 * {
   scroll-behavior: auto !important;
 }
 
-/* Lenis smooth scroll styling rules */
 html.lenis,
 html.lenis body {
   height: auto;
