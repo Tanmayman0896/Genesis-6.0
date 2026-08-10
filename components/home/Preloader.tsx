@@ -55,7 +55,7 @@ export default function Preloader({
         {/* Logo */}
         <div className="relative z-10 flex flex-col items-center">
           <Image
-            src="/genesislogo.webp"
+            src="/genesislogo.png"
             alt="Genesis Logo"
             width={220}
             height={75}
