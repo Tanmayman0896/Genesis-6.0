@@ -6,7 +6,7 @@ export interface TeamMember {
   id: string;
   name: string;
   role: string;
-  photo: string | null; // path relative to /public e.g. "/teams/events/john.jpg"
+  photo: string | null; 
   linkedin?: string;
   github?: string;
   instagram?: string;
