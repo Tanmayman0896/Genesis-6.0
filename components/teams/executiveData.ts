@@ -10,7 +10,7 @@ export const executiveData: Team[] = [
       id: "cv1",
       name: "Tanmoy Mandal",
       role: "Convener",
-      photo: "https://images.prismic.io/ieeemuj/aLjIZGGNHVfTOoNW_TanmoyMondal-technicalHackX3.0.jpg?auto=format,compress",
+      photo: "https://pub-2b91df05320148438318902a8dc7795b.r2.dev/media/1781889254081_37vzf.avif",
     },
     {
       id: "cv2",
@@ -42,13 +42,13 @@ export const executiveData: Team[] = [
       id: "dr1",
       name: "Aarush Dayal",
       role: "Director",
-      photo: "https://images.prismic.io/ieeemuj/aLjFWGGNHVfTOoEZ_AarushDayal-operations-HackX3.0.jpg?auto=format,compress",
+      photo: "https://pub-2b91df05320148438318902a8dc7795b.r2.dev/media/1782011040019_jvrrg.avif",
     },
     {
       id: "dr2",
       name: "Keshav Anand",
       role: "Director",
-      photo: "https://images.prismic.io/ieeemuj/aD_vnLh8WN-LVkZP_96ad7182-9dd4-46bc-8a16-9f3a61cb9b04-KeshavAnand.jpeg?auto=format,compress",
+      photo: "https://pub-2b91df05320148438318902a8dc7795b.r2.dev/media/1782011008303_b7rapr.avif",
     },
     {
       id: "dr3",
@@ -60,7 +60,7 @@ export const executiveData: Team[] = [
       id: "dr4",
       name: "Dolly Srivastava",
       role: "Director",
-      photo: "https://images.prismic.io/ieeemuj/aD3a2rh8WN-LVfjA_wowkyaphotohai-DollySrivastava.jpg?auto=format,compress",
+      photo: "https://pub-2b91df05320148438318902a8dc7795b.r2.dev/media/1782011065871_m0oq3a.avif",
     },
     {
       id: "dr5",
@@ -72,7 +72,7 @@ export const executiveData: Team[] = [
       id: "dr6",
       name: "Anshuman Singh",
       role: "Director",
-      photo: "https://images.prismic.io/ieeemuj/aEM3B7h8WN-LVxqu_20250405_211338-AnshumanSingh.jpg?auto=format,compress",
+      photo: "https://pub-2b91df05320148438318902a8dc7795b.r2.dev/media/1782011094578_2vzedf.avif",
     },
     {
       id: "dr7",
@@ -210,7 +210,7 @@ export const executiveData: Team[] = [
       id: "th1",
       name: "Aarush Dayal",
       role: "Events Head",
-      photo: "https://images.prismic.io/ieeemuj/aLjFWGGNHVfTOoEZ_AarushDayal-operations-HackX3.0.jpg?auto=format,compress",
+      photo: "https://pub-2b91df05320148438318902a8dc7795b.r2.dev/media/1782011040019_jvrrg.avif",
     },
     {
       id: "th2",
@@ -259,7 +259,7 @@ export const executiveData: Team[] = [
       id: "th9",
       name: "Tanmoy Mandal",
       role: "Marketing Head",
-      photo: "https://images.prismic.io/ieeemuj/aLjIZGGNHVfTOoNW_TanmoyMondal-technicalHackX3.0.jpg?auto=format,compress",
+      photo: "https://pub-2b91df05320148438318902a8dc7795b.r2.dev/media/1781889254081_37vzf.avif",
     },
     {
       id: "th10",
@@ -302,13 +302,13 @@ export const executiveData: Team[] = [
       id: "th16",
       name: "Tanmoy Mandal",
       role: "Corporate Head",
-      photo: "https://images.prismic.io/ieeemuj/aLjIZGGNHVfTOoNW_TanmoyMondal-technicalHackX3.0.jpg?auto=format,compress",
+      photo: "https://pub-2b91df05320148438318902a8dc7795b.r2.dev/media/1781889254081_37vzf.avif",
     },
     {
       id: "th17",
       name: "Dolly Srivastava",
       role: "Corporate Head",
-      photo: "https://images.prismic.io/ieeemuj/aD3a2rh8WN-LVfjA_wowkyaphotohai-DollySrivastava.jpg?auto=format,compress",
+      photo: "https://pub-2b91df05320148438318902a8dc7795b.r2.dev/media/1782011065871_m0oq3a.avif",
     },
     {
       id: "th18",
@@ -351,7 +351,7 @@ export const executiveData: Team[] = [
       id: "th24",
       name: "Aarush Dayal",
       role: "Graphic Design Head",
-      photo: "https://images.prismic.io/ieeemuj/aLjFWGGNHVfTOoEZ_AarushDayal-operations-HackX3.0.jpg?auto=format,compress",
+      photo: "https://pub-2b91df05320148438318902a8dc7795b.r2.dev/media/1782011040019_jvrrg.avif",
     },
     {
       id: "th25",
@@ -376,7 +376,7 @@ export const executiveData: Team[] = [
       id: "th28",
       name: "Tanmoy Mandal",
       role: "Technical Head",
-      photo: "https://images.prismic.io/ieeemuj/aLjIZGGNHVfTOoNW_TanmoyMondal-technicalHackX3.0.jpg?auto=format,compress",
+      photo: "https://pub-2b91df05320148438318902a8dc7795b.r2.dev/media/1781889254081_37vzf.avif",
     },
     {
       id: "th29",
@@ -438,7 +438,7 @@ export const executiveData: Team[] = [
       id: "th38",
       name: "Anshuman Singh",
       role: "Media & Coverage Head",
-      photo: "https://images.prismic.io/ieeemuj/aEM3B7h8WN-LVxqu_20250405_211338-AnshumanSingh.jpg?auto=format,compress",
+      photo: "https://pub-2b91df05320148438318902a8dc7795b.r2.dev/media/1782011094578_2vzedf.avif",
     },
     {
       id: "th39",
@@ -463,7 +463,7 @@ export const executiveData: Team[] = [
       id: "th42",
       name: "Dolly Srivastava",
       role: "Curations Head",
-      photo: "https://images.prismic.io/ieeemuj/aD3a2rh8WN-LVfjA_wowkyaphotohai-DollySrivastava.jpg?auto=format,compress",
+      photo: "https://pub-2b91df05320148438318902a8dc7795b.r2.dev/media/1782011065871_m0oq3a.avif",
     },
     {
       id: "th43",
@@ -494,13 +494,13 @@ export const executiveData: Team[] = [
       id: "th47",
       name: "Keshav Anand",
       role: "Logistics Head",
-      photo: "https://images.prismic.io/ieeemuj/aD_vnLh8WN-LVkZP_96ad7182-9dd4-46bc-8a16-9f3a61cb9b04-KeshavAnand.jpeg?auto=format,compress",
+      photo: "https://pub-2b91df05320148438318902a8dc7795b.r2.dev/media/1782011008303_b7rapr.avif",
     },
     {
       id: "th48",
       name: "Anshuman Singh",
       role: "Logistics Head",
-      photo: "https://images.prismic.io/ieeemuj/aEM3B7h8WN-LVxqu_20250405_211338-AnshumanSingh.jpg?auto=format,compress",
+      photo: "https://pub-2b91df05320148438318902a8dc7795b.r2.dev/media/1782011094578_2vzedf.avif",
     },
     {
       id: "th49",
@@ -531,13 +531,13 @@ export const executiveData: Team[] = [
       id: "th53",
       name: "Keshav Anand",
       role: "Hospitality Head",
-      photo: "https://images.prismic.io/ieeemuj/aD_vnLh8WN-LVkZP_96ad7182-9dd4-46bc-8a16-9f3a61cb9b04-KeshavAnand.jpeg?auto=format,compress",
+      photo: "https://pub-2b91df05320148438318902a8dc7795b.r2.dev/media/1782011008303_b7rapr.avif",
     },
     {
       id: "th54",
       name: "Anshuman Singh",
       role: "Hospitality Head",
-      photo: "https://images.prismic.io/ieeemuj/aEM3B7h8WN-LVxqu_20250405_211338-AnshumanSingh.jpg?auto=format,compress",
+      photo: "https://pub-2b91df05320148438318902a8dc7795b.r2.dev/media/1782011094578_2vzedf.avif",
     },
     {
       id: "th55",
@@ -574,7 +574,7 @@ export const executiveData: Team[] = [
       id: "th60",
       name: "Dolly Srivastava",
       role: "Finance Head",
-      photo: "https://images.prismic.io/ieeemuj/aD3a2rh8WN-LVfjA_wowkyaphotohai-DollySrivastava.jpg?auto=format,compress",
+      photo: "https://pub-2b91df05320148438318902a8dc7795b.r2.dev/media/1782011065871_m0oq3a.avif",
     },
     {
       id: "th61",
@@ -661,7 +661,7 @@ export const executiveData: Team[] = [
       id: "th74",
       name: "Keshav Anand",
       role: "Flying Squad Head",
-      photo: "https://images.prismic.io/ieeemuj/aD_vnLh8WN-LVkZP_96ad7182-9dd4-46bc-8a16-9f3a61cb9b04-KeshavAnand.jpeg?auto=format,compress",
+      photo: "https://pub-2b91df05320148438318902a8dc7795b.r2.dev/media/1782011008303_b7rapr.avif",
     },
     {
       id: "th75",

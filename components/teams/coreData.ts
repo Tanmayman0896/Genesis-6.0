@@ -17,7 +17,7 @@ export const coreData: Team[] = [
         id: "tc7",
         name: "Vidhyanshu Kumar",
         role: "Team Member",
-        photo: "https://images.prismic.io/ieeemuj/W5sKhmHh4OKXHrhg_Vidhyanshu.png?auto=format,compress",
+        photo: "https://pub-45c102ac14a64011a530ed2864a18405.r2.dev/team/vidhyanshu-kumar.webp",
         github: "",
       },
       {
