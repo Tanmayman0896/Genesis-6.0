@@ -88,14 +88,14 @@ export default function ContactPage() {
                 </h3>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-6">
                   <div>
-                    <p className="text-sm text-blue-400 font-bold font-sans">Tanmoy Mandal</p>
-                    <p className="text-[15px] text-white font-bold font-sans mt-0.5">+91 83401 57213</p>
-                    <p className="text-xs text-blue-100/50 font-light font-sans mt-0.5">(Chairperson-IEEE CS MUJ)</p>
-                  </div>
-                  <div>
                     <p className="text-sm text-blue-400 font-bold font-sans">Arunanshu Basu</p>
                     <p className="text-[15px] text-white font-bold font-sans mt-0.5">+91 78694 86315</p>
                     <p className="text-xs text-blue-100/50 font-light font-sans mt-0.5">(Chairperson-IEEE SB MUJ)</p>
+                  </div>
+                  <div>
+                    <p className="text-sm text-blue-400 font-bold font-sans">Tanmoy Mandal</p>
+                    <p className="text-[15px] text-white font-bold font-sans mt-0.5">+91 83401 57213</p>
+                    <p className="text-xs text-blue-100/50 font-light font-sans mt-0.5">(Chairperson-IEEE CS MUJ)</p>
                   </div>
                   <div>
                     <p className="text-sm text-blue-400 font-bold font-sans">Palakshi Sirsa</p>
