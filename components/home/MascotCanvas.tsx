@@ -682,13 +682,13 @@ export default function MascotCanvas({ onProgress, onLoaded, page = "home", side
                         .to(mascotModel.scale, { y: scale * 1.12, x: scale * 0.9, duration: 0.15, ease: "power1.inOut" })
                         .to(mascotModel.scale, { y: scale, x: scale, duration: 0.2, ease: "back.out(2)" });
 
-                      // Spawn radial burst of 360-degree pink hearts (spread like sparkles)
-                      const numHearts = 10;
-                      for (let i = 0; i < numHearts; i++) {
-                        const baseAngle = (i / numHearts) * 2 * Math.PI;
-                        const angle = baseAngle + (Math.random() - 0.5) * 0.25;
-                        spawnHeart(angle, Math.random() * 0.15);
-                      }
+                      // Hearts animation disabled
+                      // const numHearts = 10;
+                      // for (let i = 0; i < numHearts; i++) {
+                      //   const baseAngle = (i / numHearts) * 2 * Math.PI;
+                      //   const angle = baseAngle + (Math.random() - 0.5) * 0.25;
+                      //   spawnHeart(angle, Math.random() * 0.15);
+                      // }
                     }
                   }
                 } else if (p < 0.5 || p > 0.9) {
