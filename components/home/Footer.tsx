@@ -119,20 +119,20 @@ export default function Footer() {
             
             <div className={styles.chaptersWrapper}>
               <Image
-                src="/footer/IEEE CS WHITE LOGO_converted.avif"
-                alt="IEEE CS Logo"
-                width={180}
-                height={60}
-                className={`${styles.csLogo} object-contain`}
-                loading="lazy"
-                decoding="async"
-              />
-              <Image
                 src="/footer/ieee sb white logo_converted.avif"
                 alt="IEEE SB Logo"
                 width={180}
                 height={60}
                 className={`${styles.sbLogo} object-contain`}
+                loading="lazy"
+                decoding="async"
+              />
+              <Image
+                src="/footer/IEEE CS WHITE LOGO_converted.avif"
+                alt="IEEE CS Logo"
+                width={180}
+                height={60}
+                className={`${styles.csLogo} object-contain`}
                 loading="lazy"
                 decoding="async"
               />
@@ -167,10 +167,10 @@ export default function Footer() {
                   <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
                   <circle cx="12" cy="7" r="4" />
                 </svg>
-                Tanmoy Mandal
+                  Arunanshu Basu
               </h4>
-              <a href="tel:+918340157213" className={styles.contactPhone}>+91 83401 57213</a>
-              <p className={styles.contactRole}>(Chairperson-IEEE CS MUJ)</p>
+              <a href="tel:+917869486315" className={styles.contactPhone}>+91 78694 86315</a>
+              <p className={styles.contactRole}>(Chairperson-IEEE SB MUJ)</p>
             </div>
             <div className={styles.contactCard}>
               <h4 className={styles.contactName}>
@@ -178,10 +178,10 @@ export default function Footer() {
                   <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
                   <circle cx="12" cy="7" r="4" />
                 </svg>
-                Arunanshu Basu
+                Tanmoy Mandal
               </h4>
-              <a href="tel:+917869486315" className={styles.contactPhone}>+91 78694 86315</a>
-              <p className={styles.contactRole}>(Chairperson-IEEE SB MUJ)</p>
+              <a href="tel:+918340157213" className={styles.contactPhone}>+91 83401 57213</a>
+              <p className={styles.contactRole}>(Chairperson-IEEE CS MUJ)</p>
             </div>
             <div className={styles.contactCard}>
               <h4 className={styles.contactName}>
@@ -211,6 +211,14 @@ export default function Footer() {
         {/* Right Section: Website Links */}
         <div className={styles.rightSection}>
           <div className={styles.linksContainer}>
+             <a href="https://ieeemuj.com/" target="_blank" rel="noopener noreferrer" className={styles.footerLink}>
+              <svg className={styles.globeIcon} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                <circle cx="12" cy="12" r="10" />
+                <line x1="2" y1="12" x2="22" y2="12" />
+                <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
+              </svg>
+              IEEE SB WEBSITE
+            </a>
             <a href="https://cs.ieeemuj.com" target="_blank" rel="noopener noreferrer" className={styles.footerLink}>
               <svg className={styles.globeIcon} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
                 <circle cx="12" cy="12" r="10" />
@@ -218,14 +226,6 @@ export default function Footer() {
                 <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
               </svg>
               IEEE CS WEBSITE
-            </a>
-            <a href="https://ieeemuj.com/" target="_blank" rel="noopener noreferrer" className={styles.footerLink}>
-              <svg className={styles.globeIcon} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                <circle cx="12" cy="12" r="10" />
-                <line x1="2" y1="12" x2="22" y2="12" />
-                <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
-              </svg>
-              IEEE SB WEBSITE
             </a>
             <a href="https://wie.ieeemuj.com" target="_blank" rel="noopener noreferrer" className={styles.footerLink}>
               <svg className={styles.globeIcon} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
