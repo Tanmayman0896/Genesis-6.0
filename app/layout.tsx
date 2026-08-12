@@ -84,6 +84,18 @@ export default function RootLayout({
           crossOrigin="anonymous" 
           referrerPolicy="no-referrer" 
         />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "WebSite",
+              "name": "Genesis 6.0",
+              "alternateName": "Genesis",
+              "url": "https://genesis.ieeemuj.com/",
+            }),
+          }}
+        />
       </head>
       <body className="min-h-full flex flex-col">
         <div className="fixed-bg" />
