@@ -6,9 +6,15 @@ import { MemberType, TeamMember } from "./teamsData";
 import { executiveData } from "./executiveData";
 import { coreData } from "./coreData";
 import { facultyData } from "./facultyData";
-import {LinkedInIcon,GitHubIcon,ChevronIcon,FilterIcon,
+import {
+  LinkedInIcon,
+  GitHubIcon,
+  ChevronIcon,
+  FilterIcon,
 } from "./TeamIcons";
+
 // ─── Font helper ──────────────────────────────────────────────────────────────
+
 const FONT: React.CSSProperties = {
   fontFamily: "var(--font-mirava-sans)",
 };
@@ -42,8 +48,6 @@ const MEMBER_TYPES: { id: MemberType; label: string }[] = [
 ];
 
 // ─── Sliding Pill Toggle ─────────────────────────────────────────────────────
-// Bar background: dark navy (#0d1b35) matching the reference image.
-// Active pill: white, slides smoothly. Inactive text: muted blue-white.
 
 function SlidingPillToggle({
   options,
@@ -77,7 +81,7 @@ function SlidingPillToggle({
   return (
     <div
       ref={containerRef}
-      className="relative inline-flex items-center rounded-full p-1"
+      className="relative inline-flex items-center rounded-full p-1 max-w-full"
       style={{
         background: "#0d1b35",
         border: "1.5px solid rgba(26,115,232,0.25)",
@@ -103,7 +107,7 @@ function SlidingPillToggle({
             buttonRefs.current[i] = el;
           }}
           onClick={() => onChange(option.id)}
-          className="relative z-10 px-7 py-2.5 rounded-full text-[14px] font-bold select-none"
+          className="relative z-10 px-5 sm:px-7 py-2.5 rounded-full text-[13px] sm:text-[14px] font-bold select-none whitespace-nowrap"
           style={{
             ...FONT,
             color: active === option.id ? "#07162c" : "white",
@@ -118,8 +122,6 @@ function SlidingPillToggle({
 }
 
 // ─── Member Card ─────────────────────────────────────────────────────────────
-// Layout: large photo fills the top 3/4 of the card, name + role appear small
-// below. LinkedIn / GitHub icon buttons always visible at the very bottom.
 
 function MemberCard({
   member,
@@ -180,10 +182,10 @@ function MemberCard({
   return (
     <div
       ref={cardRef}
-      className={`w-full transition-all duration-[850ms] ease-out transform ${getSlideClass()}`}
+      className={`w-full min-w-0 transition-all duration-[850ms] ease-out transform ${getSlideClass()}`}
     >
       <div
-        className="group flex flex-col items-center justify-between rounded-2xl p-4 transition-all duration-300 hover:scale-[1.03] hover:shadow-[0_20px_50px_rgba(26,115,232,0.3)] border border-white/25 bg-gradient-to-b from-[#72b6e5]/30 to-[#5ea1d4]/30 backdrop-blur-lg h-full"
+        className="group flex flex-col items-center justify-between rounded-2xl p-3 sm:p-4 transition-all duration-300 hover:scale-[1.03] hover:shadow-[0_20px_50px_rgba(26,115,232,0.3)] border border-white/25 bg-gradient-to-b from-[#72b6e5]/30 to-[#5ea1d4]/30 backdrop-blur-lg h-full"
         style={{
           boxShadow:
             "inset 0 1px 1px rgba(255,255,255,0.4), 0 8px 32px 0 rgba(0, 0, 0, 0.15)",
@@ -214,14 +216,14 @@ function MemberCard({
         {/* ── Name + Role ── */}
         <div className="w-full text-center mt-4 mb-3">
           <h3
-            className="text-white font-extrabold text-[16px] md:text-[18px] leading-snug drop-shadow-[0_2px_4px_rgba(0,0,0,0.25)] tracking-wide"
+            className="text-white font-extrabold text-[14px] sm:text-[16px] md:text-[18px] leading-snug drop-shadow-[0_2px_4px_rgba(0,0,0,0.25)] tracking-wide break-words"
             style={FONT}
           >
             {member.name}
           </h3>
 
           <p
-            className="text-white/90 font-bold text-[12px] md:text-[13px] leading-snug mt-1.5 drop-shadow-[0_1px_2px_rgba(0,0,0,0.15)]"
+            className="text-white/90 font-bold text-[11px] sm:text-[12px] md:text-[13px] leading-snug mt-1.5 drop-shadow-[0_1px_2px_rgba(0,0,0,0.15)] break-words"
             style={FONT}
           >
             {member.role}
@@ -229,19 +231,20 @@ function MemberCard({
         </div>
 
         {/* ── GitHub + LinkedIn buttons ── */}
-        <div className="flex items-center justify-center gap-2 mt-auto w-full">
+        <div className="flex items-center justify-center gap-1.5 sm:gap-2 mt-auto w-full min-w-0">
           {/* GitHub */}
           {member.github ? (
             <a
               href={member.github}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center justify-center gap-2 px-5 py-1.5 rounded-full border border-white/30 bg-white/20 backdrop-blur-sm text-white hover:text-white hover:bg-white/35 hover:scale-105 transition-all duration-300 shadow-[0_2px_10px_rgba(0,0,0,0.05)] w-fit"
+              className="flex items-center justify-center gap-1 sm:gap-1.5 lg:gap-2 w-1/2 min-w-0 px-1.5 sm:px-2.5 lg:px-4 py-1.5 rounded-full border border-white/30 bg-white/20 backdrop-blur-sm text-white hover:text-white hover:bg-white/35 hover:scale-105 transition-all duration-300 shadow-[0_2px_10px_rgba(0,0,0,0.05)]"
               aria-label={`${member.name} GitHub`}
             >
-              <GitHubIcon className="w-[14px] h-[14px] text-white" />
+              <GitHubIcon className="w-[12px] h-[12px] sm:w-[13px] sm:h-[13px] lg:w-[14px] lg:h-[14px] flex-shrink-0 text-white" />
+
               <span
-                className="text-[13px] font-bold text-white tracking-wide"
+                className="text-[10px] sm:text-[11px] lg:text-[13px] font-bold text-white tracking-wide whitespace-nowrap"
                 style={FONT}
               >
                 GitHub
@@ -249,13 +252,13 @@ function MemberCard({
             </a>
           ) : (
             <span
-              className="flex items-center justify-center gap-2 px-5 py-1.5 rounded-full border border-white/20 bg-white/10 text-white/60 cursor-not-allowed w-fit"
+              className="flex items-center justify-center gap-1 sm:gap-1.5 lg:gap-2 w-1/2 min-w-0 px-1.5 sm:px-2.5 lg:px-4 py-1.5 rounded-full border border-white/20 bg-white/10 text-white/60 cursor-not-allowed"
               aria-label="GitHub (not linked)"
             >
-              <GitHubIcon className="w-[14px] h-[14px] text-white/60" />
+              <GitHubIcon className="w-[12px] h-[12px] sm:w-[13px] sm:h-[13px] lg:w-[14px] lg:h-[14px] flex-shrink-0 text-white/60" />
 
               <span
-                className="text-[13px] font-bold text-white/60 tracking-wide"
+                className="text-[10px] sm:text-[11px] lg:text-[13px] font-bold text-white/60 tracking-wide whitespace-nowrap"
                 style={FONT}
               >
                 GitHub
@@ -269,13 +272,13 @@ function MemberCard({
               href={member.linkedin}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center justify-center gap-2 px-5 py-1.5 rounded-full border border-white/30 bg-white/20 backdrop-blur-sm text-white hover:text-white hover:bg-white/35 hover:scale-105 transition-all duration-300 shadow-[0_2px_10px_rgba(0,0,0,0.05)] w-fit"
+              className="flex items-center justify-center gap-1 sm:gap-1.5 lg:gap-2 w-1/2 min-w-0 px-1.5 sm:px-2.5 lg:px-4 py-1.5 rounded-full border border-white/30 bg-white/20 backdrop-blur-sm text-white hover:text-white hover:bg-white/35 hover:scale-105 transition-all duration-300 shadow-[0_2px_10px_rgba(0,0,0,0.05)]"
               aria-label={`${member.name} LinkedIn`}
             >
-              <LinkedInIcon className="w-[14px] h-[14px] text-white" />
+              <LinkedInIcon className="w-[12px] h-[12px] sm:w-[13px] sm:h-[13px] lg:w-[14px] lg:h-[14px] flex-shrink-0 text-white" />
 
               <span
-                className="text-[13px] font-bold text-white tracking-wide"
+                className="text-[10px] sm:text-[11px] lg:text-[13px] font-bold text-white tracking-wide whitespace-nowrap"
                 style={FONT}
               >
                 LinkedIn
@@ -283,13 +286,13 @@ function MemberCard({
             </a>
           ) : (
             <span
-              className="flex items-center justify-center gap-2 px-5 py-1.5 rounded-full border border-white/20 bg-white/10 text-white/60 cursor-not-allowed w-fit"
+              className="flex items-center justify-center gap-1 sm:gap-1.5 lg:gap-2 w-1/2 min-w-0 px-1.5 sm:px-2.5 lg:px-4 py-1.5 rounded-full border border-white/20 bg-white/10 text-white/60 cursor-not-allowed"
               aria-label="LinkedIn (not linked)"
             >
-              <LinkedInIcon className="w-[14px] h-[14px] text-white/60" />
+              <LinkedInIcon className="w-[12px] h-[12px] sm:w-[13px] sm:h-[13px] lg:w-[14px] lg:h-[14px] flex-shrink-0 text-white/60" />
 
               <span
-                className="text-[13px] font-bold text-white/60 tracking-wide"
+                className="text-[10px] sm:text-[11px] lg:text-[13px] font-bold text-white/60 tracking-wide whitespace-nowrap"
                 style={FONT}
               >
                 LinkedIn
@@ -353,7 +356,7 @@ export default function TeamsPage() {
         />
 
         {/* Team filter toggle button */}
-        {/* 
+        {/*
         <button
           onClick={() => setFiltersOpen((prev) => !prev)}
           className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full text-[14px] font-bold transition-all duration-300"
@@ -440,7 +443,10 @@ export default function TeamsPage() {
       {/* ── Teams Grid ── */}
       <div className="max-w-6xl mx-auto space-y-16">
         {filteredTeams.length === 0 ? (
-          <div className="text-center py-24 text-white/30 text-lg" style={FONT}>
+          <div
+            className="text-center py-24 text-white/30 text-lg"
+            style={FONT}
+          >
             No members found for this combination.
           </div>
         ) : (
