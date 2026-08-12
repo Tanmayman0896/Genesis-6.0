@@ -28,7 +28,7 @@ export const executiveData: Team[] = [
       id: "cv4",
       name: "Shubhanshu Dixit",
       role: "Convener",
-      photo: null,
+      photo: "https://images.prismic.io/ieeemuj/YeEGqiXTiDFTi97v_Shubhanshu.jpeg?auto=format,compress",
     },
   ],
 },
@@ -150,37 +150,37 @@ export const executiveData: Team[] = [
       id: "dr19",
       name: "Rishan Mazumdar",
       role: "Director",
-      photo: null,
+      photo: "https://images.prismic.io/ieeemuj/qlFwXpTB2igF5gPT_rishaan.jpeg?auto=format,compress",
     },
     {
       id: "dr20",
       name: "Harsh Raj",
       role: "Director",
-      photo: null,
+      photo: "https://images.prismic.io/ieeemuj/jCS6N4_zzUmgQ9J3_harshraj.jpeg?auto=format,compress",
     },
     {
       id: "dr21",
       name: "Garv Sharma",
       role: "Director",
-      photo: null,
+      photo: "https://images.prismic.io/ieeemuj/0-vKe0C1aqOXFccJ_garv.jpeg?auto=format,compress",
     },
     {
       id: "dr22",
       name: "Pranav Kheole",
       role: "Director",
-      photo: null,
+      photo: "https://images.prismic.io/ieeemuj/_j2XV9wttcn6LykD_Pranav.jpeg?auto=format,compress",
     },
     {
       id: "dr23",
       name: "Yash Raj",
       role: "Director",
-      photo: null,
+      photo: "https://images.prismic.io/ieeemuj/4JzML6VE38ckDP8H_Yash.jpg?auto=format,compress",
     },
     {
       id: "dr24",
-      name: "Manya Moona",
+      name: "Manya Moonat",
       role: "Director",
-      photo: null,
+      photo: "https://images.prismic.io/ieeemuj/jaAvTBvqNqvYnauY_Maanya.jpg?auto=format,compress",
     },
   ],
 },
@@ -246,13 +246,13 @@ export const executiveData: Team[] = [
       id: "th7",
       name: "Manya Moonat",
       role: "Events Head",
-      photo: null,
+      photo: "https://images.prismic.io/ieeemuj/jaAvTBvqNqvYnauY_Maanya.jpg?auto=format,compress",
     },
     {
       id: "th8",
       name: "Yash Raj",
       role: "Events Head",
-      photo: null,
+      photo: "https://images.prismic.io/ieeemuj/4JzML6VE38ckDP8H_Yash.jpg?auto=format,compress",
     },
 
     {
@@ -289,13 +289,13 @@ export const executiveData: Team[] = [
       id: "th14",
       name: "Pranav Kheole",
       role: "Marketing Head",
-      photo: null,
+      photo: "https://images.prismic.io/ieeemuj/_j2XV9wttcn6LykD_Pranav.jpeg?auto=format,compress",
     },
     {
       id: "th15",
       name: "Manya Moonat",
       role: "Marketing Head",
-      photo: null,
+      photo: "https://images.prismic.io/ieeemuj/jaAvTBvqNqvYnauY_Maanya.jpg?auto=format,compress",
     },
 
     {
@@ -338,13 +338,13 @@ export const executiveData: Team[] = [
       id: "th22",
       name: "Garv Sharma",
       role: "Corporate Head",
-      photo: null,
+      photo: "https://images.prismic.io/ieeemuj/0-vKe0C1aqOXFccJ_garv.jpeg?auto=format,compress",
     },
     {
       id: "th23",
       name: "Yash Raj",
       role: "Corporate Head",
-      photo: null,
+      photo: "https://images.prismic.io/ieeemuj/4JzML6VE38ckDP8H_Yash.jpg?auto=format,compress",
     },
 
     {
@@ -369,7 +369,7 @@ export const executiveData: Team[] = [
       id: "th27",
       name: "Garv Sharma",
       role: "Graphic Design Head",
-      photo: null,
+      photo: "https://images.prismic.io/ieeemuj/0-vKe0C1aqOXFccJ_garv.jpeg?auto=format,compress",
     },
 
     {
@@ -400,13 +400,13 @@ export const executiveData: Team[] = [
       id: "th32",
       name: "Harsh Raj",
       role: "Technical Head",
-      photo: null,
+      photo: "https://images.prismic.io/ieeemuj/jCS6N4_zzUmgQ9J3_harshraj.jpeg?auto=format,compress",
     },
     {
       id: "th33",
       name: "Yash Raj",
       role: "Technical Head",
-      photo: null,
+      photo: "https://images.prismic.io/ieeemuj/4JzML6VE38ckDP8H_Yash.jpg?auto=format,compress",
     },
 
     {
@@ -431,7 +431,7 @@ export const executiveData: Team[] = [
       id: "th37",
       name: "Manya Moonat",
       role: "Content Head",
-      photo: null,
+      photo: "https://images.prismic.io/ieeemuj/jaAvTBvqNqvYnauY_Maanya.jpg?auto=format,compress",
     },
 
     {
@@ -456,7 +456,7 @@ export const executiveData: Team[] = [
       id: "th41",
       name: "Pranav Kheole",
       role: "Media & Coverage Head",
-      photo: null,
+      photo: "https://images.prismic.io/ieeemuj/_j2XV9wttcn6LykD_Pranav.jpeg?auto=format,compress",
     },
 
     {
@@ -487,7 +487,7 @@ export const executiveData: Team[] = [
       id: "th46",
       name: "Shubhanshu Dixit",
       role: "Curations Head",
-      photo: null,
+      photo: "https://images.prismic.io/ieeemuj/YeEGqiXTiDFTi97v_Shubhanshu.jpeg?auto=format,compress",
     },
 
     {
@@ -524,7 +524,7 @@ export const executiveData: Team[] = [
       id: "th52",
       name: "Rishan Mazumdar",
       role: "Logistics Head",
-      photo: null,
+      photo: "https://images.prismic.io/ieeemuj/qlFwXpTB2igF5gPT_rishaan.jpeg?auto=format,compress",
     },
 
     {
@@ -561,13 +561,13 @@ export const executiveData: Team[] = [
       id: "th58",
       name: "Garv Sharma",
       role: "Hospitality Head",
-      photo: null,
+      photo: "https://images.prismic.io/ieeemuj/0-vKe0C1aqOXFccJ_garv.jpeg?auto=format,compress",
     },
     {
       id: "th59",
       name: "Rishan Mazumdar",
       role: "Hospitality Head",
-      photo: null,
+      photo: "https://images.prismic.io/ieeemuj/qlFwXpTB2igF5gPT_rishaan.jpeg?auto=format,compress",
     },
 
     {
@@ -592,7 +592,7 @@ export const executiveData: Team[] = [
       id: "th63",
       name: "Harsh Raj",
       role: "Finance Head",
-      photo: null,
+      photo: "https://images.prismic.io/ieeemuj/jCS6N4_zzUmgQ9J3_harshraj.jpeg?auto=format,compress",
     },
 
     {
@@ -623,13 +623,13 @@ export const executiveData: Team[] = [
       id: "th68",
       name: "Shubhanshu Dixit",
       role: "Social Media Head",
-      photo: null,
+      photo: "https://images.prismic.io/ieeemuj/YeEGqiXTiDFTi97v_Shubhanshu.jpeg?auto=format,compress",
     },
     {
       id: "th69",
       name: "Pranav Kheole",
       role: "Social Media Head",
-      photo: null,
+      photo: "https://images.prismic.io/ieeemuj/_j2XV9wttcn6LykD_Pranav.jpeg?auto=format,compress",
     },
 
     {
@@ -654,7 +654,7 @@ export const executiveData: Team[] = [
       id: "th73",
       name: "Shubhanshu Dixit",
       role: "Crafts Head",
-      photo: null,
+      photo: "https://images.prismic.io/ieeemuj/YeEGqiXTiDFTi97v_Shubhanshu.jpeg?auto=format,compress",
     },
 
     {
@@ -685,7 +685,7 @@ export const executiveData: Team[] = [
       id: "th78",
       name: "Rishan Mazumdar",
       role: "Flying Squad Head",
-      photo: null,
+      photo: "https://images.prismic.io/ieeemuj/qlFwXpTB2igF5gPT_rishaan.jpeg?auto=format,compress",
     },
   ],
 },
