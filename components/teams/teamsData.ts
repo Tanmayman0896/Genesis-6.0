@@ -1,4 +1,3 @@
-// ─── Team Types and Interfaces ────────────────────────────────────────────────
 
 export type MemberType = "executive" | "core" | "faculty";
 

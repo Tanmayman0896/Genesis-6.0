@@ -38,16 +38,29 @@ const plusJakartaSans = Plus_Jakarta_Sans({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://genesis.ieeemuj.com"),
   title: {
-    default: "Genesis 6.0",
+    default: "Genesis 6.0 by IEEE MUJ",
     template: "%s | Genesis 6.0",
   },
-  description: "Welcome to Genesis 6.0 - the flagship technical event. Compete in hackathons, join workshops, win exciting prizes, and connect with top tech minds.",
+  description: "Genesis is the largest technical fest of IEEE MUJ.",
   keywords: ["Genesis 6.0", "IEEE", "technical symposium", "hackathon", "workshops", "coding contest", "engineering"],
   icons: {
     icon: "/icon.png",
     shortcut: "/icon.png",
     apple: "/apple-icon.png",
+  },
+  openGraph: {
+    title: "Genesis 6.0 by IEEE MUJ",
+    description: "Genesis is the largest technical fest of IEEE MUJ.",
+    siteName: "Genesis 6.0",
+    url: "https://genesis.ieeemuj.com",
+    type: "website",
+  },
+  twitter: {
+    card: "summary",
+    title: "Genesis 6.0 by IEEE MUJ",
+    description: "Genesis is the largest technical fest of IEEE MUJ.",
   },
 };
 
