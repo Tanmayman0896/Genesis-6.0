@@ -549,10 +549,7 @@ export default function Gallery() {
   return (
     <div
       ref={containerRef}
-      className="relative h-screen w-full flex flex-col items-center justify-start pt-24 font-sans text-white overflow-hidden select-none"
-      style={{
-        background: "linear-gradient(135deg, #07162c 0%, #0e2954 35%, #1f5194 70%, #60a5fa 100%)",
-      }}
+      className="relative h-screen w-full flex flex-col items-center justify-start pt-24 font-sans text-white overflow-hidden select-none bg-transparent"
     >
       {/* Decorative Blur Backgrounds */}
       <div className="gpu-accelerated absolute top-1/4 left-1/10 w-96 h-96 bg-blue-500/10 rounded-full blur-[120px] pointer-events-none" />
