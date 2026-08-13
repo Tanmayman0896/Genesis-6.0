@@ -208,4 +208,5 @@ export const executiveData: Team[] = [
       photo: "https://images.prismic.io/ieeemuj/BX94O48hvl8LHHGb_5cac3860bd69ff53c720786612e1523badc24917-1200x1600.jpg?auto=format,compress",
     },
   ],
+},
 ];
