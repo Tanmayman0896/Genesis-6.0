@@ -388,7 +388,7 @@ export default function Home() {
               </div>
               <MascotCanvas page="why" side="left" />
             </div>
-            <h2 className="text-[38px] md:text-[62px] font-extrabold tracking-tight font-mirava-sans bg-gradient-to-r from-white via-blue-100 to-blue-300 bg-clip-text text-transparent mb-6 md:whitespace-nowrap">
+            <h2 className="text-[clamp(2rem,5.8vw,62px)] font-extrabold tracking-tight font-mirava-sans bg-gradient-to-r from-white via-blue-100 to-blue-300 bg-clip-text text-transparent mb-6 leading-tight text-center">
               Why participate in Genesis 6.0?
             </h2>
 
