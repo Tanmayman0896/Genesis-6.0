@@ -38,16 +38,29 @@ const plusJakartaSans = Plus_Jakarta_Sans({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://genesis.ieeemuj.com"),
   title: {
-    default: "Genesis 6.0",
+    default: "Genesis 6.0 by IEEE MUJ",
     template: "%s | Genesis 6.0",
   },
-  description: "Welcome to Genesis 6.0 - the flagship technical event. Compete in hackathons, join workshops, win exciting prizes, and connect with top tech minds.",
+  description: "Genesis is the largest technical fest of IEEE MUJ.",
   keywords: ["Genesis 6.0", "IEEE", "technical symposium", "hackathon", "workshops", "coding contest", "engineering"],
   icons: {
     icon: "/icon.png",
     shortcut: "/icon.png",
     apple: "/apple-icon.png",
+  },
+  openGraph: {
+    title: "Genesis 6.0 by IEEE MUJ",
+    description: "Genesis is the largest technical fest of IEEE MUJ.",
+    siteName: "Genesis 6.0",
+    url: "https://genesis.ieeemuj.com",
+    type: "website",
+  },
+  twitter: {
+    card: "summary",
+    title: "Genesis 6.0 by IEEE MUJ",
+    description: "Genesis is the largest technical fest of IEEE MUJ.",
   },
 };
 
@@ -70,6 +83,18 @@ export default function RootLayout({
           href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" 
           crossOrigin="anonymous" 
           referrerPolicy="no-referrer" 
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "WebSite",
+              "name": "Genesis 6.0",
+              "alternateName": "Genesis",
+              "url": "https://genesis.ieeemuj.com/",
+            }),
+          }}
         />
       </head>
       <body className="min-h-full flex flex-col">
