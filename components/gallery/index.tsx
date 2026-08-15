@@ -41,199 +41,199 @@ interface GalleryImage {
 
 const GALLERY_IMAGES: GalleryImage[] = [
   {
-    src: "/gallery/DSC00036.svg",
+    src: "/gallery/DSC00036.avif",
     title: "Opening Ceremony",
     photographer: "Genesis Team",
     category: "EVENTS",
   },
   {
-    src: "/gallery/DSC00052.svg",
+    src: "/gallery/DSC00052.avif",
     title: "Main Stage Energy",
     photographer: "Genesis Team",
     category: "EVENTS",
   },
   {
-    src: "/gallery/DSC00071.svg",
+    src: "/gallery/DSC00071.avif",
     title: "Keynote Address",
     photographer: "Genesis Team",
     category: "EVENTS",
   },
   {
-    src: "/gallery/DSC00077.svg",
+    src: "/gallery/DSC00077.avif",
     title: "Audience Engagement",
     photographer: "Genesis Team",
     category: "EVENTS",
   },
   {
-    src: "/gallery/DSC00483-Enhanced-NR.svg",
+    src: "/gallery/DSC00483-Enhanced-NR.avif",
     title: "Technical Workshop",
     photographer: "Genesis Team",
     category: "WORKSHOPS",
   },
   {
-    src: "/gallery/DSC00531-Enhanced-NR.svg",
+    src: "/gallery/DSC00531-Enhanced-NR.avif",
     title: "Coding Hackathon",
     photographer: "Genesis Team",
     category: "COMPETITIONS",
   },
   {
-    src: "/gallery/DSC00627-Enhanced-NR.svg",
+    src: "/gallery/DSC00627-Enhanced-NR.avif",
     title: "Project Showcase",
     photographer: "Genesis Team",
     category: "EXHIBITION",
   },
   {
-    src: "/gallery/DSC02911-Enhanced-NR.svg",
+    src: "/gallery/DSC02911-Enhanced-NR.avif",
     title: "Team Collaboration",
     photographer: "Genesis Team",
     category: "WORKSHOPS",
   },
   {
-    src: "/gallery/DSC02976-Enhanced-NR.svg",
+    src: "/gallery/DSC02976-Enhanced-NR.avif",
     title: "Speaker Session",
     photographer: "Genesis Team",
     category: "TALKS",
   },
   {
-    src: "/gallery/DSC03109-Enhanced-NR.svg",
+    src: "/gallery/DSC03109-Enhanced-NR.avif",
     title: "Interactive Q&A",
     photographer: "Genesis Team",
     category: "TALKS",
   },
   {
-    src: "/gallery/DSC03177-Enhanced-NR.svg",
+    src: "/gallery/DSC03177-Enhanced-NR.avif",
     title: "Innovation Hub",
     photographer: "Genesis Team",
     category: "EXHIBITION",
   },
   {
-    src: "/gallery/DSC03839.svg",
+    src: "/gallery/DSC03839.avif",
     title: "Cultural Evening",
     photographer: "Genesis Team",
     category: "CULTURE",
   },
   {
-    src: "/gallery/DSC04064.svg",
+    src: "/gallery/DSC04064.avif",
     title: "Stage Performance",
     photographer: "Genesis Team",
     category: "CULTURE",
   },
   {
-    src: "/gallery/DSC04148.svg",
+    src: "/gallery/DSC04148.avif",
     title: "Musical Night",
     photographer: "Genesis Team",
     category: "CULTURE",
   },
   {
-    src: "/gallery/DSC04177.svg",
+    src: "/gallery/DSC04177.avif",
     title: "Light & Sound Spectacle",
     photographer: "Genesis Team",
     category: "CULTURE",
   },
   {
-    src: "/gallery/DSC04422.svg",
+    src: "/gallery/DSC04422.avif",
     title: "Grand Finale",
     photographer: "Genesis Team",
     category: "CELEBRATIONS",
   },
   {
-    src: "/gallery/DSC04752.svg",
+    src: "/gallery/DSC04752.avif",
     title: "Award Ceremony",
     photographer: "Genesis Team",
     category: "CELEBRATIONS",
   },
   {
-    src: "/gallery/DSC09449-Enhanced-NR.svg",
+    src: "/gallery/DSC09449-Enhanced-NR.avif",
     title: "Hackathon Sprint",
     photographer: "Genesis Team",
     category: "COMPETITIONS",
   },
   {
-    src: "/gallery/DSC09460-Enhanced-NR.svg",
+    src: "/gallery/DSC09460-Enhanced-NR.avif",
     title: "Mentorship Session",
     photographer: "Genesis Team",
     category: "WORKSHOPS",
   },
   {
-    src: "/gallery/DSC09462-Enhanced-NR.svg",
+    src: "/gallery/DSC09462-Enhanced-NR.avif",
     title: "Prototyping Lab",
     photographer: "Genesis Team",
     category: "INNOVATION",
   },
   {
-    src: "/gallery/DSC09465-Enhanced-NR.svg",
+    src: "/gallery/DSC09465-Enhanced-NR.avif",
     title: "Pitch Presentation",
     photographer: "Genesis Team",
     category: "COMPETITIONS",
   },
   {
-    src: "/gallery/DSC09552-Enhanced-NR.svg",
+    src: "/gallery/DSC09552-Enhanced-NR.avif",
     title: "Jury Evaluation",
     photographer: "Genesis Team",
     category: "COMPETITIONS",
   },
   {
-    src: "/gallery/DSC09881.svg",
+    src: "/gallery/DSC09881.avif",
     title: "Networking Break",
     photographer: "Genesis Team",
     category: "COMMUNITY",
   },
   {
-    src: "/gallery/DSC09980.svg",
+    src: "/gallery/DSC09980.avif",
     title: "Valedictory Meet",
     photographer: "Genesis Team",
     category: "CELEBRATIONS",
   },
   {
-    src: "/gallery/Genesis flex drop-13.svg",
+    src: "/gallery/Genesis flex drop-13.avif",
     title: "Genesis Banner Moments",
     photographer: "Genesis Team",
     category: "BRANDING",
   },
   {
-    src: "/gallery/Genesis flex drop-6.svg",
+    src: "/gallery/Genesis flex drop-6.avif",
     title: "Event Campus Ambience",
     photographer: "Genesis Team",
     category: "BRANDING",
   },
   {
-    src: "/gallery/Genesis flex drop-8.svg",
+    src: "/gallery/Genesis flex drop-8.avif",
     title: "Genesis Fest Wall",
     photographer: "Genesis Team",
     category: "BRANDING",
   },
   {
-    src: "/gallery/IMG_1101-Enhanced-NR.svg",
+    src: "/gallery/IMG_1101-Enhanced-NR.avif",
     title: "Design Workshop",
     photographer: "Genesis Team",
     category: "WORKSHOPS",
   },
   {
-    src: "/gallery/IMG_1135-Enhanced-NR.svg",
+    src: "/gallery/IMG_1135-Enhanced-NR.avif",
     title: "Hands-on Tech Lab",
     photographer: "Genesis Team",
     category: "WORKSHOPS",
   },
   {
-    src: "/gallery/IMG_1144-Enhanced-NR.svg",
+    src: "/gallery/IMG_1144-Enhanced-NR.avif",
     title: "Robotics Arena",
     photographer: "Genesis Team",
     category: "COMPETITIONS",
   },
   {
-    src: "/gallery/IMG_1171-Enhanced-NR.svg",
+    src: "/gallery/IMG_1171-Enhanced-NR.avif",
     title: "AI & Data Science Talk",
     photographer: "Genesis Team",
     category: "TALKS",
   },
   {
-    src: "/gallery/IMG_9632-Enhanced-NR.svg",
+    src: "/gallery/IMG_9632-Enhanced-NR.avif",
     title: "Night Festivities",
     photographer: "Genesis Team",
     category: "CULTURE",
   },
   {
-    src: "/gallery/IMG_9780-Enhanced-NR.svg",
+    src: "/gallery/IMG_9780-Enhanced-NR.avif",
     title: "Closing Memories",
     photographer: "Genesis Team",
     category: "COMMUNITY",
@@ -348,8 +348,8 @@ export default function Gallery() {
     let targetMarqueeY = 0;
 
     // Autoplay speed and direction states (smooth direction reversal) - initialized to a placeholder, updated dynamically
-    let currentAutoplaySpeed = -1.2;
-    let targetAutoplaySpeed = -1.2;
+    let currentAutoplaySpeed = -0.45;
+    let targetAutoplaySpeed = -0.45;
 
     // Curve influence tracking (for velocity-dependent curved carousel mapping)
     let curveInfluence = 0;
@@ -384,9 +384,9 @@ export default function Gallery() {
 
       if (cardWidth > 0 && marqueeWidth > 0) {
         wrapLimit = GALLERY_IMAGES.length * (cardWidth + cardGap);
-        // Calculate autoplay speed using the original 2x width reference (wrapLimit * 2) so it matches original -0.05% speed
-        const baseSpeed = -(wrapLimit * 2) * 0.0005;
-        if (currentAutoplaySpeed === -1.2) {
+        // Calculate autoplay speed using the original 2x width reference (wrapLimit * 2) - reduced to 0.00018 for a calm, gentle pace
+        const baseSpeed = -(wrapLimit * 2) * 0.00018;
+        if (currentAutoplaySpeed === -0.45) {
           currentAutoplaySpeed = baseSpeed;
           targetAutoplaySpeed = baseSpeed;
         } else {
@@ -601,13 +601,13 @@ export default function Gallery() {
 
     const handleWheel = (e: WheelEvent) => {
       // Scale wheel delta to pixel scrolling using mathematically matched scroll sensitivity
-      // Reduced from 0.0008 to 0.0005 for a smoother, slower scroll speed
-      const scrollSensitivity = 0.0005 * wrapLimit;
+      // Reduced sensitivity for smoother, gentler scroll response
+      const scrollSensitivity = 0.00022 * wrapLimit;
       targetX -= (e.deltaY * scrollSensitivity);
 
       // Smoothly switch target autoplay direction when scroll exceeds a noise threshold
       if (Math.abs(e.deltaY) > 1) {
-        const baseSpeed = Math.abs((wrapLimit * 2) * 0.0005);
+        const baseSpeed = Math.abs((wrapLimit * 2) * 0.00018);
         targetAutoplaySpeed = e.deltaY > 0 ? -baseSpeed : baseSpeed;
       }
     };
@@ -625,13 +625,13 @@ export default function Gallery() {
         const deltaY = touchStartY - touchY;
         touchStartY = touchY;
         // Scale swipe delta to pixel scrolling using mathematically matched touch sensitivity
-        // Reduced from 0.0024 to 0.0015 for a smoother, slower drag speed
-        const touchSensitivity = 0.0015 * wrapLimit;
+        // Reduced sensitivity for smoother, gentler drag response
+        const touchSensitivity = 0.0007 * wrapLimit;
         targetX -= (deltaY * touchSensitivity);
 
         // Smoothly switch target autoplay direction when swipe exceeds a noise threshold
         if (Math.abs(deltaY) > 0.5) {
-          const baseSpeed = Math.abs((wrapLimit * 2) * 0.0005);
+          const baseSpeed = Math.abs((wrapLimit * 2) * 0.00018);
           targetAutoplaySpeed = deltaY > 0 ? -baseSpeed : baseSpeed;
         }
       }
