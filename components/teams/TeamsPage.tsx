@@ -8,7 +8,6 @@ import { coreData } from "./coreData";
 import { facultyData } from "./facultyData";
 import {
   LinkedInIcon,
-  GitHubIcon,
   ChevronIcon,
   FilterIcon,
 } from "./TeamIcons";
@@ -230,55 +229,21 @@ function MemberCard({
           </p>
         </div>
 
-        {/* ── GitHub + LinkedIn buttons ── */}
-        <div className="flex items-center justify-center gap-1.5 sm:gap-2 mt-auto w-full min-w-0">
-          {/* GitHub */}
-          {member.github ? (
-            <a
-              href={member.github}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center justify-center gap-1 sm:gap-1.5 lg:gap-2 w-1/2 min-w-0 px-1.5 sm:px-2.5 lg:px-4 py-1.5 rounded-full border border-white/30 bg-white/20 backdrop-blur-sm text-white hover:text-white hover:bg-white/35 hover:scale-105 transition-all duration-300 shadow-[0_2px_10px_rgba(0,0,0,0.05)]"
-              aria-label={`${member.name} GitHub`}
-            >
-              <GitHubIcon className="w-[12px] h-[12px] sm:w-[13px] sm:h-[13px] lg:w-[14px] lg:h-[14px] flex-shrink-0 text-white" />
-
-              <span
-                className="text-[10px] sm:text-[11px] lg:text-[13px] font-bold text-white tracking-wide whitespace-nowrap"
-                style={FONT}
-              >
-                GitHub
-              </span>
-            </a>
-          ) : (
-            <span
-              className="flex items-center justify-center gap-1 sm:gap-1.5 lg:gap-2 w-1/2 min-w-0 px-1.5 sm:px-2.5 lg:px-4 py-1.5 rounded-full border border-white/20 bg-white/10 text-white/60 cursor-not-allowed"
-              aria-label="GitHub (not linked)"
-            >
-              <GitHubIcon className="w-[12px] h-[12px] sm:w-[13px] sm:h-[13px] lg:w-[14px] lg:h-[14px] flex-shrink-0 text-white/60" />
-
-              <span
-                className="text-[10px] sm:text-[11px] lg:text-[13px] font-bold text-white/60 tracking-wide whitespace-nowrap"
-                style={FONT}
-              >
-                GitHub
-              </span>
-            </span>
-          )}
-
+        {/* ── LinkedIn button ── */}
+        <div className="flex items-center justify-center mt-auto w-full">
           {/* LinkedIn */}
           {member.linkedin ? (
             <a
               href={member.linkedin}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center justify-center gap-1 sm:gap-1.5 lg:gap-2 w-1/2 min-w-0 px-1.5 sm:px-2.5 lg:px-4 py-1.5 rounded-full border border-white/30 bg-white/20 backdrop-blur-sm text-white hover:text-white hover:bg-white/35 hover:scale-105 transition-all duration-300 shadow-[0_2px_10px_rgba(0,0,0,0.05)]"
+              className="inline-flex items-center justify-center gap-1.5 px-4 sm:px-5 py-1.5 rounded-full border border-white/30 bg-white/20 backdrop-blur-sm text-white hover:text-white hover:bg-white/35 hover:scale-105 transition-all duration-300 shadow-[0_2px_10px_rgba(0,0,0,0.05)]"
               aria-label={`${member.name} LinkedIn`}
             >
-              <LinkedInIcon className="w-[12px] h-[12px] sm:w-[13px] sm:h-[13px] lg:w-[14px] lg:h-[14px] flex-shrink-0 text-white" />
+              <LinkedInIcon className="w-[13px] h-[13px] sm:w-[14px] sm:h-[14px] flex-shrink-0 text-white" />
 
               <span
-                className="text-[10px] sm:text-[11px] lg:text-[13px] font-bold text-white tracking-wide whitespace-nowrap"
+                className="text-[11px] sm:text-[12px] md:text-[13px] font-bold text-white tracking-wide whitespace-nowrap"
                 style={FONT}
               >
                 LinkedIn
@@ -286,13 +251,13 @@ function MemberCard({
             </a>
           ) : (
             <span
-              className="flex items-center justify-center gap-1 sm:gap-1.5 lg:gap-2 w-1/2 min-w-0 px-1.5 sm:px-2.5 lg:px-4 py-1.5 rounded-full border border-white/20 bg-white/10 text-white/60 cursor-not-allowed"
+              className="inline-flex items-center justify-center gap-1.5 px-4 sm:px-5 py-1.5 rounded-full border border-white/20 bg-white/10 text-white/60 cursor-not-allowed"
               aria-label="LinkedIn (not linked)"
             >
-              <LinkedInIcon className="w-[12px] h-[12px] sm:w-[13px] sm:h-[13px] lg:w-[14px] lg:h-[14px] flex-shrink-0 text-white/60" />
+              <LinkedInIcon className="w-[13px] h-[13px] sm:w-[14px] sm:h-[14px] flex-shrink-0 text-white/60" />
 
               <span
-                className="text-[10px] sm:text-[11px] lg:text-[13px] font-bold text-white/60 tracking-wide whitespace-nowrap"
+                className="text-[11px] sm:text-[12px] md:text-[13px] font-bold text-white/60 tracking-wide whitespace-nowrap"
                 style={FONT}
               >
                 LinkedIn
