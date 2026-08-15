@@ -72,7 +72,7 @@ export const executiveData: Team[] = [
       name: "Shreya Daljeet",
       role: "Director",
       photo: "https://images.prismic.io/ieeemuj/aLjCymGNHVfTOn9g_ShreyaDaljeet-content-HackX3.0.png?auto=format,compress",
-      linkedin: "https://www.linkedin.com/in/shreya-daljeet-4b7195231?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=ios_app",
+      linkedin: "https://www.linkedin.com/in/shreya-daljeet-4b7195231",
     },
     {
       id: "dr6",
@@ -218,12 +218,14 @@ export const executiveData: Team[] = [
       name: "Aarush Dayal",
       role: "Events Head",
       photo: "https://pub-2b91df05320148438318902a8dc7795b.r2.dev/media/1782011040019_jvrrg.avif",
+      linkedin: "https://www.linkedin.com/in/aarush-dayal-790812215/",
     },
     {
       id: "th2",
       name: "Shreya Daljeet",
       role: "Events Head",
       photo: "https://images.prismic.io/ieeemuj/aLjCymGNHVfTOn9g_ShreyaDaljeet-content-HackX3.0.png?auto=format,compress",
+      linkedin: "https://www.linkedin.com/in/shreya-daljeet-4b7195231",
     },
     {
       id: "th3",
@@ -267,12 +269,14 @@ export const executiveData: Team[] = [
       name: "Tanmoy Mandal",
       role: "Marketing Head",
       photo: "https://pub-2b91df05320148438318902a8dc7795b.r2.dev/media/1781889254081_37vzf.avif",
+      linkedin: "https://www.linkedin.com/in/tanmoy-mandal-014a23326/",
     },
     {
       id: "th10",
       name: "Sara Pansuriya",
       role: "Marketing Head",
       photo: "https://images.prismic.io/ieeemuj/aLjG7WGNHVfTOoJZ_SaraPansuriya-Marketing-HackX3.0.jpeg?auto=format,compress",
+      linkedin: "https://www.linkedin.com/in/sara-pansuriya-936299338",
     },
     {
       id: "th11",
@@ -310,12 +314,14 @@ export const executiveData: Team[] = [
       name: "Tanmoy Mandal",
       role: "Corporate Head",
       photo: "https://pub-2b91df05320148438318902a8dc7795b.r2.dev/media/1781889254081_37vzf.avif",
+      linkedin: "https://www.linkedin.com/in/tanmoy-mandal-014a23326/",
     },
     {
       id: "th17",
       name: "Dolly Srivastava",
       role: "Corporate Head",
       photo: "https://pub-2b91df05320148438318902a8dc7795b.r2.dev/media/1782011065871_m0oq3a.avif",
+      linkedin: "https://www.linkedin.com/in/dollysrivastava",
     },
     {
       id: "th18",
@@ -359,6 +365,7 @@ export const executiveData: Team[] = [
       name: "Aarush Dayal",
       role: "Graphic Design Head",
       photo: "https://pub-2b91df05320148438318902a8dc7795b.r2.dev/media/1782011040019_jvrrg.avif",
+      linkedin: "https://www.linkedin.com/in/aarush-dayal-790812215/",
     },
     {
       id: "th25",
@@ -384,6 +391,7 @@ export const executiveData: Team[] = [
       name: "Tanmoy Mandal",
       role: "Technical Head",
       photo: "https://pub-2b91df05320148438318902a8dc7795b.r2.dev/media/1781889254081_37vzf.avif",
+      linkedin: "https://www.linkedin.com/in/tanmoy-mandal-014a23326/",
     },
     {
       id: "th29",
@@ -421,6 +429,7 @@ export const executiveData: Team[] = [
       name: "Sara Pansuriya",
       role: "Content Head",
       photo: "https://images.prismic.io/ieeemuj/aLjG7WGNHVfTOoJZ_SaraPansuriya-Marketing-HackX3.0.jpeg?auto=format,compress",
+      linkedin: "https://www.linkedin.com/in/sara-pansuriya-936299338",
     },
     {
       id: "th35",
@@ -471,6 +480,7 @@ export const executiveData: Team[] = [
       name: "Dolly Srivastava",
       role: "Curations Head",
       photo: "https://pub-2b91df05320148438318902a8dc7795b.r2.dev/media/1782011065871_m0oq3a.avif",
+      linkedin: "https://www.linkedin.com/in/dollysrivastava",
     },
     {
       id: "th43",
@@ -502,6 +512,7 @@ export const executiveData: Team[] = [
       name: "Keshav Anand",
       role: "Logistics Head",
       photo: "https://pub-2b91df05320148438318902a8dc7795b.r2.dev/media/1782011008303_b7rapr.avif",
+      linkedin: "https://www.linkedin.com/in/keshav-anand-479712327",
     },
     {
       id: "th48",
@@ -539,6 +550,7 @@ export const executiveData: Team[] = [
       name: "Keshav Anand",
       role: "Hospitality Head",
       photo: "https://pub-2b91df05320148438318902a8dc7795b.r2.dev/media/1782011008303_b7rapr.avif",
+      linkedin: "https://www.linkedin.com/in/keshav-anand-479712327",
     },
     {
       id: "th54",
@@ -582,6 +594,7 @@ export const executiveData: Team[] = [
       name: "Dolly Srivastava",
       role: "Finance Head",
       photo: "https://pub-2b91df05320148438318902a8dc7795b.r2.dev/media/1782011065871_m0oq3a.avif",
+      linkedin: "https://www.linkedin.com/in/dollysrivastava",
     },
     {
       id: "th61",
@@ -607,6 +620,7 @@ export const executiveData: Team[] = [
       name: "Shreya Daljeet",
       role: "Social Media Head",
       photo: "https://images.prismic.io/ieeemuj/aLjCymGNHVfTOn9g_ShreyaDaljeet-content-HackX3.0.png?auto=format,compress",
+      linkedin: "https://www.linkedin.com/in/shreya-daljeet-4b7195231",
     },
     {
       id: "th65",
@@ -644,6 +658,7 @@ export const executiveData: Team[] = [
       name: "Sara Pansuriya",
       role: "Crafts Head",
       photo: "https://images.prismic.io/ieeemuj/aLjG7WGNHVfTOoJZ_SaraPansuriya-Marketing-HackX3.0.jpeg?auto=format,compress",
+      linkedin: "https://www.linkedin.com/in/sara-pansuriya-936299338",
     },
     {
       id: "th71",
@@ -669,6 +684,7 @@ export const executiveData: Team[] = [
       name: "Keshav Anand",
       role: "Flying Squad Head",
       photo: "https://pub-2b91df05320148438318902a8dc7795b.r2.dev/media/1782011008303_b7rapr.avif",
+      linkedin: "https://www.linkedin.com/in/keshav-anand-479712327",
     },
     {
       id: "th75",
