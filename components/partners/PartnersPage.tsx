@@ -6,185 +6,116 @@ const FONT: React.CSSProperties = {
   fontFamily: "var(--font-mirava-sans)",
 };
 
-
 interface Partner {
   name: string;
-  logo: React.ReactNode;
+  logo: string;
   website: string;
 }
 
 const PARTNERS_DATA: Partner[] = [
   {
-    name: "HP",
-    logo: (
-      <svg viewBox="0 0 100 100" className="w-full max-w-[76px] sm:max-w-[96px] h-auto">
-        <circle cx="50" cy="50" r="46" fill="#0096D6" />
-        <text x="50" y="62" fill="white" fontStyle="italic" fontWeight="bold" fontSize="36" fontFamily="sans-serif" textAnchor="middle">hp</text>
-      </svg>
-    ),
-    website: "https://www.hp.com",
+    name: "Google Developer Groups",
+    logo: "https://images.prismic.io/ieeemuj/1jM6EGUfybaYOfhJ_GDG.png?auto=format,compress",
+    website: "https://gdg.community.dev/",
   },
   {
-    name: "Monster",
-    logo: (
-      <svg viewBox="0 0 100 100" className="w-full max-w-[65px] sm:max-w-[80px] h-auto text-white fill-current opacity-95">
-        <path d="M38 12c-2 15 3 45 4 60c-2-15-4-45-4-60M50 8c-2 20 4 68 3 84c-1-16-4-56-3-84M62 16c-2 12 3 38 4 50c-2-12-4-38-4-50" stroke="currentColor" strokeWidth="4.5" strokeLinecap="round" />
-      </svg>
-    ),
-    website: "https://www.monsterenergy.com",
+    name: "Jio Saaavn",
+    logo: "https://images.prismic.io/ieeemuj/UaBPGvhbNTJ0jN1E_jiosaavn.png?auto=format,compress",
+    website: "https://www.jiosaavn.com/",
   },
   {
-    name: "IEEE Rajasthan",
-    logo: (
-      <div className="bg-[#ffffff] px-3 sm:px-5 py-1.5 sm:py-2.5 rounded-lg flex items-center justify-center shadow-md w-full max-w-[125px] sm:max-w-[176px]">
-        <svg viewBox="0 0 180 50" className="w-full h-auto">
-          <polygon points="5,25 25,5 45,25 25,45" fill="#00629B" />
-          <line x1="25" y1="5" x2="25" y2="45" stroke="white" strokeWidth="1.5" />
-          <line x1="25" y1="25" x2="13" y2="25" stroke="white" strokeWidth="1.5" />
-          <line x1="25" y1="25" x2="37" y2="25" stroke="white" strokeWidth="1.5" />
-          <text x="55" y="24" fill="#00629B" fontSize="19" fontWeight="900" fontFamily="sans-serif" letterSpacing="0.5">IEEE</text>
-          <text x="55" y="40" fill="#1e3a8a" fontSize="7.5" fontWeight="700" fontFamily="sans-serif" letterSpacing="0.1">RAJASTHAN SUB SECTION</text>
-        </svg>
-      </div>
-    ),
-    website: "https://ieeerajasthan.org",
+    name: "HackerRank",
+    logo: "https://images.prismic.io/ieeemuj/vP5FGW3EOgVufwsz_HackerRank.png?auto=format,compress",
+    website: "https://www.hackerrank.com/",
   },
   {
-    name: "TribeVibe",
-    logo: (
-      <svg viewBox="0 0 200 50" className="w-full max-w-[125px] sm:max-w-[180px] h-auto text-white">
-        <circle cx="25" cy="25" r="18" fill="none" stroke="white" strokeWidth="2.5" />
-        <path d="M22 14h6v3h-4v15h-2V17h-2zM28 20l3-6h-6z" fill="white" />
-        <text x="54" y="26" fill="white" fontSize="20" fontWeight="bold" fontFamily="sans-serif">TribeVibe</text>
-        <text x="54" y="38" fill="#94a3b8" fontSize="8" fontFamily="sans-serif">A BookMyShow Enterprise</text>
-      </svg>
-    ),
-    website: "https://www.tribevibe.live",
-  },
-  {
-    name: "Starbucks",
-    logo: (
-      <svg viewBox="0 0 100 100" className="w-full max-w-[65px] sm:max-w-[80px] h-auto">
-        <circle cx="50" cy="50" r="46" fill="#00704A" />
-        <circle cx="50" cy="50" r="28" fill="none" stroke="white" strokeWidth="2" />
-        <circle cx="50" cy="50" r="16" fill="#00704A" />
-        <path d="M47 43l3 8 3-8z" fill="white" />
-        <polygon points="50,22 52,28 58,28 53,32 55,38 50,34 45,38 47,32 42,28 48,28" fill="white" />
-        <path d="M28 65c5-10 12-15 15-15M72 65c-5-10-12-15-15-15" stroke="white" strokeWidth="2" fill="none" />
-      </svg>
-    ),
-    website: "https://www.starbucks.in",
-  },
-  {
-    name: "Decathlon",
-    logo: (
-      <svg viewBox="0 0 220 50" className="w-full max-w-[125px] sm:max-w-[180px] h-auto text-white">
-        <text x="0" y="35" fill="white" fontSize="26" fontWeight="900" fontFamily="sans-serif" letterSpacing="0.5">DECATHLON</text>
-      </svg>
-    ),
-    website: "https://www.decathlon.in",
-  },
-  {
-    name: "StepNex",
-    logo: (
-      <svg viewBox="0 0 220 50" className="w-full max-w-[125px] sm:max-w-[180px] h-auto text-white">
-        <g fill="white">
-          <rect x="5" y="32" width="10" height="3" rx="0.5" />
-          <rect x="10" y="26" width="10" height="3" rx="0.5" />
-          <rect x="15" y="20" width="10" height="3" rx="0.5" />
-          <rect x="20" y="14" width="10" height="3" rx="0.5" />
-          <line x1="5" y1="36" x2="30" y2="12" stroke="white" strokeWidth="1.5" />
-        </g>
-        <text x="40" y="24" fill="white" fontSize="18" fontWeight="bold" fontFamily="sans-serif">StepNex</text>
-        <text x="40" y="36" fill="#94a3b8" fontSize="9" fontFamily="sans-serif">Technologies</text>
-      </svg>
-    ),
-    website: "https://stepnex.in",
+    name: "Zorko",
+    logo: "https://images.prismic.io/ieeemuj/wYeC91G1KA623Hlt_zorko.png?auto=format,compress",
+    website: "https://zorko.in/",
   },
   {
     name: "Unstop",
-    logo: (
-      <div className="bg-[#ffffff] px-4 sm:px-6 py-1.5 sm:py-2 rounded-full flex items-center justify-center shadow-md w-full max-w-[100px] sm:max-w-[130px]">
-        <svg viewBox="0 0 120 30" className="w-full h-auto">
-          <text x="60" y="22" fill="#000000" fontSize="22" fontWeight="900" fontFamily="sans-serif" textAnchor="middle">unstop</text>
-        </svg>
-      </div>
-    ),
-    website: "https://unstop.com",
+    logo: "https://images.prismic.io/ieeemuj/UM0Uz8qoVNjfI6lH_unstop.png?auto=format,compress",
+    website: "https://unstop.com/",
   },
   {
-    name: "Spice",
-    logo: (
-      <div className="flex flex-col items-center gap-1.5 w-full max-w-[65px] sm:max-w-[80px]">
-        <svg viewBox="0 0 100 50" className="w-full h-auto text-white">
-          <path d="M50 5c-8 0-14 6-14 13s6 13 14 17c8 4 14 6 14 13s-6 13-14 13-14-6-14-13h4c0 6 4 10 10 10s10-4 10-10-4-10-10-14c-8-4-14-6-14-13s6-13 14-13 14 6 14 13h-4c0-6-4-10-10-10z" fill="white" />
-        </svg>
-        <span className="text-white text-[10px] font-black tracking-[0.25em] uppercase text-center w-full" style={FONT}>SPICE</span>
-      </div>
-    ),
-    website: "https://spice.in",
-  }
+    name: "Elsheph Systems",
+    logo: "https://images.prismic.io/ieeemuj/uDlBQgieRETfhCjL_elsheph.png?auto=format,compress",
+    website: "https://www.elsheph.com/",
+  },
+  {
+    name: "Thinkque Consulting",
+    logo: "https://images.prismic.io/ieeemuj/gUkccj4Cp48WHqW-_thinkque.png?auto=format,compress",
+    website: "https://www.thinkqueconsulting.com/",
+  },
+  {
+    name: "JBM Group",
+    logo: "https://images.prismic.io/ieeemuj/JmZvJha45H1gaXxQ_jbm.png?auto=format,compress",
+    website: "https://www.jbmgroup.com/",
+  },
+  {
+    name: "Akbhar Travels",
+    logo: "https://images.prismic.io/ieeemuj/K-9E4hFYHmLtHfzD_akbar.png?auto=format,compress",
+    website: "https://www.akbartravels.com",
+  },
+  {
+    name: "Club Leno",
+    logo: "https://images.prismic.io/ieeemuj/OKq8TwkRGXi0G2Dl_ClubLeno.png?auto=format,compress",
+    website: "https://www.instagram.com/clubleno/",
+  },
+  {
+    name: "Code Crafters",
+    logo: "https://images.prismic.io/ieeemuj/_81RYhfLKIRElX-g_Lockup-Stacked-Dark.jpg?auto=format,compress",
+    website: "https://codecrafters.io/",
+  },
+  {
+    name: "Scribbles",
+    logo: "https://images.prismic.io/ieeemuj/vOtZnH9UI29uUDdm_Scribbles.png?auto=format,compress",
+    website: "https://www.instagram.com/scribblesmuj/",
+  },
+  {
+    name: "Aperture",
+    logo: "https://images.prismic.io/ieeemuj/iZ06s6mubzcltVLv_aperture.png?auto=format,compress",
+    website: "https://www.instagram.com/aperturemuj/",
+  },
+  {
+    name: "Coreografia",
+    logo: "https://images.prismic.io/ieeemuj/gxF9La3DdxB5EC-A_Coreografia.png?auto=format,compress",
+    website: "https://www.instagram.com/coreografia_muj/",
+  },
+  {
+    name: "The Music Band",
+    logo: "https://images.prismic.io/ieeemuj/PYRZhpEpp1sbEG2o_TMC.png?auto=format,compress",
+    website: "https://www.instagram.com/tmc.muj/",
+  },
 ];
 
 interface FeaturedPartner {
   name: string;
   category: string;
-  logo: React.ReactNode;
+  logo: string;
   description: string;
   website: string;
 }
 
 const FEATURED_PARTNERS: FeaturedPartner[] = [
   {
-    name: "Book My Show",
+    name: "Synth powered by Elsheph",
     category: "Title Sponsor",
-    logo: (
-      <svg viewBox="0 0 240 80" className="w-full max-w-[170px] sm:max-w-[210px] h-auto">
-        <defs>
-          <mask id="ticket-mask">
-            <rect x="0" y="0" width="38" height="52" fill="white" />
-            <circle cx="0" cy="26" r="4.5" fill="black" />
-            <circle cx="38" cy="26" r="4.5" fill="black" />
-          </mask>
-        </defs>
-        <text x="5" y="52" fill="white" fontSize="36" fontWeight="bold" fontFamily="sans-serif">book</text>
-        <g transform="translate(90, 10) rotate(-15)">
-          <rect x="0" y="0" width="38" height="52" rx="3" fill="white" mask="url(#ticket-mask)" />
-          <text x="19" y="33" fill="#0d1b35" fontSize="17" fontWeight="bold" fontFamily="sans-serif" textAnchor="middle">my</text>
-        </g>
-        <text x="142" y="52" fill="white" fontSize="36" fontWeight="bold" fontFamily="sans-serif">show</text>
-      </svg>
-    ),
-    description: "BookMyShow offers showtimes, movie tickets, reviews, trailers, concert tickets and events.",
-    website: "https://in.bookmyshow.com"
+    logo: "https://images.prismic.io/ieeemuj/pxFM2lcdwsbG-AYp_synth.png?auto=format,compress",
+    description:
+      "Synth powered by Elsheph:- Unlock every signal. Push past every limit.",
+    website: "https://www.synthsports.co/",
   },
-  {
-    name: "VisionIAS",
-    category: "Ed-Tech Partner",
-    logo: (
-      <svg viewBox="0 0 240 80" className="w-full max-w-[170px] sm:max-w-[210px] h-auto">
-        <text x="10" y="45" fontFamily="sans-serif" fontWeight="900" fontSize="34" letterSpacing="0.5">
-          <tspan fill="#00629B">VISION</tspan>
-          <tspan fill="#E31E24">IAS</tspan>
-        </text>
-        <text x="10" y="65" fill="#94a3b8" fontFamily="sans-serif" fontWeight="700" fontSize="10" letterSpacing="3.5">
-          INSPIRING INNOVATION
-        </text>
-      </svg>
-    ),
-    description: "Vision IAS is India's premier Research and Training Institute for UPSC Civil Services Examination.",
-    website: "https://www.visionias.in"
-  }
 ];
 
 export default function PartnersPage() {
   return (
     <main className="relative min-h-screen w-full px-6 py-32 md:px-12 flex flex-col items-center justify-start overflow-x-hidden font-sans text-white select-none">
-      
-
 
       {/* Decorative Glow Elements */}
       <div className="gpu-accelerated absolute top-1/4 left-1/10 w-96 h-96 bg-blue-500/10 rounded-full blur-[120px] pointer-events-none" />
+
       <div className="gpu-accelerated absolute bottom-1/4 right-1/10 w-[500px] h-[500px] bg-indigo-500/10 rounded-full blur-[150px] pointer-events-none" />
 
       {/* Hero Header Section */}
@@ -198,38 +129,53 @@ export default function PartnersPage() {
             Partners
           </span>
         </h1>
+
         <p className="text-lg md:text-xl text-blue-100/70 font-light max-w-2xl mx-auto leading-relaxed">
-          We are proud to collaborate with visionary organizations that share our passion for innovation and technology. These esteemed partners play a crucial role in making Genesis 6.0 a success.
+          We are proud to collaborate with visionary organizations that share
+          our passion for innovation and technology. These esteemed partners
+          play a crucial role in making Genesis 6.0 a success.
         </p>
       </div>
 
-      {/* Featured Partners Section (Two Large Landscape Cards) */}
+      {/* Featured Partners Section */}
       <div className="w-full max-w-6xl mx-auto flex flex-col gap-6 mb-8 mt-4">
         {FEATURED_PARTNERS.map((partner, idx) => (
           <div key={idx} className="relative group flex flex-col">
-            {/* Ambient colorful card-specific glow behind the glass card */}
+
+            {/* Ambient Glow */}
             <div className="absolute -inset-1.5 rounded-3xl bg-gradient-to-r from-pink-500/10 via-purple-500/15 to-blue-500/15 opacity-0 group-hover:opacity-100 blur-2xl transition-all duration-700 pointer-events-none -z-10" />
-            
+
             <a
               href={partner.website}
               target="_blank"
               rel="noopener noreferrer"
-              className="relative flex flex-col md:flex-row items-center justify-between p-6 sm:p-8 rounded-2xl bg-white/[0.05] backdrop-blur-[32px] border border-white/[0.08] shadow-[inset_0_1px_1.5px_rgba(255,255,255,0.22),_inset_0_-1px_1.5px_rgba(0,0,0,0.18),_0_12px_32px_rgba(0,0,0,0.25)] hover:border-white/20 hover:bg-white/[0.09] transition-all duration-500 hover:-translate-y-1 hover:shadow-[inset_0_1px_2px_rgba(255,255,255,0.38),_inset_0_-1px_1.5px_rgba(0,0,0,0.1),_0_24px_50px_rgba(30,144,255,0.22)] gap-8 text-left"
+              className="relative flex flex-col md:flex-row items-center justify-between p-6 sm:p-8 rounded-2xl bg-white/[0.05] backdrop-blur-[32px] border border-white/[0.08] shadow-[inset_0_1px_1.5px_rgba(255,255,255,0.22),inset_0_-1px_1.5px_rgba(0,0,0,0.18),0_12px_32px_rgba(0,0,0,0.25)] hover:border-white/20 hover:bg-white/[0.09] transition-all duration-500 hover:-translate-y-1 hover:shadow-[inset_0_1px_2px_rgba(255,255,255,0.38),inset_0_-1px_1.5px_rgba(0,0,0,0.1),0_24px_50px_rgba(30,144,255,0.22)] gap-8 text-left"
             >
-              {/* Left Column: Logo */}
+
+              {/* Logo */}
               <div className="flex-shrink-0 w-full md:w-1/3 flex items-center justify-center md:justify-start">
-                {partner.logo}
+                <img
+                  src={partner.logo}
+                  alt={partner.name}
+                  className="max-w-full max-h-32 object-contain"
+                />
               </div>
 
-              {/* Right Column: Info & Arrow */}
+              {/* Right Column */}
               <div className="flex-1 flex flex-row items-center justify-between gap-6 w-full">
+
                 <div className="flex flex-col gap-1">
-                  <h3 className="text-2xl md:text-3xl font-black text-white" style={FONT}>
+                  <h3
+                    className="text-2xl md:text-3xl font-black text-white"
+                    style={FONT}
+                  >
                     {partner.name}
                   </h3>
+
                   <span className="text-[14px] md:text-[16px] font-bold text-blue-300">
                     {partner.category}
                   </span>
+
                   <p className="text-xs md:text-sm text-blue-100/70 leading-relaxed font-sans font-medium">
                     {partner.description}
                   </p>
@@ -237,10 +183,21 @@ export default function PartnersPage() {
 
                 {/* Arrow */}
                 <div className="flex-shrink-0 text-blue-100 group-hover:text-white transition-colors duration-300">
-                  <svg className="w-6 h-6 transform group-hover:translate-x-1.5 transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5">
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                  <svg
+                    className="w-6 h-6 transform group-hover:translate-x-1.5 transition-transform duration-300"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                    strokeWidth="2.5"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M14 5l7 7m0 0l-7 7m7-7H3"
+                    />
                   </svg>
                 </div>
+
               </div>
             </a>
           </div>
@@ -249,36 +206,42 @@ export default function PartnersPage() {
 
       {/* Partner Grid */}
       <div className="grid grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-8 w-full max-w-6xl mx-auto mt-8">
+
         {PARTNERS_DATA.map((partner, idx) => (
           <div key={idx} className="relative group flex flex-col">
-            {/* Ambient colorful card-specific glow behind the glass card */}
+
+            {/* Ambient Glow */}
             <div className="absolute -inset-1.5 rounded-3xl bg-gradient-to-r from-pink-500/10 via-purple-500/15 to-blue-500/15 opacity-0 group-hover:opacity-100 blur-2xl transition-all duration-700 pointer-events-none -z-10" />
-            
+
             <a
               href={partner.website}
               target="_blank"
               rel="noopener noreferrer"
-              className="relative flex flex-col justify-between p-4 sm:p-8 rounded-2xl bg-white/[0.05] backdrop-blur-[32px] border border-white/[0.08] shadow-[inset_0_1px_1.5px_rgba(255,255,255,0.22),_inset_0_-1px_1.5px_rgba(0,0,0,0.18),_0_12px_32px_rgba(0,0,0,0.25)] hover:border-white/20 hover:bg-white/[0.09] transition-all duration-500 hover:-translate-y-1 hover:shadow-[inset_0_1px_2px_rgba(255,255,255,0.38),_inset_0_-1px_1.5px_rgba(0,0,0,0.1),_0_24px_50px_rgba(30,144,255,0.22)] min-h-[160px] sm:min-h-[200px] flex-1"
+              className="relative flex flex-col justify-between p-4 sm:p-8 rounded-2xl bg-white/[0.05] backdrop-blur-[32px] border border-white/[0.08] shadow-[inset_0_1px_1.5px_rgba(255,255,255,0.22),inset_0_-1px_1.5px_rgba(0,0,0,0.18),0_12px_32px_rgba(0,0,0,0.25)] hover:border-white/20 hover:bg-white/[0.09] transition-all duration-500 hover:-translate-y-1 hover:shadow-[inset_0_1px_2px_rgba(255,255,255,0.38),inset_0_-1px_1.5px_rgba(0,0,0,0.1),0_24px_50px_rgba(30,144,255,0.22)] min-h-[160px] sm:min-h-[200px] flex-1"
             >
+
               {/* Corner Decorative Accent */}
               <div className="absolute top-0 right-0 w-8 h-8 border-t-2 border-r-2 border-transparent group-hover:border-white/20 rounded-tr-2xl transition-all duration-300 pointer-events-none" />
 
               {/* Logo Container */}
               <div className="flex-1 flex items-center justify-center w-full">
-                {partner.logo}
+                <img
+                  src={partner.logo}
+                  alt={partner.name}
+                  className="max-w-full max-h-24 sm:max-h-32 object-contain"
+                />
               </div>
 
-              {/* Bottom Row: Name */}
+              {/* Partner Name */}
               <div className="w-full mt-6 text-center text-[18px] font-bold text-blue-100 group-hover:text-white transition-colors duration-300">
                 <span style={FONT}>{partner.name}</span>
               </div>
+
             </a>
           </div>
         ))}
+
       </div>
-
-
-
     </main>
   );
 }
