@@ -11,12 +11,12 @@ interface TicketData {
   date: string;
   venue: string;
   price: string;
-  image: string; // Event image URL from Prismic
+  image: string;
+  registerLink: string;
   color: string;
   glowColor: string;
-  barcode: string; // Image path for custom barcode
+  barcode: string;
 }
-
 interface TicketCardProps {
   ticket: TicketData;
 }
