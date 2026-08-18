@@ -172,9 +172,17 @@ export default function TicketCard({ ticket }: TicketCardProps) {
           </div>
 
           {/* Register Button */}
-          <button
+          <a
+            href={ticket.registerLink || "#"}
+            target="_blank"
+            rel="noopener noreferrer"
             onMouseEnter={onButtonMouseEnter}
             onMouseLeave={onButtonMouseLeave}
+            onClick={(e) => {
+              if (!ticket.registerLink) {
+                e.preventDefault();
+              }
+            }}
             className="relative inline-flex items-center justify-center overflow-hidden rounded-full bg-[#1a73e8] px-4 py-1.5 text-xs font-bold text-white shadow-sm active:scale-[0.98] transition-transform duration-200 cursor-pointer"
           >
             <span
@@ -185,7 +193,7 @@ export default function TicketCard({ ticket }: TicketCardProps) {
             <span ref={textRef} className="relative z-10">
               Register
             </span>
-          </button>
+          </a>
         </div>
       </div>
 
