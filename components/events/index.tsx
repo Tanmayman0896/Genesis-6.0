@@ -5,80 +5,120 @@ import TicketCard, { TicketData } from "./TicketCard";
 const TICKETS_DATA: TicketData[] = [
   {
     id: "1",
-    title: "Code Warriors",
-    category: "HACKATHON",
-    date: "November 16th, 2026",
-    venue: "Main Auditorium & Lab A",
-    price: "Free",
+    title: "Faceoff",
+    category: "SPORTS",
+    date: "August 18th, 2026",
+    venue: "B7 Court",
+    price: "₹75 / team",
+    image:
+      "https://images.prismic.io/ieeemuj/xEsBIjfIsLuY3mRR_faceoff.avif?auto=format,compress",
+    registerLink:
+      "https://docs.google.com/forms/d/e/1FAIpQLSfPACFgdLl-PosDd8HNUKjHE8iOGEGwq6NN8KD9WELH0DceAQ/viewform",
     color: "bg-[#ff68a8]", // Pink ticket
     glowColor: "shadow-pink-500/20 hover:shadow-pink-500/40",
     barcode: "/barcode.png",
   },
+
   {
     id: "2",
-    title: "AI Symposium",
-    category: "AI & NEURAL NETS",
-    date: "November 18th, 2026",
-    venue: "Seminar Hall C (Undisclosed)",
-    price: "₹150",
+    title: "ZeroTrace",
+    category: "WORKSHOP",
+    date: "August 19th, 2026",
+    venue: "307 AB 1",
+    price: "Registration Required",
+    image:
+      "https://images.prismic.io/ieeemuj/-zhqDLDPlUSmrEHF_Screenshot2026-08-18at5.14.05PM.png?auto=format,compress",
+    registerLink:
+      "https://docs.google.com/forms/d/e/1FAIpQLSe-SeQFh1XU0NBEGhrFFI20kuZTdhE2i5rHqpWy3cZSWo-xng/viewform?usp=publish-editor",
     color: "bg-[#3cbbf6]", // Blue ticket
     glowColor: "shadow-blue-500/20 hover:shadow-blue-500/40",
     barcode: "/barcode.png",
   },
+
   {
     id: "3",
-    title: "Web3 Solidity",
-    category: "WORKSHOP",
-    date: "December 02, 2026",
-    venue: "Innovation Center",
-    price: "₹250",
+    title: "Ballistic",
+    category: "GAMING",
+    date: "August 19th, 2026",
+    venue: "Genesis Chowk",
+    price: "₹100 / game",
+    image:
+      "https://images.prismic.io/ieeemuj/4TnpYC3r_8ub_86J_ballistic.avif?auto=format,compress",
+    registerLink: "https://forms.gle/15DZqrckWzx6N8Rb6",
     color: "bg-[#4ade80]", // Green ticket
     glowColor: "shadow-emerald-500/20 hover:shadow-emerald-500/40",
     barcode: "/barcode.png",
   },
+
   {
     id: "4",
-    title: "Design Sprint",
-    category: "CREATIVE DESIGN",
-    date: "December 05, 2026",
-    venue: "Design Studio A",
-    price: "Free",
+    title: "Recurz",
+    category: "HACKATHON",
+    date: "August 21st, 2026",
+    venue: "LHC Second Floor",
+    price: "₹50 / person",
+    image:
+      "https://images.prismic.io/ieeemuj/XLgKDwfw3jn6xny9_recurz.avif?auto=format,compress",
+    registerLink:
+      "https://docs.google.com/forms/d/e/1FAIpQLSc5Xlq4uAF98HhtmqcNtp93FpAk8XkiN6vQqXg3WFmnesnl_A/viewform",
     color: "bg-[#fb923c]", // Orange ticket
     glowColor: "shadow-orange-500/20 hover:shadow-orange-500/40",
     barcode: "/barcode.png",
   },
+
   {
     id: "5",
-    title: "Cyber CTF",
-    category: "CYBERSECURITY",
-    date: "December 12, 2026",
-    venue: "Main Lab B & C",
-    price: "₹100",
+    title: "Networking with WIE",
+    category: "NETWORKING",
+    date: "August 22nd, 2026",
+    venue: "307, AB1",
+    price: "₹50",
+    image:
+      "https://images.prismic.io/ieeemuj/7gg7RGrlEQd_3exS_nww.avif?auto=format,compress",
+    registerLink:
+      "https://docs.google.com/forms/d/e/1FAIpQLSckZUnCFLCb9j6GuSMR5kVCD9RGkA8gbuM7KMN30cJR5xdUUQ/viewform?usp=dialog",
     color: "bg-[#a78bfa]", // Purple ticket
     glowColor: "shadow-purple-500/20 hover:shadow-purple-500/40",
     barcode: "/barcode.png",
   },
+
   {
     id: "6",
-    title: "Game Showcase",
-    category: "GAME DEV EXPO",
-    date: "December 18, 2026",
-    venue: "Exhibition Hall",
-    price: "Free",
+    title: "Tech Summit",
+    category: "TECH SUMMIT",
+    date: "August 22nd, 2026",
+    venue: "Venue TBA",
+    price: "Registration Required",
+    image: "PASTE_TECH_SUMMIT_PRISMIC_IMAGE_URL_HERE",
+    registerLink: "",
     color: "bg-[#facc15]", // Yellow ticket
     glowColor: "shadow-yellow-500/20 hover:shadow-yellow-500/40",
     barcode: "/barcode.png",
   },
- 
+
+  {
+    id: "7",
+    title: "Breacout",
+    category: "TREASURE HUNT",
+    date: "August 23rd, 2026",
+    venue: "Old Mess",
+    price: "₹100 / person",
+    image:
+      "https://images.prismic.io/ieeemuj/aC5P57BGJ6r_f9Ch_breacout.avif?auto=format,compress",
+    registerLink:
+      "https://docs.google.com/forms/d/e/1FAIpQLSfoKHvHLnEl3yxmGqmxL3lmnEPNSI68rH985mEOkUWmn-C0Dg/viewform?fbzx=-6499911764373709275",
+    color: "bg-[#ff68a8]", // Pink ticket
+    glowColor: "shadow-pink-500/20 hover:shadow-pink-500/40",
+    barcode: "/barcode.png",
+  },
 ];
 
 export default function Events() {
   return (
-    <div
-      className="relative min-h-screen w-full flex flex-col items-center pt-36 md:pt-40 pb-24 font-sans text-white overflow-x-hidden bg-transparent"
-    >
+    <div className="relative min-h-screen w-full flex flex-col items-center pt-36 md:pt-40 pb-24 font-sans text-white overflow-x-hidden bg-transparent">
       {/* Decorative Blur Backgrounds */}
       <div className="gpu-accelerated absolute top-1/4 left-1/10 w-96 h-96 bg-blue-500/10 rounded-full blur-[120px] pointer-events-none" />
+
       <div className="gpu-accelerated absolute bottom-1/4 right-1/10 w-[500px] h-[500px] bg-indigo-500/10 rounded-full blur-[150px] pointer-events-none" />
 
       {/* Main Title Section */}
